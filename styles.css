@@ -1,0 +1,43 @@
+/* Custom Styles & Micro-Animations for HomePro Web Preview */
+
+/* Active Tab Highlight */
+.screen-tab-btn.active-tab {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(79, 70, 229, 0.35));
+  color: #ffffff;
+  border: 1px solid rgba(129, 140, 248, 0.4);
+  box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.3);
+}
+
+/* Mock Screen Transitions */
+.mockup-screen {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Phone Glow Effect */
+@keyframes ambientPulse {
+  0%, 100% {
+    box-shadow: 0 20px 50px -15px rgba(99, 102, 241, 0.25);
+  }
+  50% {
+    box-shadow: 0 25px 65px -10px rgba(225, 29, 72, 0.3);
+  }
+}
+
+.phone-glow {
+  animation: ambientPulse 6s infinite ease-in-out;
+}
+
+/* Custom Scrollbar for sleek look */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #070a13;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f293d;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}
