@@ -23,8 +23,8 @@ function switchScreen(index) {
         screenEl.removeAttribute('hidden');
       }
       if (tabBtn) {
-        tabBtn.classList.add('active-tab', 'text-white');
-        tabBtn.classList.remove('text-slate-400');
+        tabBtn.classList.add('active-tab');
+        tabBtn.classList.remove('text-ink-secondary');
         tabBtn.setAttribute('aria-selected', 'true');
         tabBtn.setAttribute('tabindex', '0');
       }
@@ -36,8 +36,8 @@ function switchScreen(index) {
         screenEl.setAttribute('hidden', 'true');
       }
       if (tabBtn) {
-        tabBtn.classList.remove('active-tab', 'text-white');
-        tabBtn.classList.add('text-slate-400');
+        tabBtn.classList.remove('active-tab');
+        tabBtn.classList.add('text-ink-secondary');
         tabBtn.setAttribute('aria-selected', 'false');
         tabBtn.setAttribute('tabindex', '-1');
       }
@@ -48,12 +48,12 @@ function switchScreen(index) {
   const navMockBtns = document.querySelectorAll('.nav-mock-btn');
   navMockBtns.forEach((btn, idx) => {
     if (idx === index) {
-      btn.classList.add('text-blue-400');
-      btn.classList.remove('text-slate-400');
+      btn.classList.add('text-brand-600');
+      btn.classList.remove('text-slate-500');
       btn.setAttribute('aria-current', 'page');
     } else {
-      btn.classList.remove('text-blue-400');
-      btn.classList.add('text-slate-400');
+      btn.classList.remove('text-brand-600');
+      btn.classList.add('text-slate-500');
       btn.removeAttribute('aria-current');
     }
   });

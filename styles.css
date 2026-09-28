@@ -1,54 +1,29 @@
-/* Custom Styles, GPU Micro-Animations & A11y for HomePro Web Preview */
+/* HomePro Web Preview — Clean Light Mode Craft & Micro-Interactions */
 
-/* Active Tab Highlight */
+/* Active Tab Highlight (Clean Royal Blue) */
 .screen-tab-btn.active-tab {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(29, 78, 216, 0.35));
-  color: #ffffff;
-  border: 1px solid rgba(96, 165, 250, 0.4);
-  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.3);
+  background: #2563eb;
+  color: #ffffff !important;
+  border-color: #1d4ed8;
+  box-shadow: 0 2px 8px -1px rgba(37, 99, 235, 0.35);
+}
+
+.screen-tab-btn.active-tab i,
+.screen-tab-btn.active-tab span {
+  color: #ffffff !important;
 }
 
 /* Keyboard Focus Accessibility */
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #60a5fa;
+  outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
 
-/* Mock Screen Transitions */
+/* Screen Transitions */
 .mockup-screen {
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity, transform;
-}
-
-/* GPU-Accelerated Phone Ambient Glow (Uses opacity instead of box-shadow repaint) */
-.phone-glow-container {
-  position: relative;
-}
-
-.phone-glow-container::before {
-  content: '';
-  position: absolute;
-  inset: -12px;
-  border-radius: 54px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, rgba(239, 68, 68, 0.15) 100%);
-  filter: blur(24px);
-  z-index: -1;
-  opacity: 0.75;
-  animation: ambientGlowPulse 6s ease-in-out infinite alternate;
-  pointer-events: none;
-  transform: translateZ(0);
-}
-
-@keyframes ambientGlowPulse {
-  0% {
-    opacity: 0.45;
-    transform: scale(0.98);
-  }
-  100% {
-    opacity: 0.85;
-    transform: scale(1.02);
-  }
 }
 
 /* Custom Sleek Scrollbar */
@@ -56,14 +31,14 @@ a:focus-visible {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #070a13;
+  background: #f8fafc;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: #94a3b8;
 }
 
 /* Motion Sensitivity Compliance (WCAG 2.3.3) */
