@@ -96,7 +96,7 @@
 
             <!-- Women Safety Pill -->
             <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-safety-500/15 border border-safety-500/30 text-rose-300 text-xs font-semibold">
-              <span class="w-2 h-2 rounded-full bg-safety-500 animate-pulse"></span>
+              <span class="w-2 h-2 rounded-full bg-safety-500"></span>
               A Step Towards Women Safety
             </div>
           </div>
@@ -105,9 +105,7 @@
           <div class="space-y-2">
             <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
               Real-Time Family GPS Tracker & <br class="hidden sm:inline" />
-              <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-rose-400 bg-clip-text text-transparent">
-                24/7 Safety Guardian
-              </span>
+              <span class="text-blue-400">24/7 Safety Guardian</span>
             </h1>
             <p class="text-sm sm:text-base text-slate-300 max-w-xl font-normal leading-relaxed">
               Empowering safety for women, students, and families on every journey. Equipped with 
@@ -140,7 +138,7 @@
                   <span>Download APK</span>
                 </a>
 
-                <button onclick="openQrModal()" title="Scan QR Code to Download" class="p-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:border-blue-500/50 transition-all">
+                <button onclick="openQrModal()" aria-label="Scan QR Code to Download on Phone" title="Scan QR Code to Download" class="p-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:border-blue-500/50 transition-all">
                   <i data-lucide="qr-code" class="w-4 h-4"></i>
                 </button>
               </div>
@@ -155,6 +153,7 @@
           </div>
 
           <!-- Feature Cards Grid (4 Core Highlights) -->
+          <h2 class="sr-only">Core Capabilities & Safety Features</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             
             <!-- Feature 1: SOS -->
@@ -226,28 +225,28 @@
         <!-- Right Column: Interactive Smartphone Mockup (Accurate Real App Layouts) -->
         <div class="lg:col-span-5 flex flex-col items-center justify-start lg:sticky lg:top-4">
           
-          <!-- Screen Selector Switcher Tabs -->
-          <div class="w-full max-w-[320px] mb-3 p-1 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between text-xs font-semibold">
-            <button onclick="switchScreen(0)" id="tab-btn-0" class="screen-tab-btn active-tab flex-1 py-1.5 px-1.5 rounded-lg text-center transition-all flex items-center justify-center gap-1">
+          <!-- Screen Selector Switcher Tabs (WAI-ARIA Compliant Tablist) -->
+          <div id="screen-tablist" role="tablist" aria-label="HomePro App Preview Screens" class="w-full max-w-[320px] mb-3 p-1 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between text-xs font-semibold">
+            <button onclick="switchScreen(0)" id="tab-btn-0" role="tab" aria-selected="true" aria-controls="mock-screen-0" tabindex="0" class="screen-tab-btn active-tab flex-1 py-1.5 px-1.5 rounded-lg text-center transition-all flex items-center justify-center gap-1">
               <i data-lucide="map" class="w-3.5 h-3.5"></i>
               <span>Live Map</span>
             </button>
-            <button onclick="switchScreen(1)" id="tab-btn-1" class="screen-tab-btn flex-1 py-1.5 px-1.5 rounded-lg text-center text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1">
+            <button onclick="switchScreen(1)" id="tab-btn-1" role="tab" aria-selected="false" aria-controls="mock-screen-1" tabindex="-1" class="screen-tab-btn flex-1 py-1.5 px-1.5 rounded-lg text-center text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1">
               <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-rose-400"></i>
               <span>SOS Alert</span>
             </button>
-            <button onclick="switchScreen(2)" id="tab-btn-2" class="screen-tab-btn flex-1 py-1.5 px-1.5 rounded-lg text-center text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1">
+            <button onclick="switchScreen(2)" id="tab-btn-2" role="tab" aria-selected="false" aria-controls="mock-screen-2" tabindex="-1" class="screen-tab-btn flex-1 py-1.5 px-1.5 rounded-lg text-center text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1">
               <i data-lucide="users" class="w-3.5 h-3.5"></i>
               <span>Family</span>
             </button>
-            <button onclick="switchScreen(3)" id="tab-btn-3" class="screen-tab-btn flex-1 py-1.5 px-1.5 rounded-lg text-center text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1">
+            <button onclick="switchScreen(3)" id="tab-btn-3" role="tab" aria-selected="false" aria-controls="mock-screen-3" tabindex="-1" class="screen-tab-btn flex-1 py-1.5 px-1.5 rounded-lg text-center text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1">
               <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
               <span>Geofence</span>
             </button>
           </div>
 
-          <!-- Smartphone Shell (Optimized 560px Height for Perfect Desktop Screen Fit) -->
-          <div class="relative w-[310px] sm:w-[320px] h-[560px] rounded-[42px] bg-gradient-to-b from-slate-700 via-slate-900 to-slate-950 p-[8px] shadow-[0_20px_50px_-10px_rgba(37,99,235,0.3)] border-4 border-slate-800">
+          <!-- Smartphone Shell (Optimized 560px Height with GPU Glow) -->
+          <div class="phone-glow-container relative w-[310px] sm:w-[320px] h-[560px] rounded-[42px] bg-gradient-to-b from-slate-700 via-slate-900 to-slate-950 p-[8px] shadow-2xl border-4 border-slate-800">
             
             <!-- Side Physical Buttons -->
             <div class="absolute -left-[12px] top-24 w-[4px] h-8 bg-slate-700 rounded-l-md"></div>
@@ -275,7 +274,7 @@
               <div id="screen-viewport" class="relative w-full h-full pt-7 pb-12 overflow-hidden select-none">
                 
                 <!-- ================= SCREEN 0: REAL APP MAP (fragment_map.xml) ================= -->
-                <div id="mock-screen-0" class="mockup-screen absolute inset-0 pt-7 pb-12 flex flex-col justify-between transition-all duration-400 opacity-100 scale-100">
+                <div id="mock-screen-0" role="tabpanel" aria-labelledby="tab-btn-0" class="mockup-screen absolute inset-0 pt-7 pb-12 flex flex-col justify-between transition-all duration-400 opacity-100 scale-100">
                   
                   <!-- Real App Search Bar Card (search_bar_card) -->
                   <div class="mx-3 mt-1.5 p-2 rounded-xl bg-slate-900 border border-slate-800 shadow-md flex items-center justify-between z-20">
@@ -388,7 +387,7 @@
                 </div>
 
                 <!-- ================= SCREEN 1: REAL APP SOS (activity_sos_emergency.xml) ================= -->
-                <div id="mock-screen-1" class="mockup-screen absolute inset-0 pt-7 pb-12 flex flex-col justify-between transition-all duration-400 opacity-0 scale-95 pointer-events-none">
+                <div id="mock-screen-1" role="tabpanel" aria-labelledby="tab-btn-1" hidden class="mockup-screen absolute inset-0 pt-7 pb-12 flex flex-col justify-between transition-all duration-400 opacity-0 scale-95 pointer-events-none">
                   
                   <!-- Real Header Bar (layout_header) -->
                   <div class="h-10 px-3 bg-slate-900/90 border-b border-slate-800 flex items-center gap-2">
@@ -439,7 +438,7 @@
                 </div>
 
                 <!-- ================= SCREEN 2: REAL APP FAMILY (fragment_family_modern.xml) ================= -->
-                <div id="mock-screen-2" class="mockup-screen absolute inset-0 pt-7 pb-12 flex flex-col justify-between transition-all duration-400 opacity-0 scale-95 pointer-events-none">
+                <div id="mock-screen-2" role="tabpanel" aria-labelledby="tab-btn-2" hidden class="mockup-screen absolute inset-0 pt-7 pb-12 flex flex-col justify-between transition-all duration-400 opacity-0 scale-95 pointer-events-none">
                   
                   <!-- Real Header Bar -->
                   <div class="h-10 px-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
@@ -519,7 +518,7 @@
                 </div>
 
                 <!-- ================= SCREEN 3: REAL APP GEOFENCE (activity_geofence.xml) ================= -->
-                <div id="mock-screen-3" class="mockup-screen absolute inset-0 pt-7 pb-12 flex flex-col justify-between transition-all duration-400 opacity-0 scale-95 pointer-events-none">
+                <div id="mock-screen-3" role="tabpanel" aria-labelledby="tab-btn-3" hidden class="mockup-screen absolute inset-0 pt-7 pb-12 flex flex-col justify-between transition-all duration-400 opacity-0 scale-95 pointer-events-none">
                   
                   <!-- Real Header Bar -->
                   <div class="h-10 px-3 bg-slate-900/90 border-b border-slate-800 flex items-center gap-2">
@@ -682,7 +681,7 @@
         <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
           <div class="w-6 h-6 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-xs flex-shrink-0">1</div>
           <div>
-            <h4 class="text-xs font-bold text-white mb-0.5">Download APK</h4>
+            <h3 class="text-xs font-bold text-white mb-0.5">Download APK</h3>
             <p class="text-[11px] text-slate-400">Download <code class="text-blue-300">HomePro-release.apk</code> (33.1 MB).</p>
           </div>
         </div>
@@ -690,7 +689,7 @@
         <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
           <div class="w-6 h-6 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-xs flex-shrink-0">2</div>
           <div>
-            <h4 class="text-xs font-bold text-white mb-0.5">Allow Install</h4>
+            <h3 class="text-xs font-bold text-white mb-0.5">Allow Install</h3>
             <p class="text-[11px] text-slate-400">Tap <strong class="text-slate-200">"Install Unknown Apps"</strong> -> Allow.</p>
           </div>
         </div>
@@ -698,7 +697,7 @@
         <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
           <div class="w-6 h-6 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-xs flex-shrink-0">3</div>
           <div>
-            <h4 class="text-xs font-bold text-white mb-0.5">Join Family</h4>
+            <h3 class="text-xs font-bold text-white mb-0.5">Join Family</h3>
             <p class="text-[11px] text-slate-400">Enter phone number and share your unique 6-digit invite code.</p>
           </div>
         </div>
@@ -708,10 +707,10 @@
     </div>
   </section>
 
-  <!-- QR Code Modal (Lightweight Pure JS) -->
-  <div id="qrModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+  <!-- QR Code Modal (Lightweight Pure JS & Accessible Dialog) -->
+  <div id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle" aria-hidden="true" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl relative">
-      <button onclick="closeQrModal()" class="absolute top-4 right-4 p-1.5 rounded-full bg-slate-800 text-slate-400 hover:text-white">
+      <button id="closeModalBtn" onclick="closeQrModal()" aria-label="Close QR code dialog" class="absolute top-4 right-4 p-1.5 rounded-full bg-slate-800 text-slate-400 hover:text-white">
         <i data-lucide="x" class="w-4 h-4"></i>
       </button>
 
@@ -720,7 +719,7 @@
       </div>
 
       <div>
-        <h3 class="text-base font-bold text-white">Scan to Download on Phone</h3>
+        <h3 id="qrModalTitle" class="text-base font-bold text-white">Scan to Download on Phone</h3>
         <p class="text-xs text-slate-400 mt-0.5">Scan with your Android camera to download the APK directly.</p>
       </div>
 

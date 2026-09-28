@@ -1,0 +1,8 @@
+# Development & System Files
+.agents/
+.claude/
+agent/
+skills-lock.json
+.DS_Store
+Thumbs.db
+*.log

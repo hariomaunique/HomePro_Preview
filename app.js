@@ -1,12 +1,14 @@
-// HomePro Web Preview — Interactive Controller & State Management
+// HomePro Web Preview — Accessible & High-Performance Interactive Controller
 
 let currentScreenIndex = 0;
 let autoPlayTimer = null;
 const totalScreens = 4;
 let userInteracted = false;
+let lastFocusedElement = null;
 
-// Screen Switching Function
+// Screen Switching Function with full ARIA sync
 function switchScreen(index) {
+  if (index < 0 || index >= totalScreens) return;
   currentScreenIndex = index;
 
   for (let i = 0; i < totalScreens; i++) {
@@ -18,20 +20,26 @@ function switchScreen(index) {
       if (screenEl) {
         screenEl.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
         screenEl.classList.add('opacity-100', 'scale-100');
+        screenEl.removeAttribute('hidden');
       }
       if (tabBtn) {
         tabBtn.classList.add('active-tab', 'text-white');
         tabBtn.classList.remove('text-slate-400');
+        tabBtn.setAttribute('aria-selected', 'true');
+        tabBtn.setAttribute('tabindex', '0');
       }
     } else {
       // Inactive Screen
       if (screenEl) {
         screenEl.classList.remove('opacity-100', 'scale-100');
         screenEl.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+        screenEl.setAttribute('hidden', 'true');
       }
       if (tabBtn) {
         tabBtn.classList.remove('active-tab', 'text-white');
         tabBtn.classList.add('text-slate-400');
+        tabBtn.setAttribute('aria-selected', 'false');
+        tabBtn.setAttribute('tabindex', '-1');
       }
     }
   }
@@ -40,16 +48,18 @@ function switchScreen(index) {
   const navMockBtns = document.querySelectorAll('.nav-mock-btn');
   navMockBtns.forEach((btn, idx) => {
     if (idx === index) {
-      btn.classList.add('text-brand-400');
-      btn.classList.remove('hover:text-white', 'text-slate-400');
+      btn.classList.add('text-blue-400');
+      btn.classList.remove('text-slate-400');
+      btn.setAttribute('aria-current', 'page');
     } else {
-      btn.classList.remove('text-brand-400');
+      btn.classList.remove('text-blue-400');
       btn.classList.add('text-slate-400');
+      btn.removeAttribute('aria-current');
     }
   });
 }
 
-// Auto-play screen presentation every 5 seconds
+// Auto-play screen presentation every 4.5 seconds
 function startAutoPlay() {
   if (autoPlayTimer) clearInterval(autoPlayTimer);
   autoPlayTimer = setInterval(() => {
@@ -60,17 +70,42 @@ function startAutoPlay() {
   }, 4500);
 }
 
-// Pause autoplay on direct click
+// Interactive event listeners
 document.addEventListener('DOMContentLoaded', () => {
   startAutoPlay();
 
   const viewport = document.getElementById('screen-viewport');
+  const tablist = document.getElementById('screen-tablist');
+
   if (viewport) {
-    viewport.addEventListener('mouseenter', () => {
-      userInteracted = true;
-    });
-    viewport.addEventListener('mouseleave', () => {
-      userInteracted = false;
+    viewport.addEventListener('mouseenter', () => { userInteracted = true; });
+    viewport.addEventListener('mouseleave', () => { userInteracted = false; });
+  }
+
+  // Arrow Key navigation for screen tabs (WAI-ARIA Tab Pattern)
+  if (tablist) {
+    tablist.addEventListener('keydown', (e) => {
+      let targetIndex = currentScreenIndex;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        targetIndex = (currentScreenIndex + 1) % totalScreens;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        targetIndex = (currentScreenIndex - 1 + totalScreens) % totalScreens;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        targetIndex = 0;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        targetIndex = totalScreens - 1;
+      }
+
+      if (targetIndex !== currentScreenIndex) {
+        userInteracted = true;
+        switchScreen(targetIndex);
+        const newTab = document.getElementById(`tab-btn-${targetIndex}`);
+        if (newTab) newTab.focus();
+      }
     });
   }
 
@@ -78,13 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
   updateQrCode();
 });
 
-// Modal Logic for QR Code
+// Accessible Modal Logic for QR Code
 function openQrModal() {
+  lastFocusedElement = document.activeElement;
   const modal = document.getElementById('qrModal');
   if (modal) {
     modal.classList.remove('hidden');
+    modal.setAttribute('aria-hidden', 'false');
     setTimeout(() => {
       modal.classList.remove('opacity-0');
+      const closeBtn = document.getElementById('closeModalBtn');
+      if (closeBtn) closeBtn.focus();
     }, 10);
   }
 }
@@ -93,17 +132,28 @@ function closeQrModal() {
   const modal = document.getElementById('qrModal');
   if (modal) {
     modal.classList.add('opacity-0');
+    modal.setAttribute('aria-hidden', 'true');
     setTimeout(() => {
       modal.classList.add('hidden');
+      if (lastFocusedElement) lastFocusedElement.focus();
     }, 300);
   }
 }
 
-// Close modal when clicking outside box
+// Close modal when clicking outside or pressing Escape key
 window.addEventListener('click', (e) => {
   const modal = document.getElementById('qrModal');
   if (e.target === modal) {
     closeQrModal();
+  }
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('qrModal');
+    if (modal && !modal.classList.contains('hidden')) {
+      closeQrModal();
+    }
   }
 });
 
@@ -112,11 +162,11 @@ function updateQrCode() {
   const qrImg = document.getElementById('qrCodeImage');
   const currentUrl = window.location.href;
   if (qrImg) {
-    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(currentUrl)}`;
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(currentUrl)}`;
   }
 }
 
-// Copy URL to Clipboard
+// Copy URL to Clipboard with accessible user feedback
 function copyCurrentUrl() {
   const copyBtnText = document.getElementById('copyBtnText');
   const url = window.location.href;
