@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — HomePro Family Tracker & Safety</title>
+  
+  <meta name="description" content="Official Privacy Policy and Background Location Data Disclosure for HomePro Family GPS Tracker & Safety App." />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+            },
+            surface: {
+              bg: '#f8fafc',
+              card: '#ffffff',
+              border: '#e2e8f0',
+              subtle: '#f1f5f9',
+            },
+            ink: {
+              primary: '#0f172a',
+              secondary: '#475569',
+              muted: '#94a3b8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-surface-bg text-ink-primary font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+  <!-- Header / Navigation Bar -->
+  <header class="bg-white border-b border-surface-border sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="inline-flex items-center gap-2.5 text-ink-primary hover:text-brand-600 transition-colors">
+        <img src="assets/logo.png" alt="HomePro Logo" class="w-7 h-7 object-contain rounded-lg shadow-sm" onerror="this.src='https://api.iconify.design/heroicons:shield-check-solid.svg?color=%232563eb'" />
+        <span class="font-display font-bold text-lg tracking-tight">HomePro</span>
+      </a>
+
+      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-100 px-3.5 py-1.5 rounded-lg transition-colors">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span>Back to Preview</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Document Container -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full">
+    <article class="bg-white rounded-2xl border border-surface-border p-6 sm:p-10 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] space-y-8">
+      
+      <!-- Document Header -->
+      <div class="border-b border-surface-border pb-6 space-y-2">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-700 text-xs font-semibold">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+          <span>Official Privacy Policy</span>
+        </div>
+        <h1 class="font-display text-2xl sm:text-3xl font-extrabold text-ink-primary tracking-tight">
+          Privacy Policy for HomePro Family Tracker
+        </h1>
+        <p class="text-xs sm:text-sm text-ink-secondary">
+          Last updated: September 28, 2026 • Effective immediately
+        </p>
+      </div>
+
+      <!-- Introduction -->
+      <div class="space-y-4 text-sm sm:text-base text-ink-secondary leading-relaxed">
+        <p>
+          Welcome to <strong>HomePro Family Tracker & Safety</strong> ("we", "our", or "us"). We are committed to protecting the privacy and security of your family's personal and location data. This Privacy Policy explains how our mobile application collects, uses, stores, and protects information when you use our Android application and associated services.
+        </p>
+
+        <!-- Critical Location Notice Callout -->
+        <div class="p-4 sm:p-5 rounded-xl bg-blue-50/80 border-l-4 border-brand-600 text-ink-primary space-y-1.5">
+          <div class="flex items-center gap-2 font-bold text-sm text-brand-700">
+            <i data-lucide="map-pin" class="w-4 h-4 text-brand-600"></i>
+            <span>Prominent Notice on Background Location Access</span>
+          </div>
+          <p class="text-xs sm:text-sm text-ink-secondary leading-relaxed">
+            HomePro is a dedicated family safety, GPS locator, and emergency distress platform. To provide real-time location sharing, automatic geofence safe place alerts (e.g. arrival/departure at School or Home), and 1-tap Emergency SOS broadcasting, <strong>this application collects precise location data in both the foreground and background ("all the time")</strong>, even when the application is closed or not in active use.
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 1 -->
+      <section class="space-y-3">
+        <h2 class="font-display text-lg sm:text-xl font-bold text-ink-primary border-b border-surface-border pb-2 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-brand-50 text-brand-600 text-xs flex items-center justify-center font-bold">1</span>
+          <span>Information We Collect</span>
+        </h2>
+        <ul class="space-y-2 text-xs sm:text-sm text-ink-secondary list-disc pl-5 leading-relaxed">
+          <li><strong>Precise GPS Location Data:</strong> Latitude, longitude, GPS accuracy, movement speed (km/h), heading, and timestamps required to display your position on your private family circle map and execute geofence transitions.</li>
+          <li><strong>Device Telemetry & Health:</strong> Real-time battery percentage, charging state, hardware GPS availability, and network connection type (5G/4G/WiFi) to ensure family members are aware of device connectivity status before power depletion.</li>
+          <li><strong>Account & Authentication Information:</strong> Phone number (used exclusively for secure Firebase Phone Authentication & OTP verification), name, and optional profile avatar monogram.</li>
+          <li><strong>Private Family Circle Data:</strong> Unique alphanumeric Family Group ID and encrypted member associations strictly tied to your private circle invite code.</li>
+        </ul>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="space-y-3">
+        <h2 class="font-display text-lg sm:text-xl font-bold text-ink-primary border-b border-surface-border pb-2 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-brand-50 text-brand-600 text-xs flex items-center justify-center font-bold">2</span>
+          <span>How We Use Your Information</span>
+        </h2>
+        <ul class="space-y-2 text-xs sm:text-sm text-ink-secondary list-disc pl-5 leading-relaxed">
+          <li>To display live, high-precision location updates strictly to authenticated members of your private family circle.</li>
+          <li>To trigger automated arrival and departure push notifications when members enter or leave configured Geofence Safe Zones (e.g. Home, College, Workplace).</li>
+          <li>To deliver high-priority Emergency SOS alerts, alarms, and satellite coordinates to family contacts during distress triggers.</li>
+          <li>To maintain an optional, self-pruning 24–48 hour timeline of location points accessible only to your verified family.</li>
+        </ul>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="space-y-3">
+        <h2 class="font-display text-lg sm:text-xl font-bold text-ink-primary border-b border-surface-border pb-2 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-brand-50 text-brand-600 text-xs flex items-center justify-center font-bold">3</span>
+          <span>Background Location Disclosure & Permissions</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-ink-secondary leading-relaxed">
+          HomePro requests Android <code>ACCESS_BACKGROUND_LOCATION</code> and <code>ACCESS_FINE_LOCATION</code> permissions strictly for core safety features:
+        </p>
+        <ul class="space-y-2 text-xs sm:text-sm text-ink-secondary list-disc pl-5 leading-relaxed">
+          <li><strong>Continuous Transit Safety:</strong> Keeping parents and trusted contacts informed during late commutes or night travel without requiring the user to keep the app open.</li>
+          <li><strong>Automatic Safe Zone Detection:</strong> Detecting arrival at destination in the background with zero user intervention.</li>
+          <li><strong>Emergency Distress Reachability:</strong> Ensuring the device can be located immediately during critical SOS scenarios.</li>
+        </ul>
+        <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-800 font-medium flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
+          <span>We <strong>NEVER</strong> sell, monetize, rent, or transfer your location records to third-party advertisers or data brokers.</span>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section class="space-y-3">
+        <h2 class="font-display text-lg sm:text-xl font-bold text-ink-primary border-b border-surface-border pb-2 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-brand-50 text-brand-600 text-xs flex items-center justify-center font-bold">4</span>
+          <span>Data Storage, Encryption & Security</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-ink-secondary leading-relaxed">
+          All communications between the mobile application and our backend are encrypted in transit using industry-standard TLS 1.3 / SSL encryption. Data is hosted securely on Google Firebase Cloud infrastructure (Firestore & Firebase Realtime Database) with strict security rules guaranteeing that data is accessible exclusively to users verified under the exact same Family ID.
+        </p>
+      </section>
+
+      <!-- Section 5 -->
+      <section class="space-y-3">
+        <h2 class="font-display text-lg sm:text-xl font-bold text-ink-primary border-b border-surface-border pb-2 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-brand-50 text-brand-600 text-xs flex items-center justify-center font-bold">5</span>
+          <span>User Control & Data Deletion</span>
+        </h2>
+        <ul class="space-y-2 text-xs sm:text-sm text-ink-secondary list-disc pl-5 leading-relaxed">
+          <li><strong>Leave Family / Revoke Sharing:</strong> You can pause location sharing, turn off background updates, or leave a family circle at any time directly in the app settings.</li>
+          <li><strong>Automatic Data Pruning:</strong> Historical location records are automatically and permanently deleted after 48 hours.</li>
+          <li><strong>Full Account Deletion:</strong> You may request complete deletion of your account, phone record, and associated history by contacting us directly.</li>
+        </ul>
+      </section>
+
+      <!-- Section 6 -->
+      <section class="space-y-3">
+        <h2 class="font-display text-lg sm:text-xl font-bold text-ink-primary border-b border-surface-border pb-2 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-brand-50 text-brand-600 text-xs flex items-center justify-center font-bold">6</span>
+          <span>Contact & Support</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-ink-secondary leading-relaxed">
+          If you have any questions, inquiries, or privacy requests, please contact our development team:
+        </p>
+        <div class="p-4 rounded-xl bg-surface-subtle border border-surface-border text-xs sm:text-sm space-y-1 text-ink-secondary">
+          <div><strong>Application:</strong> HomePro - Family GPS Tracker & Safety (<code class="text-brand-600">com.familytracker.app</code>)</div>
+          <div><strong>Support Email:</strong> <a href="mailto:support@homeproapp.com" class="text-brand-600 hover:underline">support@homeproapp.com</a></div>
+          <div><strong>Developer:</strong> HomePro Mobile Safety Team</div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- Document Footer -->
+  <footer class="bg-white border-t border-surface-border py-6 text-center text-xs text-ink-secondary">
+    <div class="max-w-4xl mx-auto px-4 space-y-2">
+      <div class="flex items-center justify-center gap-4">
+        <a href="index.html" class="hover:text-brand-600 transition-colors">HomePro Web Preview</a>
+        <span>•</span>
+        <a href="privacy-policy.html" class="font-bold text-ink-primary">Privacy Policy</a>
+      </div>
+      <p class="text-slate-400">&copy; 2026 HomePro Family Tracker. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
