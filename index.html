@@ -83,10 +83,8 @@
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
       
       <!-- Brand Logo & Name -->
-      <a href="#dashboard" onclick="switchView('dashboard')" class="flex items-center gap-2 sm:gap-3 group focus:outline-none flex-shrink-0">
-        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-brand-500 text-white flex items-center justify-center shadow-md shadow-brand-500/25 group-hover:bg-brand-600 transition-all">
-          <i data-lucide="shield" class="w-4 h-4 sm:w-5 sm:h-5 fill-current"></i>
-        </div>
+      <a href="#dashboard" onclick="switchView('dashboard')" class="flex items-center gap-2.5 sm:gap-3 group focus:outline-none flex-shrink-0">
+        <img src="logo.png" alt="HomePro Logo" class="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-xl shadow-sm group-hover:scale-105 transition-transform" />
         <div>
           <div class="flex items-center gap-1.5 sm:gap-2">
             <span class="font-display font-bold text-base sm:text-lg text-ink-primary tracking-tight">HomePro</span>
@@ -367,23 +365,20 @@
       <!-- CENTER COLUMN: Responsive Smartphone Mockup (First on Mobile, Center on Desktop) -->
       <section class="order-1 lg:order-2 lg:col-span-6 flex flex-col items-center w-full">
         
-        <!-- Mobile Quick Screen Switcher Toolbar (Visible on Mobile/Tablet <1024px) -->
-        <div class="lg:hidden w-full max-w-[380px] mb-4 bg-white p-2 rounded-2xl border border-surface-border shadow-sm flex items-center justify-between gap-2 text-xs font-semibold">
+        <!-- Mobile Screen Switcher Bar (Previous / Next Navigation) -->
+        <div class="lg:hidden w-full max-w-[380px] mb-3 bg-white px-3 py-2 rounded-2xl border border-surface-border shadow-sm flex items-center justify-between gap-2 text-xs font-semibold">
           <button onclick="prevScreen()" class="p-2 sm:px-3 py-1.5 rounded-xl bg-surface-subtle hover:bg-slate-200 text-ink-primary flex items-center gap-1 active:scale-95 transition-all" title="Previous Screen">
             <i data-lucide="chevron-left" class="w-4 h-4"></i>
-            <span class="hidden sm:inline">Prev</span>
+            <span>Prev</span>
           </button>
           
-          <!-- Dropdown Selector for all 15 screens -->
-          <div class="relative flex-1">
-            <select id="mobile-screen-dropdown" onchange="goToScreen(parseInt(this.value))" class="w-full appearance-none pl-3 pr-8 py-2 text-xs font-bold bg-surface-subtle border border-surface-border rounded-xl text-ink-primary focus:outline-none focus:border-brand-500 transition-colors cursor-pointer">
-              <!-- Populated dynamically via JS -->
-            </select>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-ink-muted absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <div class="text-center px-2 min-w-0">
+            <div id="mobile-screen-counter-title" class="text-xs font-bold text-ink-primary truncate">Splash Screen</div>
+            <div id="mobile-screen-counter-num" class="text-[10px] text-ink-muted">Screen 1 of 15</div>
           </div>
 
           <button onclick="nextScreen()" class="p-2 sm:px-3 py-1.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white flex items-center gap-1 active:scale-95 transition-all" title="Next Screen">
-            <span class="hidden sm:inline">Next</span>
+            <span>Next</span>
             <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </button>
         </div>
@@ -1743,10 +1738,6 @@
           <div class="text-[10px] font-bold text-ink-muted uppercase">Architecture</div>
           <div class="text-sm font-bold text-ink-primary mt-0.5">Universal (arm64, v7a, x86_64)</div>
         </div>
-        <div class="p-3.5 rounded-xl bg-surface-subtle border border-surface-border sm:col-span-2 lg:col-span-3">
-          <div class="text-[10px] font-bold text-ink-muted uppercase">Security & Keystore Signing</div>
-          <div class="text-xs font-mono text-emerald-700 font-semibold mt-0.5">Verified SHA-256 Android Keystore Signature (homepro-release-key.jks)</div>
-        </div>
       </div>
     </div>
 
@@ -1806,9 +1797,7 @@
   <footer class="bg-white border-t border-surface-border mt-16 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-secondary">
       <div class="flex items-center gap-3">
-        <div class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center font-bold">
-          <i data-lucide="shield" class="w-4 h-4"></i>
-        </div>
+        <img src="logo.png" alt="HomePro Logo" class="w-7 h-7 object-contain rounded-lg" />
         <span>&copy; 2026 HomePro. All rights reserved.</span>
       </div>
 

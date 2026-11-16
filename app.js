@@ -287,11 +287,11 @@ function goToScreen(index) {
     counterEl.textContent = `Screen ${index + 1} of ${APP_SCREENS.length}`;
   }
 
-  // 4b. Sync Mobile Screen Dropdown Selector
-  const mobileDropdown = document.getElementById('mobile-screen-dropdown');
-  if (mobileDropdown && mobileDropdown.value != index) {
-    mobileDropdown.value = index;
-  }
+  // 4b. Sync Mobile Screen Counter & Title
+  const mobileTitle = document.getElementById('mobile-screen-counter-title');
+  const mobileNum = document.getElementById('mobile-screen-counter-num');
+  if (mobileTitle) mobileTitle.textContent = screen.title;
+  if (mobileNum) mobileNum.textContent = `Screen ${index + 1} of ${APP_SCREENS.length}`;
 
   // 5. Update Status bar color scheme based on screen background
   const statusBar = document.getElementById('phone-status-bar');
@@ -563,15 +563,6 @@ function updatePhoneScale() {
   }
 }
 
-function initMobileDropdown() {
-  const dropdown = document.getElementById('mobile-screen-dropdown');
-  if (!dropdown) return;
-  dropdown.innerHTML = APP_SCREENS.map((screen, i) => `
-    <option value="${i}">Screen ${i + 1}: ${screen.title}</option>
-  `).join('');
-  dropdown.value = activeScreenIndex;
-}
-
 // Window resize & orientation listeners for responsive scaling
 window.addEventListener('resize', updatePhoneScale);
 window.addEventListener('orientationchange', updatePhoneScale);
@@ -580,9 +571,6 @@ window.addEventListener('orientationchange', updatePhoneScale);
 // INITIALIZATION ON DOM READY
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Populate mobile screen selector dropdown
-  initMobileDropdown();
-
   // Initial phone scaling calculation
   updatePhoneScale();
 
