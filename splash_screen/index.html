@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomePro App - Animated Splash Screen Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header Controls -->
+    <header class="top-nav">
+      <div class="brand">
+        <div class="brand-badge">PROTOTYPE</div>
+        <h1 class="brand-title">HomePro Splash Screen</h1>
+        <span class="brand-subtitle">Interactive Motion Design & Android Kotlin Implementation</span>
+      </div>
+
+      <div class="nav-actions">
+        <button id="btnCompare" class="nav-btn" title="Toggle Comparison with Output_Splash.png">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+          <span>Compare (1:1)</span>
+        </button>
+        <button id="btnKotlinCode" class="nav-btn nav-btn-primary" title="View Kotlin & Jetpack Compose Code">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>Kotlin Code</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="preview-workspace">
+      <!-- Device Wrapper -->
+      <div class="device-column">
+        <div class="device-mockup" id="deviceFrame">
+          <!-- Phone Speaker & Camera Notch -->
+          <div class="phone-speaker"></div>
+          <div class="phone-camera"></div>
+
+          <!-- Phone Screen -->
+          <div class="phone-screen" id="phoneScreen">
+            <!-- Android Status Bar -->
+            <div class="status-bar">
+              <span class="status-time" id="statusTime">9:41</span>
+              <div class="status-icons">
+                <svg width="15" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+                <svg width="16" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98A16.88 16.88 0 0 0 12 4z"/></svg>
+                <svg width="18" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="18" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="9" width="12" height="6" fill="currentColor"/><path d="M22 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+
+            <!-- Splash Screen Stage -->
+            <div class="splash-stage" id="splashStage">
+              <!-- Background Image -->
+              <img src="Splash_Sceen_Background.png" alt="Splash Background" class="splash-bg">
+
+              <!-- Ambient Glow Pulse behind logo -->
+              <div class="ambient-glow" id="ambientGlow"></div>
+
+              <!-- Protective Energy Wave / Pulse Effect -->
+              <div class="protection-wave" id="protectionWave"></div>
+
+              <!-- Center Logo Container (Aspect 1:1) -->
+              <div class="logo-wrapper" id="logoWrapper">
+                <!-- House Logo (without ring - already present / reveals) -->
+                <img src="logo_without_ring.png" alt="HomePro Logo" class="logo-house" id="logoHouse">
+
+                <!-- SVG Masked Animated Ring -->
+                <svg class="ring-svg" viewBox="0 0 1254 1254" id="ringSvg">
+                  <defs>
+                    <!-- Glow filter for particle -->
+                    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="16" result="blur1" />
+                      <feGaussianBlur stdDeviation="30" result="blur2" />
+                      <feMerge>
+                        <feMergeNode in="blur2" />
+                        <feMergeNode in="blur1" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+
+                    <!-- Mask that sweeps along the ring curve from bottom-left to top-right -->
+                    <mask id="ringMask" maskUnits="userSpaceOnUse" x="-200" y="-200" width="1654" height="1654">
+                      <g id="maskShiftGroup" transform="translate(58, 11)">
+                        <path id="ringMaskPath"
+                          d="M 114,843 C 160,940 330,935 480,885 C 680,820 940,730 1040,580 C 1110,480 1070,350 962,330"
+                          fill="none"
+                          stroke="white"
+                          stroke-width="240"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          pathLength="1000"
+                          stroke-dasharray="1000"
+                          stroke-dashoffset="1000" />
+                      </g>
+                    </mask>
+                  </defs>
+
+                  <!-- Ring group shifted to default: right (+58px) and down (+11px) -->
+                  <g id="ringContentGroup" transform="translate(58, 11)">
+                    <!-- Ring image revealed by mask -->
+                    <image href="Ring.png" width="1254" height="1254" mask="url(#ringMask)" class="ring-img" />
+
+                    <!-- Leading Energy Spark Particle that glides ahead of the ring -->
+                    <g id="sparkHead" class="spark-head">
+                      <circle cx="0" cy="0" r="36" fill="#00e5ff" opacity="0.45" filter="url(#neonGlow)" />
+                      <circle cx="0" cy="0" r="22" fill="#38bdf8" opacity="0.8" />
+                      <circle cx="0" cy="0" r="10" fill="#ffffff" />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Brand Text "HomePro" (Reveals from Left to Right) -->
+              <div class="brand-text-wrapper" id="brandTextWrapper">
+                <div class="brand-text-inner" id="brandTextInner">
+                  <img src="logo_Text.png" alt="HomePro Text" class="logo-text-img">
+                  <!-- Shimmer / Beam at the leading edge of text wipe -->
+                  <div class="text-wipe-beam" id="textWipeBeam"></div>
+                </div>
+              </div>
+
+              <!-- Bottom Loading Spinner (Matching Output_Splash) -->
+              <div class="bottom-loader-container" id="bottomLoader">
+                <svg class="loading-spinner-svg" viewBox="0 0 48 48">
+                  <circle class="spinner-circle" cx="24" cy="24" r="18" fill="none" stroke="#0099ff" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="80 35"/>
+                </svg>
+              </div>
+
+              <!-- Output_Splash Comparison Overlay -->
+              <img src="Output_Splash.png" alt="Reference Splash" class="comparison-overlay" id="compareOverlay">
+            </div>
+
+            <!-- Android Home Indicator / Navigation Bar -->
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls & Inspection Panel -->
+      <aside class="control-panel">
+        <!-- Playback Card -->
+        <div class="panel-card">
+          <div class="card-header">
+            <h3>Animation Playback</h3>
+            <span class="status-pill" id="animStatusPill">Ready</span>
+          </div>
+
+          <div class="playback-controls">
+            <button id="btnPlayPause" class="action-btn action-btn-accent">
+              <svg id="playIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <svg id="replayIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"/></svg>
+              <span id="playBtnText">Play Animation</span>
+            </button>
+            <button id="btnReset" class="action-btn action-btn-secondary" title="Reset to Start">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>Reset</span>
+            </button>
+          </div>
+
+          <!-- Timeline Scrubber -->
+          <div class="scrubber-group">
+            <div class="scrubber-labels">
+              <span>Timeline Progress</span>
+              <span id="scrubPercent" class="scrub-val">0%</span>
+            </div>
+            <input type="range" id="timeScrubber" min="0" max="1000" value="0" step="1" class="timeline-slider">
+            <div class="timeline-phases">
+              <span class="phase-marker" style="left: 0%">0.0s (Home Appears)</span>
+              <span class="phase-marker" style="left: 20%">0.4s (Ring Starts)</span>
+              <span class="phase-marker" style="left: 45%">0.9s (Text Wipes)</span>
+              <span class="phase-marker" style="left: 85%">1.7s (Shield Pulse)</span>
+            </div>
+          </div>
+
+          <!-- Speed Controls -->
+          <div class="speed-group">
+            <span class="group-title">Playback Speed</span>
+            <div class="speed-buttons">
+              <button class="speed-btn" data-speed="0.25">0.25x (Super Slow)</button>
+              <button class="speed-btn" data-speed="0.5">0.5x (Slow-Mo)</button>
+              <button class="speed-btn active" data-speed="1.0">1.0x (Normal)</button>
+              <button class="speed-btn" data-speed="1.5">1.5x (Fast)</button>
+            </div>
+          </div>
+
+          <!-- Loop & Auto-Replay -->
+          <div class="toggle-row">
+            <label class="toggle-label" for="chkLoop">
+              <input type="checkbox" id="chkLoop" class="switch-input">
+              <span class="switch-slider"></span>
+              <span class="toggle-text">Loop Animation Infinitely</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Ring Position Fine-Tuning Card -->
+        <div class="panel-card">
+          <div class="card-header">
+            <h3>Ring Position Adjustment</h3>
+            <span class="badge-tag" id="offsetReadout">X: +58px | Y: +11px</span>
+          </div>
+          <p class="card-desc">Slide to adjust ring position in real-time (Right ↔ Left, Down ↔ Up):</p>
+          
+          <div class="adjuster-group">
+            <div class="slider-header">
+              <span>Horizontal (X): <strong id="valX">+58px (Right)</strong></span>
+            </div>
+            <input type="range" id="sliderOffsetX" min="-60" max="120" value="58" class="timeline-slider">
+          </div>
+
+          <div class="adjuster-group" style="margin-top: 14px;">
+            <div class="slider-header">
+              <span>Vertical (Y): <strong id="valY">+11px (Down)</strong></span>
+            </div>
+            <input type="range" id="sliderOffsetY" min="-40" max="120" value="11" class="timeline-slider">
+          </div>
+
+          <div class="preset-btn-row">
+            <button class="preset-btn active" id="btnPresetDefault">Default (+58, +11)</button>
+            <button class="preset-btn" id="btnPresetMore">Alternative (+44, +38)</button>
+            <button class="preset-btn" id="btnPresetReset">Reset (0, 0)</button>
+          </div>
+        </div>
+
+        <!-- Animation Architecture Details -->
+        <div class="panel-card">
+          <div class="card-header">
+            <h3>Motion Mechanics</h3>
+          </div>
+          <div class="mechanics-list">
+            <div class="mechanic-item">
+              <div class="step-num">1</div>
+              <div class="step-info">
+                <strong>House Core (Base)</strong>
+                <p><code>logo_without_ring.png</code> sits centered with subtle breath glow.</p>
+              </div>
+            </div>
+            <div class="mechanic-item">
+              <div class="step-num">2</div>
+              <div class="step-info">
+                <strong>Protective Ring Sweep</strong>
+                <p>Vector path draws from bottom-left tip (114, 843) across the home base up to top-right (962, 330) like an energy shield.</p>
+              </div>
+            </div>
+            <div class="mechanic-item">
+              <div class="step-num">3</div>
+              <div class="step-info">
+                <strong>Synchronized Text Wipe</strong>
+                <p><code>logo_Text.png</code> sweeps smoothly from left-to-right with a cyan particle shimmer.</p>
+              </div>
+            </div>
+            <div class="mechanic-item">
+              <div class="step-num">4</div>
+              <div class="step-info">
+                <strong>Protection Wave & Spinner</strong>
+                <p>Cyan aura ripples outward as the ring locks in, then the bottom loading spinner activates.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison Slider (when Compare mode is on) -->
+        <div class="panel-card" id="compareControlsCard" style="display: none;">
+          <div class="card-header">
+            <h3>1:1 Reference Match</h3>
+            <span class="badge-tag">Output_Splash.png</span>
+          </div>
+          <p class="card-desc">Slide to blend between your live animated prototype and your reference image:</p>
+          <div class="slider-control">
+            <div class="slider-header">
+              <span>Prototype</span>
+              <span id="blendVal">50%</span>
+              <span>Output_Splash.png</span>
+            </div>
+            <input type="range" id="compareOpacitySlider" min="0" max="100" value="50" class="timeline-slider">
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Modal for Kotlin / Jetpack Compose Android Implementation -->
+    <div class="modal-backdrop" id="codeModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <div class="lang-icon">KT</div>
+            <div>
+              <h3>Android Jetpack Compose Implementation</h3>
+              <p>Production Kotlin code for your HomePro Android Application</p>
+            </div>
+          </div>
+          <button id="btnCloseModal" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="code-banner">
+            <span>✨ Complete Compose solution: Canvas path sweep, Animatable, and hardware-accelerated rendering.</span>
+            <button id="btnCopyCode" class="copy-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span id="copyBtnText">Copy Kotlin Code</span>
+            </button>
+          </div>
+          <pre class="code-block"><code id="kotlinCodeContainer">// Jetpack Compose Splash Screen Implementation for HomePro
+// File: app/src/main/java/com/homepro/app/presentation/splash/SplashScreen.kt
+
+package com.homepro.app.presentation.splash
+
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import com.homepro.app.R
+import kotlinx.coroutines.delay
+
+@Composable
+fun SplashScreen(
+    onSplashComplete: () -> Unit = {}
+) {
+    // Animation progress drivers
+    val transitionState = remember { MutableTransitionState(false) }
+    LaunchedEffect(Unit) {
+        transitionState.targetState = true
+        // Delay to allow full splash animation to finish before navigating
+        delay(2600)
+        onSplashComplete()
+    }
+
+    val transition = updateTransition(transitionState, label = "SplashTransition")
+
+    // 1. House Logo scale & alpha
+    val houseAlpha by transition.animateFloat(
+        transitionSpec = { tween(durationMillis = 600, easing = FastOutSlowInEasing) },
+        label = "HouseAlpha"
+    ) { state -> if (state) 1f else 0f }
+
+    // 2. Ring reveal progress: 0f (bottom-left) -> 1f (top-right)
+    val ringProgress by transition.animateFloat(
+        transitionSpec = {
+            tween(
+                durationMillis = 1400,
+                delayMillis = 400,
+                easing = FastOutSlowInEasing
+            )
+        },
+        label = "RingProgress"
+    ) { state -> if (state) 1f else 0f }
+
+    // 3. Text wipe progress: 0f (left) -> 1f (right)
+    val textProgress by transition.animateFloat(
+        transitionSpec = {
+            tween(
+                durationMillis = 1100,
+                delayMillis = 800,
+                easing = CubicBezierEasing(0.25f, 0.1f, 0.25f, 1f)
+            )
+        },
+        label = "TextProgress"
+    ) { state -> if (state) 1f else 0f }
+
+    // 4. Loader fade in
+    val loaderAlpha by transition.animateFloat(
+        transitionSpec = {
+            tween(durationMillis = 500, delayMillis = 1600)
+        },
+        label = "LoaderAlpha"
+    ) { state -> if (state) 1f else 0f }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        // Background wave illustration
+        Image(
+            painter = painterResource(id = R.drawable.splash_screen_background),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        // Center Content Container
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.weight(0.55f))
+
+            // Logo Box with House + Animated Protective Ring
+            Box(
+                modifier = Modifier
+                    .size(260.dp)
+                    .graphicsLayer {
+                        alpha = houseAlpha
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                // 1. House Logo (without ring)
+                Image(
+                    painter = painterResource(id = R.drawable.logo_without_ring),
+                    contentDescription = "HomePro Logo",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Fit
+                )
+
+                // 2. Protective Ring Masked Reveal along Path (Shifted for perfect alignment: +12dp Right, +2dp Down)
+                Image(
+                    painter = painterResource(id = R.drawable.ring),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .offset(x = 12.dp, y = 2.dp)
+                        .drawWithContent {
+                            // Clip canvas using animated vector path from bottom-left to top-right
+                            val path = Path().apply {
+                                val w = size.width
+                                val h = size.height
+                                // Normalized curve matching the ring geometry
+                                moveTo(w * 0.09f, h * 0.67f)
+                                cubicTo(
+                                    w * 0.13f, h * 0.75f,
+                                    w * 0.26f, h * 0.75f,
+                                    w * 0.38f, h * 0.71f
+                                )
+                                cubicTo(
+                                    w * 0.54f, h * 0.65f,
+                                    w * 0.75f, h * 0.58f,
+                                    w * 0.83f, h * 0.46f
+                                )
+                                cubicTo(
+                                    w * 0.89f, h * 0.38f,
+                                    w * 0.85f, h * 0.28f,
+                                    w * 0.77f, h * 0.26f
+                                )
+                            }
+                            // Draw masked content
+                            clipPath(
+                                path = path,
+                                clipOp = ClipOp.Intersect
+                            ) {
+                                this@drawWithContent.drawContent()
+                            }
+                        },
+                    contentScale = ContentScale.Fit
+                )
+            }
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            // 3. HomePro Text (Wipe Reveal from Left to Right)
+            Box(
+                modifier = Modifier
+                    .width(260.dp)
+                    .height(86.dp)
+                    .drawWithContent {
+                        // Reveal horizontally from left to right
+                        clipRect(
+                            left = 0f,
+                            top = 0f,
+                            right = size.width * textProgress,
+                            bottom = size.height
+                        ) {
+                            this@drawWithContent.drawContent()
+                        }
+                    }
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_text),
+                    contentDescription = "HomePro",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Fit
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(0.45f))
+
+            // 4. Modern Bottom Circular Progress Indicator
+            Box(
+                modifier = Modifier
+                    .size(34.dp)
+                    .graphicsLayer { alpha = loaderAlpha }
+            ) {
+                CircularProgressIndicator(
+                    strokeWidth = 3.dp,
+                    color = Color(0xFF0099FF),
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+            Spacer(modifier = Modifier.height(64.dp))
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

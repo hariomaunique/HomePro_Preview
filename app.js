@@ -189,17 +189,17 @@ const APP_SCREENS = [
 ];
 
 // App State
-let activeScreenIndex = 7; // Default to Live Map (Screen 8) for immediate visual wow factor
-let activeView = 'prototype'; // 'prototype' | 'all-screens' | 'dashboard' | 'download'
+let activeScreenIndex = 0; // Default to Splash Screen (Screen 1) inside Prototype as requested
+let activeView = 'dashboard'; // 'dashboard' | 'download' | 'prototype'
 let autoPlayActive = false;
 let autoPlayInterval = null;
 
 // ==========================================
-// VIEW SWITCHING (Header Tabs)
+// VIEW SWITCHING (Header Tabs: Dashboard -> Downloads -> Prototype)
 // ==========================================
 function switchView(viewName) {
-  if (!['prototype', 'all-screens', 'dashboard', 'download'].includes(viewName)) {
-    viewName = 'prototype';
+  if (!['dashboard', 'download', 'prototype'].includes(viewName)) {
+    viewName = 'dashboard';
   }
   activeView = viewName;
 
@@ -219,7 +219,7 @@ function switchView(viewName) {
   });
 
   // Toggle view containers
-  const views = ['prototype', 'all-screens', 'dashboard', 'download'];
+  const views = ['dashboard', 'download', 'prototype'];
   views.forEach(v => {
     const el = document.getElementById(`view-${v}`);
     if (el) {
@@ -294,10 +294,135 @@ function goToScreen(index) {
     }
   }
 
+  // 6. Trigger Exact Splash Animation when viewing Screen 0
+  if (index === 0) {
+    runSplashAnimation();
+  }
+
   // Refresh icons
   if (window.lucide && typeof window.lucide.createIcons === 'function') {
     window.lucide.createIcons();
   }
+}
+
+// ==========================================
+// EXACT SPLASH SCREEN MOTION CONTROLLER (from Splash_Screen/script.js)
+// ==========================================
+let splashAnimFrameId = null;
+
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function runSplashAnimation() {
+  if (splashAnimFrameId) cancelAnimationFrame(splashAnimFrameId);
+
+  const ringMaskPath = document.getElementById('ringMaskPath');
+  const sparkHead = document.getElementById('sparkHead');
+  const logoHouse = document.getElementById('logoHouse');
+  const brandTextInner = document.getElementById('brandTextInner');
+  const textWipeBeam = document.getElementById('textWipeBeam');
+  const bottomLoader = document.getElementById('bottomLoader');
+  const ambientGlow = document.getElementById('ambientGlow');
+  const protectionWave = document.getElementById('protectionWave');
+
+  if (!ringMaskPath || !logoHouse || !brandTextInner) return;
+
+  const totalPathLength = ringMaskPath.getTotalLength ? ringMaskPath.getTotalLength() : 1358;
+  const DURATION = 2400; // ms
+  let startTime = null;
+  let hasTriggeredWave = false;
+
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(1, elapsed / DURATION);
+    const currentTime = progress * DURATION;
+
+    // 1. House Logo state
+    const houseP = Math.min(1, currentTime / 400);
+    const houseScale = 0.95 + 0.05 * easeOutCubic(houseP);
+    logoHouse.style.transform = `scale(${houseScale})`;
+    logoHouse.style.opacity = Math.min(1, 0.4 + 0.6 * houseP);
+
+    // 2. Ring Reveal
+    const RING_START = 350;
+    const RING_END = 1800;
+    let ringP = 0;
+    if (currentTime >= RING_START) {
+      ringP = Math.min(1, (currentTime - RING_START) / (RING_END - RING_START));
+    }
+    const ringEased = easeInOutCubic(ringP);
+    const currentOffset = 1000 * (1 - ringEased);
+    ringMaskPath.setAttribute('stroke-dashoffset', currentOffset.toFixed(2));
+
+    // Leading Spark Particle
+    if (sparkHead) {
+      if (ringP > 0.01 && ringP < 0.99) {
+        sparkHead.classList.add('active');
+        try {
+          const pt = ringMaskPath.getPointAtLength(totalPathLength * ringEased);
+          sparkHead.setAttribute('transform', `translate(${pt.x}, ${pt.y})`);
+        } catch (e) {}
+      } else {
+        sparkHead.classList.remove('active');
+      }
+    }
+
+    // Protection Wave & Ambient Glow
+    if (ringP >= 0.95 && !hasTriggeredWave) {
+      hasTriggeredWave = true;
+      if (ambientGlow) ambientGlow.classList.add('active');
+      if (protectionWave) {
+        protectionWave.classList.remove('pulse');
+        void protectionWave.offsetWidth;
+        protectionWave.classList.add('pulse');
+      }
+    } else if (ringP < 0.9) {
+      hasTriggeredWave = false;
+      if (ambientGlow) ambientGlow.classList.remove('active');
+    }
+
+    // 3. Text Reveal (Left to Right Wipe)
+    const TEXT_START = 700;
+    const TEXT_END = 1950;
+    let textP = 0;
+    if (currentTime >= TEXT_START) {
+      textP = Math.min(1, (currentTime - TEXT_START) / (TEXT_END - TEXT_START));
+    }
+    const textEased = easeOutCubic(textP);
+    const hiddenRightPercent = (1 - textEased) * 100;
+    brandTextInner.style.clipPath = `inset(0 ${hiddenRightPercent.toFixed(2)}% 0 0)`;
+
+    // Leading shimmer beam
+    if (textWipeBeam) {
+      if (textP > 0.02 && textP < 0.98) {
+        textWipeBeam.classList.add('active');
+        textWipeBeam.style.left = `${(textEased * 100).toFixed(2)}%`;
+      } else {
+        textWipeBeam.classList.remove('active');
+      }
+    }
+
+    // 4. Bottom Spinner
+    if (bottomLoader) {
+      if (currentTime >= 1900) {
+        bottomLoader.classList.add('visible');
+      } else {
+        bottomLoader.classList.remove('visible');
+      }
+    }
+
+    if (progress < 1) {
+      splashAnimFrameId = requestAnimationFrame(step);
+    }
+  }
+
+  splashAnimFrameId = requestAnimationFrame(step);
 }
 
 // Helper: Update Inspector Panel with active screen metadata
@@ -407,14 +532,14 @@ function showCopiedFeedback(btnElement) {
 document.addEventListener('DOMContentLoaded', () => {
   // Check URL hash for initial view
   const hash = window.location.hash.replace('#', '');
-  if (['prototype', 'all-screens', 'dashboard', 'download'].includes(hash)) {
+  if (['dashboard', 'download', 'prototype'].includes(hash)) {
     switchView(hash);
   } else {
-    switchView('prototype');
+    switchView('dashboard');
   }
 
-  // Initialize prototype at screen 7 (Live Family Map)
-  goToScreen(7);
+  // Initialize prototype at screen 0 (Splash Screen default as requested)
+  goToScreen(0);
 
   // Search input listener
   const searchInput = document.getElementById('input-screen-search');

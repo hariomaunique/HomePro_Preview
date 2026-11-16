@@ -82,7 +82,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
       <!-- Brand Logo & Name -->
-      <a href="#prototype" onclick="switchView('prototype')" class="flex items-center gap-3 group focus:outline-none">
+      <a href="#dashboard" onclick="switchView('dashboard')" class="flex items-center gap-3 group focus:outline-none">
         <div class="w-10 h-10 rounded-xl bg-brand-500 text-white flex items-center justify-center shadow-md shadow-brand-500/25 group-hover:bg-brand-600 transition-all">
           <i data-lucide="shield" class="w-5 h-5 fill-current"></i>
         </div>
@@ -95,23 +95,19 @@
         </div>
       </a>
 
-      <!-- Center Navigation View Switcher (Tabs) -->
+      <!-- Center Navigation View Switcher (Tabs: Dashboard -> Downloads -> Prototype) -->
       <nav class="flex items-center p-1 bg-surface-subtle border border-surface-border rounded-xl text-xs font-semibold" role="tablist" aria-label="Preview Views">
-        <button onclick="switchView('prototype')" data-view="prototype" class="view-nav-pill active flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="true">
-          <i data-lucide="smartphone" class="w-4 h-4"></i>
-          <span class="hidden md:inline">Interactive</span> Prototype
-        </button>
-        <button onclick="switchView('all-screens')" data-view="all-screens" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
-          <i data-lucide="grid" class="w-4 h-4"></i>
-          All Screens <span class="px-1.5 py-0.2 bg-white/80 text-[10px] rounded-full text-ink-secondary font-bold">15</span>
-        </button>
-        <button onclick="switchView('dashboard')" data-view="dashboard" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
+        <button onclick="switchView('dashboard')" data-view="dashboard" class="view-nav-pill active flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="true">
           <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
           Dashboard
         </button>
         <button onclick="switchView('download')" data-view="download" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
           <i data-lucide="download" class="w-4 h-4"></i>
-          Download APK
+          Downloads
+        </button>
+        <button onclick="switchView('prototype')" data-view="prototype" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
+          <i data-lucide="smartphone" class="w-4 h-4"></i>
+          Prototype
         </button>
       </nav>
 
@@ -132,7 +128,7 @@
   <!-- ========================================================
        VIEW 1: INTERACTIVE PROTOTYPE (Desktop Multi-Pane View)
        ======================================================== -->
-  <main id="view-prototype" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-opacity duration-300">
+  <main id="view-prototype" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-opacity duration-300">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
       <!-- LEFT COLUMN: Screen Flow Navigator (3 Cols) -->
@@ -352,55 +348,108 @@
       <!-- CENTER COLUMN: Responsive Smartphone Mockup (6 Cols) -->
       <section class="lg:col-span-6 flex flex-col items-center">
         
-        <!-- Mobile Frame Chassis -->
-        <div class="phone-chassis">
+        <!-- Mobile Frame Chassis (Real Android device matching Splash_Screen) -->
+        <div class="device-mockup phone-chassis" id="deviceFrame">
           
-          <!-- Dynamic Island / Sensor Notch -->
-          <div class="dynamic-island">
-            <div class="dynamic-island-sensor"></div>
-            <div class="dynamic-island-camera"></div>
-          </div>
+          <!-- Android Phone Speaker & Camera Notch (from Splash_Screen) -->
+          <div class="phone-speaker"></div>
+          <div class="phone-camera"></div>
 
-          <!-- Top Status Bar (Live Clock, Wifi, 5G, Battery) -->
-          <div id="phone-status-bar" class="phone-status-bar text-slate-900">
-            <span>09:41</span>
-            <div class="flex items-center gap-1.5 text-[10px]">
-              <i data-lucide="signal" class="w-3 h-3"></i>
-              <span class="font-bold">5G</span>
-              <i data-lucide="wifi" class="w-3 h-3"></i>
-              <div class="flex items-center gap-0.5">
-                <span class="text-[9px]">98%</span>
-                <i data-lucide="battery" class="w-3.5 h-3.5"></i>
-              </div>
+          <!-- Top Status Bar (Android Status Bar) -->
+          <div id="phone-status-bar" class="status-bar phone-status-bar">
+            <span class="status-time" id="statusTime">09:41</span>
+            <div class="status-icons">
+              <svg width="15" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+              <svg width="16" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98A16.88 16.88 0 0 0 12 4z"/></svg>
+              <svg width="18" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="18" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="9" width="12" height="6" fill="currentColor"/><path d="M22 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </div>
           </div>
 
           <!-- Phone Viewport Screen (Houses all 15 screens) -->
-          <div class="phone-viewport" id="phone-viewport">
+          <div class="phone-screen phone-viewport" id="phone-viewport">
 
             <!-- ----------------------------------------------------
-                 SCREEN 0: SPLASH SCREEN (activity_splash.xml)
+                 SCREEN 0: SPLASH SCREEN (activity_splash.xml - 100% Real from Splash_Screen)
                  ---------------------------------------------------- -->
-            <div id="screen-splash" class="app-screen splash-wave text-white flex flex-col items-center justify-between p-8 text-center" onclick="goToScreen(1)">
-              <div class="pt-16">
-                <!-- House Logo & Animated Ring -->
-                <div class="relative w-36 h-36 mx-auto mb-6 flex items-center justify-center">
-                  <div class="absolute inset-0 rounded-full border-4 border-white/20 animate-ping"></div>
-                  <div class="w-28 h-28 rounded-3xl bg-white text-brand-600 flex items-center justify-center shadow-2xl shadow-blue-900/40">
-                    <i data-lucide="shield-check" class="w-14 h-14 stroke-[2.2]"></i>
-                  </div>
-                </div>
-                <h1 class="text-3xl font-display font-extrabold tracking-tight mb-2">HomePro</h1>
-                <p class="text-sm text-blue-100 font-medium">Family GPS Tracker & Women Safety</p>
+            <div id="screen-splash" class="app-screen splash-stage active cursor-pointer" onclick="goToScreen(1)" title="Tap anywhere to start">
+              <!-- Background Image -->
+              <img src="splash_screen/Splash_Sceen_Background.png" alt="Splash Background" class="splash-bg">
+
+              <!-- Ambient Glow Pulse behind logo -->
+              <div class="ambient-glow" id="ambientGlow"></div>
+
+              <!-- Protective Energy Wave / Pulse Effect -->
+              <div class="protection-wave" id="protectionWave"></div>
+
+              <!-- Center Logo Container (Aspect 1:1) -->
+              <div class="logo-wrapper" id="logoWrapper">
+                <!-- House Logo (without ring) -->
+                <img src="splash_screen/logo_without_ring.png" alt="HomePro Logo" class="logo-house" id="logoHouse">
+
+                <!-- SVG Masked Animated Ring -->
+                <svg class="ring-svg" viewBox="0 0 1254 1254" id="ringSvg">
+                  <defs>
+                    <!-- Glow filter for particle -->
+                    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="16" result="blur1" />
+                      <feGaussianBlur stdDeviation="30" result="blur2" />
+                      <feMerge>
+                        <feMergeNode in="blur2" />
+                        <feMergeNode in="blur1" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+
+                    <!-- Mask that sweeps along the ring curve from bottom-left to top-right -->
+                    <mask id="ringMask" maskUnits="userSpaceOnUse" x="-200" y="-200" width="1654" height="1654">
+                      <g id="maskShiftGroup" transform="translate(58, 11)">
+                        <path id="ringMaskPath"
+                          d="M 114,843 C 160,940 330,935 480,885 C 680,820 940,730 1040,580 C 1110,480 1070,350 962,330"
+                          fill="none"
+                          stroke="white"
+                          stroke-width="240"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          pathLength="1000"
+                          stroke-dasharray="1000"
+                          stroke-dashoffset="1000" />
+                      </g>
+                    </mask>
+                  </defs>
+
+                  <!-- Ring group shifted to default: right (+58px) and down (+11px) -->
+                  <g id="ringContentGroup" transform="translate(58, 11)">
+                    <!-- Ring image revealed by mask -->
+                    <image href="splash_screen/Ring.png" width="1254" height="1254" mask="url(#ringMask)" class="ring-img" />
+
+                    <!-- Leading Energy Spark Particle that glides ahead of the ring -->
+                    <g id="sparkHead" class="spark-head">
+                      <circle cx="0" cy="0" r="36" fill="#00e5ff" opacity="0.45" filter="url(#neonGlow)" />
+                      <circle cx="0" cy="0" r="22" fill="#38bdf8" opacity="0.8" />
+                      <circle cx="0" cy="0" r="10" fill="#ffffff" />
+                    </g>
+                  </g>
+                </svg>
               </div>
 
-              <div class="pb-10 space-y-3">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold border border-white/20 animate-pulse">
-                  <span>Tap anywhere to start</span>
-                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              <!-- Brand Text "HomePro" (Reveals from Left to Right) -->
+              <div class="brand-text-wrapper" id="brandTextWrapper">
+                <div class="brand-text-inner" id="brandTextInner">
+                  <img src="splash_screen/logo_Text.png" alt="HomePro Text" class="logo-text-img">
+                  <!-- Shimmer / Beam at the leading edge of text wipe -->
+                  <div class="text-wipe-beam" id="textWipeBeam"></div>
                 </div>
-                <p class="text-[11px] text-blue-200">v1.0 • Enterprise 256-bit AES Encryption</p>
               </div>
+
+              <!-- Bottom Loading Spinner (Matching Output_Splash) -->
+              <div class="bottom-loader-container" id="bottomLoader">
+                <svg class="loading-spinner-svg" viewBox="0 0 48 48">
+                  <circle class="spinner-circle" cx="24" cy="24" r="18" fill="none" stroke="#0099ff" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="80 35"/>
+                </svg>
+              </div>
+
+              <!-- Tap to continue hint -->
+              <div class="tap-hint-pill">Tap anywhere to start →</div>
             </div>
 
             <!-- ----------------------------------------------------
@@ -1391,267 +1440,9 @@
   </main>
 
   <!-- ========================================================
-       VIEW 2: ALL SCREENS GALLERY (Side-by-side design system)
+       VIEW: MAIN DASHBOARD & PRODUCT OVERVIEW (Default View)
        ======================================================== -->
-  <section id="view-all-screens" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 transition-opacity duration-300">
-    <div class="text-center max-w-2xl mx-auto mb-10">
-      <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-50 text-brand-600 border border-brand-100 uppercase tracking-wider">Design System & Gallery</span>
-      <h2 class="text-2xl sm:text-3xl font-display font-bold text-ink-primary mt-2 mb-2">All 15 Real Android Screens</h2>
-      <p class="text-xs sm:text-sm text-ink-secondary">
-        Browse every screen of the HomePro Android app side-by-side across all user journey stages.
-      </p>
-    </div>
-
-    <!-- Gallery Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <!-- Gallery Card 1: Splash -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 1</span>
-            <code class="text-[10px] text-ink-muted">activity_splash.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Splash Screen</h4>
-          <p class="text-xs text-ink-secondary mb-3">Minimalist brand screen with house logo and protective ring animation.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(0);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 2: Onboarding -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 2</span>
-            <code class="text-[10px] text-ink-muted">activity_onboarding.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Onboarding Carousel</h4>
-          <p class="text-xs text-ink-secondary mb-3">3-Step tour of GPS satellite tracking, smart geofences, and emergency SOS.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(1);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 3: Login -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 3</span>
-            <code class="text-[10px] text-ink-muted">activity_login_modern.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Modern Phone Login</h4>
-          <p class="text-xs text-ink-secondary mb-3">Phone number entry with +91 country prefix and zero-spam assurance.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(2);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 4: OTP -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 4</span>
-            <code class="text-[10px] text-ink-muted">activity_otp_modern.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">OTP Verification</h4>
-          <p class="text-xs text-ink-secondary mb-3">4-Digit auto-focus token verification with live 30s resend countdown.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(3);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 5: Permissions -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 5</span>
-            <code class="text-[10px] text-ink-muted">activity_permission.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">System Permission Guard</h4>
-          <p class="text-xs text-ink-secondary mb-3">GPS satellite, Always-On background service, battery saver bypass, autostart.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(4);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 6: Profile Setup -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 6</span>
-            <code class="text-[10px] text-ink-muted">activity_profile_setup.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Profile Creation</h4>
-          <p class="text-xs text-ink-secondary mb-3">Avatar picker with family relation roles (Head of Family, Spouse, Son, etc.).</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(5);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 7: Family Setup -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 7</span>
-            <code class="text-[10px] text-ink-muted">activity_family_setup.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Family Circle Setup</h4>
-          <p class="text-xs text-ink-secondary mb-3">Create private circle or enter 6-digit code to pair with existing circle.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(6);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 8: Live Map (Flagship) -->
-      <div class="bg-white rounded-2xl border-2 border-brand-500 p-4 shadow-md hover:shadow-lg transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-500 text-white rounded">Screen 8 • Flagship</span>
-            <code class="text-[10px] text-ink-muted">fragment_map.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-brand-600">Live Family Map</h4>
-          <p class="text-xs text-ink-secondary mb-3">Google Map with moving vehicle puff track, member stories bar, and floating SOS.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(7);" class="w-full py-2 rounded-xl bg-brand-600 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 9: Family Circle -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 9</span>
-            <code class="text-[10px] text-ink-muted">fragment_family_modern.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Family Circle Roster</h4>
-          <p class="text-xs text-ink-secondary mb-3">Active circle members, battery telemetry, and 6-digit code HP-7842.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(8);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 10: Alerts -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 10</span>
-            <code class="text-[10px] text-ink-muted">fragment_alerts.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Safety Alerts & Logs</h4>
-          <p class="text-xs text-ink-secondary mb-3">Categorized feed for SOS emergencies, safe zone arrivals, and battery alerts.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(9);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 11: Profile & Settings -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 11</span>
-            <code class="text-[10px] text-ink-muted">fragment_profile_modern.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Profile & Circle Settings</h4>
-          <p class="text-xs text-ink-secondary mb-3">Safe Zones management, low battery notifications, and Privacy Policy.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(10);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 12: Member Telemetry -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 12</span>
-            <code class="text-[10px] text-ink-muted">activity_member_detail.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Member Live Telemetry</h4>
-          <p class="text-xs text-ink-secondary mb-3">Live 42 km/h speedometer, battery health, route timeline, and direct Call.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(11);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 13: SOS Emergency -->
-      <div class="bg-white rounded-2xl border border-red-200 p-4 shadow-sm hover:border-red-400 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-red-50 text-red-600 rounded">Screen 13 • Emergency</span>
-            <code class="text-[10px] text-ink-muted">activity_sos_emergency.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-red-600">SOS Emergency Siren</h4>
-          <p class="text-xs text-ink-secondary mb-3">Pulsating siren radar, coordinates SMS broadcast, cancel alert, Call 112.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(12);" class="w-full py-2 rounded-xl bg-red-50 text-red-600 group-hover:bg-red-600 group-hover:text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 14: Geofence -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 14</span>
-            <code class="text-[10px] text-ink-muted">activity_geofence.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Smart Geofence Safe Zones</h4>
-          <p class="text-xs text-ink-secondary mb-3">Radius boundary zones (Home, School, Office) with arrival & departure alerts.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(13);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-      <!-- Gallery Card 15: Add Member -->
-      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 15</span>
-            <code class="text-[10px] text-ink-muted">activity_add_member.xml</code>
-          </div>
-          <h4 class="text-sm font-bold text-ink-primary">Add Member & Share</h4>
-          <p class="text-xs text-ink-secondary mb-3">6-digit invite code sharing via WhatsApp, SMS and QR scanner.</p>
-        </div>
-        <button onclick="switchView('prototype'); goToScreen(14);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
-          <span>Open in Interactive Mockup</span>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================================================
-       VIEW 3: MAIN DASHBOARD & PRODUCT OVERVIEW
-       ======================================================== -->
-  <section id="view-dashboard" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 transition-opacity duration-300 space-y-12">
+  <section id="view-dashboard" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 transition-opacity duration-300 space-y-12">
     
     <!-- Hero Banner with Prominent Download APK Button -->
     <div class="bg-white rounded-3xl border border-surface-border p-8 sm:p-12 shadow-sm text-center max-w-4xl mx-auto">
