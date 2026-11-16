@@ -267,12 +267,20 @@ function goToScreen(index) {
     }
   });
 
-  // 2. Update Left Sidebar items
+  // 2. Update Left Sidebar items (without scrolling the whole page/window!)
   const sidebarItems = document.querySelectorAll('.sidebar-screen-item');
   sidebarItems.forEach((item, i) => {
     if (i === index) {
       item.classList.add('active');
-      item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // Only scroll the internal sidebar container on desktop (width >= 1024px)
+      // Never scroll the page or window on mobile devices!
+      if (window.innerWidth >= 1024) {
+        const container = item.closest('.overflow-y-auto');
+        if (container) {
+          const itemOffset = item.offsetTop - container.offsetTop;
+          container.scrollTo({ top: itemOffset - 20, behavior: 'smooth' });
+        }
+      }
     } else {
       item.classList.remove('active');
     }
@@ -287,11 +295,11 @@ function goToScreen(index) {
     counterEl.textContent = `Screen ${index + 1} of ${APP_SCREENS.length}`;
   }
 
-  // 4b. Sync Mobile Screen Counter & Title
-  const mobileTitle = document.getElementById('mobile-screen-counter-title');
-  const mobileNum = document.getElementById('mobile-screen-counter-num');
-  if (mobileTitle) mobileTitle.textContent = screen.title;
-  if (mobileNum) mobileNum.textContent = `Screen ${index + 1} of ${APP_SCREENS.length}`;
+  // 4b. Sync Mobile Screen Dropdown Selector (without page jump)
+  const mobileDropdown = document.getElementById('mobile-screen-dropdown');
+  if (mobileDropdown && mobileDropdown.value != index) {
+    mobileDropdown.value = index;
+  }
 
   // 5. Update Status bar color scheme based on screen background
   const statusBar = document.getElementById('phone-status-bar');
@@ -466,7 +474,49 @@ function prevScreen() {
   goToScreen(prevIdx);
 }
 
-// Auto-play toggle
+// Fullscreen Mode Toggle
+function toggleFullScreen() {
+  const elem = document.documentElement;
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen().catch(() => {});
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+}
+
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+
+function handleFullscreenChange() {
+  const icon = document.getElementById('icon-fullscreen');
+  const btn = document.getElementById('btn-fullscreen-toggle');
+  const isFull = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  if (icon) {
+    icon.setAttribute('data-lucide', isFull ? 'minimize' : 'maximize');
+  }
+  if (btn) {
+    if (isFull) {
+      btn.classList.add('bg-brand-500', 'text-white');
+      btn.classList.remove('bg-white', 'text-slate-700');
+    } else {
+      btn.classList.remove('bg-brand-500', 'text-white');
+      btn.classList.add('bg-white', 'text-slate-700');
+    }
+  }
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
+// Auto-play toggle (kept for keyboard / script compatibility)
 function toggleAutoPlay() {
   autoPlayActive = !autoPlayActive;
   const btn = document.getElementById('btn-autoplay-toggle');
@@ -563,6 +613,15 @@ function updatePhoneScale() {
   }
 }
 
+function initMobileDropdown() {
+  const dropdown = document.getElementById('mobile-screen-dropdown');
+  if (!dropdown) return;
+  dropdown.innerHTML = APP_SCREENS.map((screen, i) => `
+    <option value="${i}">Screen ${i + 1}: ${screen.title}</option>
+  `).join('');
+  dropdown.value = activeScreenIndex;
+}
+
 // Window resize & orientation listeners for responsive scaling
 window.addEventListener('resize', updatePhoneScale);
 window.addEventListener('orientationchange', updatePhoneScale);
@@ -571,6 +630,9 @@ window.addEventListener('orientationchange', updatePhoneScale);
 // INITIALIZATION ON DOM READY
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
+  // Populate mobile screen selector dropdown
+  initMobileDropdown();
+
   // Initial phone scaling calculation
   updatePhoneScale();
 
