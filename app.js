@@ -285,7 +285,7 @@ function goToScreen(index) {
   // 5. Update Status bar color scheme based on screen background
   const statusBar = document.getElementById('phone-status-bar');
   if (statusBar) {
-    if (screen.id === 'screen-splash' || screen.id === 'screen-sos') {
+    if (screen.id === 'screen-sos') {
       statusBar.classList.add('text-white');
       statusBar.classList.remove('text-slate-900');
     } else {
