@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HomePro — Real-Time Family GPS Tracker & Women Safety Guardian</title>
+  <title>HomePro — Real-Time Family GPS Tracker & Safety Guardian</title>
   
   <!-- SEO & Social Meta -->
   <meta name="description" content="HomePro is an enterprise-grade real-time Family GPS Tracker & Women Safety Guardian with instant SOS emergency siren, smart geofence auto check-ins, and live battery telemetry." />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#2563EB" />
 
   <!-- Google Fonts: Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +37,18 @@
               100: '#ffe4e6',
               500: '#ef4444', // Matches app @color/alert_red #EF4444
               600: '#dc2626',
-              700: '#be123c',
+            },
+            success: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981', // Matches app @color/safety_green #10B981
+              600: '#059669',
+            },
+            warning: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              500: '#f59e0b', // Matches app @color/premium_gold #FFB700
+              600: '#d97706',
             },
             surface: {
               bg: '#f8fafc',      // Matches app @color/deep_blue_primary #F8FAFC
@@ -53,702 +64,1929 @@
           }
         }
       }
-    }
+    };
   </script>
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Custom Styles -->
+  <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="styles.css" />
 </head>
+<body class="bg-surface-bg text-ink-primary antialiased font-sans selection:bg-brand-50 selection:text-brand-600">
 
-<body class="bg-surface-bg text-ink-primary font-sans antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
-
-  <!-- Subtle Clean Engineering Grid Background (No artificial neon blurs) -->
-  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-  </div>
-
-  <!-- Main Hero Content Container -->
-  <main class="relative z-10 pt-6 sm:pt-10 pb-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- ========================================================
+       TOP GLOBAL NAVIGATION BAR (Matches Porter / ShipKaro style)
+       ======================================================== -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-surface-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 items-start">
-        
-        <!-- Left Column: Product Information, Value Proposition & Actions -->
-        <div class="lg:col-span-7 space-y-6">
+      <!-- Brand Logo & Name -->
+      <a href="#prototype" onclick="switchView('prototype')" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-10 h-10 rounded-xl bg-brand-500 text-white flex items-center justify-center shadow-md shadow-brand-500/25 group-hover:bg-brand-600 transition-all">
+          <i data-lucide="shield" class="w-5 h-5 fill-current"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-display font-bold text-lg text-ink-primary tracking-tight">HomePro</span>
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 border border-brand-100 rounded-full">v1.0 Live</span>
+          </div>
+          <p class="text-[11px] text-ink-secondary hidden sm:block">Family GPS Tracker & Women Safety Guardian</p>
+        </div>
+      </a>
+
+      <!-- Center Navigation View Switcher (Tabs) -->
+      <nav class="flex items-center p-1 bg-surface-subtle border border-surface-border rounded-xl text-xs font-semibold" role="tablist" aria-label="Preview Views">
+        <button onclick="switchView('prototype')" data-view="prototype" class="view-nav-pill active flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="true">
+          <i data-lucide="smartphone" class="w-4 h-4"></i>
+          <span class="hidden md:inline">Interactive</span> Prototype
+        </button>
+        <button onclick="switchView('all-screens')" data-view="all-screens" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
+          <i data-lucide="grid" class="w-4 h-4"></i>
+          All Screens <span class="px-1.5 py-0.2 bg-white/80 text-[10px] rounded-full text-ink-secondary font-bold">15</span>
+        </button>
+        <button onclick="switchView('dashboard')" data-view="dashboard" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          Dashboard
+        </button>
+        <button onclick="switchView('download')" data-view="download" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          Download APK
+        </button>
+      </nav>
+
+      <!-- Right Action CTA -->
+      <div class="flex items-center gap-2">
+        <a href="HomePro-release.apk" download="HomePro-release.apk" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-500 hover:bg-brand-600 text-white shadow-sm transition-all active:scale-95">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Download (33.2 MB)</span>
+        </a>
+        <a href="https://github.com/hariomaunique/HomePro_Preview" target="_blank" rel="noopener" class="p-2 rounded-xl text-ink-secondary hover:text-ink-primary hover:bg-surface-subtle border border-surface-border transition-colors" title="View Source on GitHub">
+          <i data-lucide="github" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================
+       VIEW 1: INTERACTIVE PROTOTYPE (Desktop Multi-Pane View)
+       ======================================================== -->
+  <main id="view-prototype" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-opacity duration-300">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- LEFT COLUMN: Screen Flow Navigator (3 Cols) -->
+      <aside class="lg:col-span-3 bg-white rounded-2xl border border-surface-border p-4 shadow-sm flex flex-col max-h-[820px]">
+        <div class="flex items-center justify-between pb-3 border-b border-surface-border mb-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="layers" class="w-4 h-4 text-brand-500"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-ink-primary">App User Flows</span>
+          </div>
+          <span class="px-2 py-0.5 text-[10px] font-bold bg-surface-subtle text-ink-secondary border border-surface-border rounded-full">15 Screens</span>
+        </div>
+
+        <!-- Quick Search -->
+        <div class="relative mb-3">
+          <i data-lucide="search" class="w-3.5 h-3.5 text-ink-muted absolute left-3 top-1/2 -translate-y-1/2"></i>
+          <input id="input-screen-search" type="text" placeholder="Search screen or layout..." class="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-surface-subtle border border-surface-border focus:bg-white focus:border-brand-500 focus:outline-none transition-all" />
+        </div>
+
+        <!-- Scrollable Flow Accordions -->
+        <div class="overflow-y-auto space-y-4 pr-1 text-xs">
           
-          <!-- Header Identity & Women Safety Initiative Tag -->
-          <div class="flex flex-wrap items-center gap-3">
-            <!-- App Brand Chip -->
-            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-white border border-surface-border shadow-sm">
-              <img src="assets/logo.png" alt="HomePro Logo" class="w-6 h-6 object-contain rounded-lg" onerror="this.src='https://api.iconify.design/heroicons:shield-check-solid.svg?color=%232563eb'" />
-              <div class="flex items-center gap-2">
-                <span class="font-display font-bold text-base text-ink-primary tracking-tight">HomePro</span>
-                <span class="px-1.5 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 border border-brand-100 rounded-md">v1.0.0</span>
+          <!-- Group 1: Onboarding & Setup -->
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-ink-muted px-2 py-1 mb-1 flex items-center justify-between">
+              <span>1. Onboarding & Setup</span>
+              <span class="text-[9px]">7 Screens</span>
+            </div>
+            <div class="space-y-0.5">
+              <div onclick="goToScreen(0)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="0">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">1</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Splash Screen</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Logo & Protective Ring</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(1)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="1">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">2</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Onboarding Carousel</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">3-Step Capability Tour</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(2)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="2">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">3</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Modern Login</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Phone +91 Authentication</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(3)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="3">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">4</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">OTP Verification</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">4-Digit Code & Resend</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(4)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="4">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">5</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Permission Guard</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">GPS, Battery & Autostart</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(5)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="5">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">6</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Profile Setup</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Avatar & Role Relation</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(6)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="6">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">7</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Family Circle Setup</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Create Circle or Join</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 2: Core Tracking Tabs -->
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-ink-muted px-2 py-1 mb-1 flex items-center justify-between">
+              <span>2. Core Tracking (App Tabs)</span>
+              <span class="text-[9px]">4 Screens</span>
+            </div>
+            <div class="space-y-0.5">
+              <div onclick="goToScreen(7)" class="sidebar-screen-item active rounded-xl p-2.5 flex items-center justify-between" data-index="7">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-brand-500 text-white text-[10px] font-bold flex items-center justify-center">8</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-brand-500">Live Family Map</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Map, Puff Track, SOS</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-brand-500"></i>
+              </div>
+
+              <div onclick="goToScreen(8)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="8">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">9</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Family Circle Roster</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Code HP-7842, Battery %</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(9)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="9">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">10</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Safety Alerts</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">SOS & Geofence Logs</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(10)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="10">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">11</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Account & Settings</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Health & Circle Guard</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 3: Deep Safety & Emergency -->
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-ink-muted px-2 py-1 mb-1 flex items-center justify-between">
+              <span>3. Deep Safety & Tools</span>
+              <span class="text-[9px]">4 Screens</span>
+            </div>
+            <div class="space-y-0.5">
+              <div onclick="goToScreen(11)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="11">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">12</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Member Live Telemetry</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">42 km/h, Timeline, Call</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(12)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="12">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">13</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">SOS Emergency Siren</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Pulsing Siren & Call 112</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(13)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="13">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">14</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Geofence Safe Zones</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">Home, School, Office</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+
+              <div onclick="goToScreen(14)" class="sidebar-screen-item rounded-xl p-2.5 flex items-center justify-between" data-index="14">
+                <div class="flex items-center gap-2.5">
+                  <span class="screen-badge w-5 h-5 rounded-md bg-surface-subtle text-ink-secondary text-[10px] font-bold flex items-center justify-center">15</span>
+                  <div>
+                    <div class="screen-title text-xs font-semibold text-ink-primary">Add Member & Share</div>
+                    <div class="text-[10px] text-ink-muted truncate max-w-[140px]">WhatsApp & QR Scanner</div>
+                  </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-muted"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- CENTER COLUMN: Responsive Smartphone Mockup (6 Cols) -->
+      <section class="lg:col-span-6 flex flex-col items-center">
+        
+        <!-- Mobile Frame Chassis -->
+        <div class="phone-chassis">
+          
+          <!-- Dynamic Island / Sensor Notch -->
+          <div class="dynamic-island">
+            <div class="dynamic-island-sensor"></div>
+            <div class="dynamic-island-camera"></div>
+          </div>
+
+          <!-- Top Status Bar (Live Clock, Wifi, 5G, Battery) -->
+          <div id="phone-status-bar" class="phone-status-bar text-slate-900">
+            <span>09:41</span>
+            <div class="flex items-center gap-1.5 text-[10px]">
+              <i data-lucide="signal" class="w-3 h-3"></i>
+              <span class="font-bold">5G</span>
+              <i data-lucide="wifi" class="w-3 h-3"></i>
+              <div class="flex items-center gap-0.5">
+                <span class="text-[9px]">98%</span>
+                <i data-lucide="battery" class="w-3.5 h-3.5"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone Viewport Screen (Houses all 15 screens) -->
+          <div class="phone-viewport" id="phone-viewport">
+
+            <!-- ----------------------------------------------------
+                 SCREEN 0: SPLASH SCREEN (activity_splash.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-splash" class="app-screen splash-wave text-white flex flex-col items-center justify-between p-8 text-center" onclick="goToScreen(1)">
+              <div class="pt-16">
+                <!-- House Logo & Animated Ring -->
+                <div class="relative w-36 h-36 mx-auto mb-6 flex items-center justify-center">
+                  <div class="absolute inset-0 rounded-full border-4 border-white/20 animate-ping"></div>
+                  <div class="w-28 h-28 rounded-3xl bg-white text-brand-600 flex items-center justify-center shadow-2xl shadow-blue-900/40">
+                    <i data-lucide="shield-check" class="w-14 h-14 stroke-[2.2]"></i>
+                  </div>
+                </div>
+                <h1 class="text-3xl font-display font-extrabold tracking-tight mb-2">HomePro</h1>
+                <p class="text-sm text-blue-100 font-medium">Family GPS Tracker & Women Safety</p>
+              </div>
+
+              <div class="pb-10 space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold border border-white/20 animate-pulse">
+                  <span>Tap anywhere to start</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </div>
+                <p class="text-[11px] text-blue-200">v1.0 • Enterprise 256-bit AES Encryption</p>
               </div>
             </div>
 
-            <!-- Women Safety Initiative Badge -->
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-safety-50 border border-rose-200 text-safety-700 text-xs font-semibold shadow-sm">
-              <span class="w-2 h-2 rounded-full bg-safety-500"></span>
-              A Step Towards Women Safety
-            </div>
-          </div>
+            <!-- ----------------------------------------------------
+                 SCREEN 1: ONBOARDING CAROUSEL (activity_onboarding.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-onboarding" class="app-screen bg-surface-bg flex flex-col justify-between p-6">
+              <div class="flex items-center justify-between pt-2">
+                <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Step 1 of 3</span>
+                <button onclick="goToScreen(2)" class="text-xs font-bold text-ink-secondary hover:text-ink-primary">Skip</button>
+              </div>
 
-          <!-- Main Confident Headline (Editorial Typography, Crisp Ink) -->
-          <div class="space-y-3">
-            <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-ink-primary leading-[1.15]">
-              Real-Time Family GPS Tracker & <br class="hidden sm:inline" />
-              <span class="text-brand-600">24/7 Safety Guardian</span>
-            </h1>
-            <p class="text-base text-ink-secondary max-w-xl leading-relaxed">
-              Designed to protect your loved ones and sisters on every journey. Features 
-              <strong class="text-ink-primary font-semibold">1-Tap Emergency SOS</strong>, live Google Maps tracking, 
-              safe zone geofencing, and automated battery telemetry.
-            </p>
-          </div>
-
-          <!-- Download Action Card (Stripe-grade Clean Surface) -->
-          <div class="p-5 sm:p-6 rounded-2xl bg-white border border-surface-border shadow-[0_10px_30px_-10px_rgba(0,0,0,0.06)] relative overflow-hidden">
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-              <div>
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="text-sm font-bold text-ink-primary">Direct Production Release</span>
-                  <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded uppercase tracking-wider">Signed APK</span>
+              <div class="text-center my-auto py-6">
+                <div class="w-44 h-44 mx-auto mb-6 rounded-3xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-600 shadow-inner">
+                  <i data-lucide="map-pin" class="w-20 h-20 animate-bounce"></i>
                 </div>
-                <p class="text-xs text-ink-secondary flex items-center gap-2.5">
-                  <span>Size: <strong class="text-ink-primary">33.2 MB</strong></span>
-                  <span>•</span>
-                  <span>Target: <strong class="text-ink-primary">Android 8.0+</strong></span>
-                  <span>•</span>
-                  <span class="text-emerald-600 font-semibold">100% Free & Private</span>
+                <h2 class="text-xl font-display font-bold text-ink-primary mb-2">Live Satellite GPS Tracking</h2>
+                <p class="text-xs text-ink-secondary leading-relaxed px-4">
+                  Pinpoint your loved ones with ±3m high-precision location, travel speed, and moving route history updated in real-time.
                 </p>
               </div>
 
-              <!-- Action Buttons -->
-              <div class="flex items-center gap-2.5 flex-shrink-0">
-                <a href="HomePro-release.apk" download="HomePro-release.apk" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-md shadow-brand-500/20 active:scale-[0.98] transition-all">
-                  <i data-lucide="download" class="w-4 h-4"></i>
-                  <span>Download APK</span>
-                </a>
-
-                <button onclick="openQrModal()" aria-label="Scan QR Code to Download on Phone" title="Scan QR Code to Download" class="p-3 rounded-xl bg-surface-subtle hover:bg-slate-200 border border-surface-border text-ink-secondary hover:text-ink-primary transition-all">
-                  <i data-lucide="qr-code" class="w-4 h-4"></i>
+              <div class="space-y-4 pb-4">
+                <div class="flex justify-center items-center gap-1.5">
+                  <span class="w-6 h-1.5 rounded-full bg-brand-600"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                </div>
+                <button onclick="goToScreen(2)" class="hotspot-interactive w-full py-3.5 rounded-2xl bg-brand-600 text-white font-bold text-xs shadow-md shadow-brand-500/25 flex items-center justify-center gap-2">
+                  <span>Continue</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
               </div>
             </div>
 
-            <!-- Trust Highlights -->
-            <div class="mt-4 pt-3.5 border-t border-surface-border flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs text-ink-secondary font-medium">
-              <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-brand-600"></i> End-to-End Encrypted</span>
-              <span class="flex items-center gap-1.5"><i data-lucide="key" class="w-4 h-4 text-emerald-600"></i> Private Family Invite Code</span>
-              <span class="flex items-center gap-1.5"><i data-lucide="battery-charging" class="w-4 h-4 text-amber-600"></i> Low Battery Drain Engine</span>
-            </div>
-          </div>
-
-          <!-- Feature Cards Grid (4 Core Capabilities) -->
-          <h2 class="sr-only">Core Capabilities & Safety Features</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            
-            <!-- Feature 1: SOS -->
-            <div class="p-4 rounded-xl bg-white border border-surface-border hover:border-rose-300 hover:shadow-sm transition-all group">
-              <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-8 h-8 rounded-lg bg-safety-50 text-safety-600 flex items-center justify-center font-bold">
-                  <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+            <!-- ----------------------------------------------------
+                 SCREEN 2: MODERN LOGIN (activity_login_modern.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-login" class="app-screen bg-surface-bg flex flex-col justify-between p-6">
+              <div class="pt-6">
+                <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4 border border-brand-100">
+                  <i data-lucide="shield" class="w-6 h-6"></i>
                 </div>
-                <h3 class="text-sm font-bold text-ink-primary">Emergency SOS & Siren</h3>
-              </div>
-              <p class="text-xs text-ink-secondary leading-relaxed">
-                One-tap distress alert rings sirens on all family devices with exact GPS satellite coordinates. Works online and via offline SMS.
-              </p>
-            </div>
+                <h2 class="text-xl font-display font-bold text-ink-primary mb-1">Welcome to HomePro</h2>
+                <p class="text-xs text-ink-secondary">Enter your phone number to sign in or create your family account.</p>
 
-            <!-- Feature 2: Map -->
-            <div class="p-4 rounded-xl bg-white border border-surface-border hover:border-brand-300 hover:shadow-sm transition-all group">
-              <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-8 h-8 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center font-bold">
-                  <i data-lucide="map-pin" class="w-4 h-4"></i>
+                <!-- Phone Input Card -->
+                <div class="mt-8 space-y-3">
+                  <label class="text-[11px] font-bold text-ink-primary uppercase tracking-wider">Mobile Number</label>
+                  <div class="flex items-center gap-2 p-3 rounded-2xl bg-white border border-surface-border shadow-sm">
+                    <span class="text-xs font-bold text-ink-primary px-2 border-r border-surface-border flex items-center gap-1">
+                      🇮🇳 +91
+                    </span>
+                    <input type="tel" value="98765 43210" readonly class="text-xs font-semibold text-ink-primary bg-transparent focus:outline-none flex-1" />
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
+                  </div>
                 </div>
-                <h3 class="text-sm font-bold text-ink-primary">Live Speed & GPS Map</h3>
-              </div>
-              <p class="text-xs text-ink-secondary leading-relaxed">
-                Real-time interactive Google Map with moving member pins, travel speed (km/h), and ±3m precision.
-              </p>
-            </div>
 
-            <!-- Feature 3: Geofence -->
-            <div class="p-4 rounded-xl bg-white border border-surface-border hover:border-emerald-300 hover:shadow-sm transition-all group">
-              <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                  <i data-lucide="shield" class="w-4 h-4"></i>
+                <!-- Reassurance Card -->
+                <div class="mt-6 p-3.5 rounded-2xl bg-brand-50/60 border border-brand-100 flex items-start gap-3">
+                  <i data-lucide="lock" class="w-4 h-4 text-brand-600 mt-0.5 flex-shrink-0"></i>
+                  <p class="text-[11px] text-brand-900 leading-snug">
+                    Zero spam guaranteed. Your phone number is used strictly for circle authentication and emergency SOS broadcasts.
+                  </p>
                 </div>
-                <h3 class="text-sm font-bold text-ink-primary">Safe Geofence Zones</h3>
               </div>
-              <p class="text-xs text-ink-secondary leading-relaxed">
-                Automated arrival and departure notifications when sisters or kids enter College, Office, or Home safely.
-              </p>
+
+              <div class="pb-4 space-y-3">
+                <button onclick="goToScreen(3)" class="hotspot-interactive w-full py-3.5 rounded-2xl bg-brand-600 text-white font-bold text-xs shadow-md shadow-brand-500/25 flex items-center justify-center gap-2">
+                  <span>Get Verification OTP</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+                <p class="text-[10px] text-center text-ink-muted">By continuing, you agree to the <a href="privacy-policy.html" class="underline text-brand-600">Privacy Policy</a>.</p>
+              </div>
             </div>
 
-            <!-- Feature 4: Telemetry -->
-            <div class="p-4 rounded-xl bg-white border border-surface-border hover:border-amber-300 hover:shadow-sm transition-all group">
-              <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
-                  <i data-lucide="activity" class="w-4 h-4"></i>
+            <!-- ----------------------------------------------------
+                 SCREEN 3: OTP VERIFICATION (activity_otp_modern.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-otp" class="app-screen bg-surface-bg flex flex-col justify-between p-6">
+              <div class="pt-6">
+                <button onclick="goToScreen(2)" class="w-8 h-8 rounded-xl bg-white border border-surface-border flex items-center justify-center text-ink-secondary mb-4 hover:text-ink-primary">
+                  <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                </button>
+
+                <h2 class="text-xl font-display font-bold text-ink-primary mb-1">Verify Your Number</h2>
+                <p class="text-xs text-ink-secondary mb-6">
+                  We sent a 4-digit verification code to <span class="font-bold text-ink-primary">+91 98765 43210</span>.
+                </p>
+
+                <!-- 4-Digit OTP Boxes -->
+                <div class="grid grid-cols-4 gap-3 mb-6">
+                  <div class="h-14 rounded-2xl bg-white border-2 border-brand-500 text-lg font-bold flex items-center justify-center text-ink-primary shadow-sm">4</div>
+                  <div class="h-14 rounded-2xl bg-white border-2 border-brand-500 text-lg font-bold flex items-center justify-center text-ink-primary shadow-sm">8</div>
+                  <div class="h-14 rounded-2xl bg-white border-2 border-brand-500 text-lg font-bold flex items-center justify-center text-ink-primary shadow-sm">2</div>
+                  <div class="h-14 rounded-2xl bg-white border-2 border-brand-500 text-lg font-bold flex items-center justify-center text-ink-primary shadow-sm">1</div>
                 </div>
-                <h3 class="text-sm font-bold text-ink-primary">Live Device Telemetry</h3>
+
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-ink-muted">Resend OTP in <strong class="text-brand-600">00:24</strong></span>
+                  <button class="text-brand-600 font-bold hover:underline">Edit number</button>
+                </div>
               </div>
-              <p class="text-xs text-ink-secondary leading-relaxed">
-                Continuous battery percentage watch (charging/low alerts) and 5G/4G/WiFi connection strength indicator.
-              </p>
+
+              <div class="pb-4">
+                <button onclick="goToScreen(4)" class="hotspot-interactive w-full py-3.5 rounded-2xl bg-brand-600 text-white font-bold text-xs shadow-md shadow-brand-500/25 flex items-center justify-center gap-2">
+                  <span>Verify & Continue</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
             </div>
 
-          </div>
+            <!-- ----------------------------------------------------
+                 SCREEN 4: PERMISSION GUARD (activity_permission.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-permissions" class="app-screen bg-surface-bg flex flex-col justify-between p-6">
+              <div class="pt-4">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">✓</div>
+                  <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Authentication Verified</span>
+                </div>
+                <h2 class="text-xl font-display font-bold text-ink-primary mb-1">System Preparation</h2>
+                <p class="text-xs text-ink-secondary mb-4">Enable these essential permissions for 24/7 background family safety.</p>
 
-          <!-- Tech Stack Badges -->
-          <div class="flex flex-wrap items-center gap-2 pt-1 text-xs text-ink-secondary">
-            <span class="font-bold text-ink-primary">Tech Stack:</span>
-            <span class="px-2.5 py-1 rounded-lg bg-white border border-surface-border font-medium">Android SDK 34</span>
-            <span class="px-2.5 py-1 rounded-lg bg-white border border-surface-border font-medium">Kotlin & Java</span>
-            <span class="px-2.5 py-1 rounded-lg bg-white border border-surface-border font-medium">Google Maps SDK</span>
-            <span class="px-2.5 py-1 rounded-lg bg-white border border-surface-border font-medium">Firebase Firestore</span>
-            <span class="px-2.5 py-1 rounded-lg bg-white border border-surface-border font-medium">Material Design 3</span>
-          </div>
+                <!-- Permission List Cards -->
+                <div class="space-y-2.5">
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-xl bg-blue-50 text-brand-600 flex items-center justify-center"><i data-lucide="satellite" class="w-4 h-4"></i></div>
+                      <div>
+                        <div class="text-xs font-bold text-ink-primary">Access GPS Satellites</div>
+                        <div class="text-[10px] text-ink-muted">±3m precision tracking</div>
+                      </div>
+                    </div>
+                    <span class="px-2 py-1 text-[10px] font-bold bg-emerald-50 text-emerald-600 rounded-lg">Granted</span>
+                  </div>
 
-        </div>
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="activity" class="w-4 h-4"></i></div>
+                      <div>
+                        <div class="text-xs font-bold text-ink-primary">Always-On Background</div>
+                        <div class="text-[10px] text-ink-muted">Continuous location daemon</div>
+                      </div>
+                    </div>
+                    <span class="px-2 py-1 text-[10px] font-bold bg-emerald-50 text-emerald-600 rounded-lg">Granted</span>
+                  </div>
 
-        <!-- Right Column: Realistic Light-Theme Physical Smartphone Mockup -->
-        <div class="lg:col-span-5 flex flex-col items-center justify-start lg:sticky lg:top-6">
-          
-          <!-- Screen Selector Switcher Tabs -->
-          <div id="screen-tablist" role="tablist" aria-label="HomePro App Preview Screens" class="w-full max-w-[320px] mb-3.5 p-1 rounded-xl bg-white border border-surface-border shadow-sm flex items-center justify-between text-xs font-semibold">
-            <button onclick="switchScreen(0)" id="tab-btn-0" role="tab" aria-selected="true" aria-controls="mock-screen-0" tabindex="0" class="screen-tab-btn active-tab flex-1 py-1.5 px-1 rounded-lg text-center transition-all flex items-center justify-center gap-1">
-              <i data-lucide="map" class="w-3.5 h-3.5"></i>
-              <span>Map</span>
-            </button>
-            <button onclick="switchScreen(1)" id="tab-btn-1" role="tab" aria-selected="false" aria-controls="mock-screen-1" tabindex="-1" class="screen-tab-btn flex-1 py-1.5 px-1 rounded-lg text-center text-ink-secondary hover:text-ink-primary transition-all flex items-center justify-center gap-1">
-              <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-safety-600"></i>
-              <span>SOS</span>
-            </button>
-            <button onclick="switchScreen(2)" id="tab-btn-2" role="tab" aria-selected="false" aria-controls="mock-screen-2" tabindex="-1" class="screen-tab-btn flex-1 py-1.5 px-1 rounded-lg text-center text-ink-secondary hover:text-ink-primary transition-all flex items-center justify-center gap-1">
-              <i data-lucide="users" class="w-3.5 h-3.5"></i>
-              <span>Family</span>
-            </button>
-            <button onclick="switchScreen(3)" id="tab-btn-3" role="tab" aria-selected="false" aria-controls="mock-screen-3" tabindex="-1" class="screen-tab-btn flex-1 py-1.5 px-1 rounded-lg text-center text-ink-secondary hover:text-ink-primary transition-all flex items-center justify-center gap-1">
-              <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
-              <span>Places</span>
-            </button>
-          </div>
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="battery-charging" class="w-4 h-4"></i></div>
+                      <div>
+                        <div class="text-xs font-bold text-ink-primary">Ignore Battery Saver</div>
+                        <div class="text-[10px] text-ink-muted">Prevents OS from killing app</div>
+                      </div>
+                    </div>
+                    <span class="px-2 py-1 text-[10px] font-bold bg-emerald-50 text-emerald-600 rounded-lg">Granted</span>
+                  </div>
 
-          <!-- Realistic Smartphone Chassis (Sleek Matte Titanium & Pure Glass Display) -->
-          <div class="relative w-[310px] sm:w-[325px] h-[570px] rounded-[44px] bg-slate-900 p-[9px] shadow-[0_25px_60px_-15px_rgba(15,23,42,0.18)] border-4 border-slate-700">
-            
-            <!-- Side Hardware Buttons -->
-            <div class="absolute -left-[13px] top-24 w-[4px] h-8 bg-slate-700 rounded-l-md"></div>
-            <div class="absolute -left-[13px] top-36 w-[4px] h-10 bg-slate-700 rounded-l-md"></div>
-            <div class="absolute -right-[13px] top-28 w-[4px] h-12 bg-slate-700 rounded-r-md"></div>
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center"><i data-lucide="power" class="w-4 h-4"></i></div>
+                      <div>
+                        <div class="text-xs font-bold text-ink-primary">Boot Recovery Autostart</div>
+                        <div class="text-[10px] text-ink-muted">Auto-restart after reboot</div>
+                      </div>
+                    </div>
+                    <span class="px-2 py-1 text-[10px] font-bold bg-emerald-50 text-emerald-600 rounded-lg">Granted</span>
+                  </div>
+                </div>
+              </div>
 
-            <!-- Inner Phone Display (Actual App Light Theme #F8FAFC) -->
-            <div class="relative w-full h-full bg-[#f8fafc] rounded-[36px] overflow-hidden flex flex-col justify-between border border-slate-300 shadow-inner">
+              <div class="pb-4">
+                <button onclick="goToScreen(5)" class="hotspot-interactive w-full py-3.5 rounded-2xl bg-brand-600 text-white font-bold text-xs shadow-md shadow-brand-500/25 flex items-center justify-center gap-2">
+                  <span>Start Tracking</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 5: PROFILE SETUP (activity_profile_setup.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-profile-setup" class="app-screen bg-surface-bg flex flex-col justify-between p-6">
+              <div class="pt-6">
+                <h2 class="text-xl font-display font-bold text-ink-primary mb-1">Set Up Your Profile</h2>
+                <p class="text-xs text-ink-secondary mb-6">Choose an avatar and specify your family relation so members recognize you.</p>
+
+                <!-- Avatar Selector -->
+                <div class="flex flex-col items-center mb-6">
+                  <div class="relative">
+                    <div class="w-20 h-20 rounded-full bg-brand-500 text-white text-2xl font-bold flex items-center justify-center shadow-md">
+                      AV
+                    </div>
+                    <button class="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-white border border-surface-border text-brand-600 flex items-center justify-center shadow">
+                      <i data-lucide="camera" class="w-3 h-3"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Fields -->
+                <div class="space-y-3">
+                  <div>
+                    <label class="text-[10px] font-bold text-ink-muted uppercase">Full Name</label>
+                    <input type="text" value="Amit Verma" readonly class="w-full mt-1 p-3 rounded-xl bg-white border border-surface-border text-xs font-semibold text-ink-primary" />
+                  </div>
+                  <div>
+                    <label class="text-[10px] font-bold text-ink-muted uppercase">Your Family Role</label>
+                    <div class="w-full mt-1 p-3 rounded-xl bg-white border border-surface-border text-xs font-semibold text-ink-primary flex justify-between items-center">
+                      <span>Head of Family</span>
+                      <i data-lucide="chevron-down" class="w-4 h-4 text-ink-muted"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pb-4">
+                <button onclick="goToScreen(6)" class="hotspot-interactive w-full py-3.5 rounded-2xl bg-brand-600 text-white font-bold text-xs shadow-md shadow-brand-500/25 flex items-center justify-center gap-2">
+                  <span>Continue</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 6: FAMILY SETUP (activity_family_setup.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-family-setup" class="app-screen bg-surface-bg flex flex-col justify-between p-6">
+              <div class="pt-6">
+                <h2 class="text-xl font-display font-bold text-ink-primary mb-1">Create or Join Circle</h2>
+                <p class="text-xs text-ink-secondary mb-6">Family circles are private vaults visible only to paired members.</p>
+
+                <!-- Option 1: Create New Circle -->
+                <div onclick="goToScreen(7)" class="hotspot-interactive p-4 rounded-2xl bg-white border-2 border-brand-500 shadow-sm mb-4">
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">
+                      <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-ink-primary">Create New Family Circle</div>
+                      <div class="text-[10px] text-ink-muted">Generate a unique 6-digit code</div>
+                    </div>
+                  </div>
+                  <div class="p-2.5 rounded-xl bg-surface-subtle text-[11px] text-ink-secondary font-medium">
+                    Name: <strong class="text-ink-primary">Verma Family</strong>
+                  </div>
+                </div>
+
+                <!-- Option 2: Join Existing Circle -->
+                <div class="p-4 rounded-2xl bg-white border border-surface-border opacity-75">
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="w-9 h-9 rounded-xl bg-surface-subtle text-ink-secondary flex items-center justify-center font-bold">
+                      <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-ink-primary">Join With Invite Code</div>
+                      <div class="text-[10px] text-ink-muted">Enter 6-character code from family</div>
+                    </div>
+                  </div>
+                  <input type="text" placeholder="e.g. HP-7842" readonly class="w-full p-2.5 rounded-xl bg-surface-subtle border border-surface-border text-xs uppercase font-mono tracking-widest text-center" />
+                </div>
+              </div>
+
+              <div class="pb-4">
+                <button onclick="goToScreen(7)" class="hotspot-interactive w-full py-3.5 rounded-2xl bg-brand-600 text-white font-bold text-xs shadow-md shadow-brand-500/25 flex items-center justify-center gap-2">
+                  <span>Enter Live Family Map</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 7: LIVE FAMILY MAP (fragment_map.xml) - FLAGSHIP
+                 ---------------------------------------------------- -->
+            <div id="screen-map" class="app-screen bg-slate-100 flex flex-col justify-between relative overflow-hidden active">
               
-              <!-- Android Status Bar Header -->
-              <div class="absolute top-0 inset-x-0 h-7 z-40 flex items-center justify-between px-5 pt-1 text-[10px] font-bold text-slate-700 bg-white/90 backdrop-blur-sm border-b border-slate-200/60">
-                <span>9:41</span>
-                <!-- Camera Notch -->
-                <div class="w-16 h-3 bg-black rounded-full flex items-center justify-center">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-800"></span>
+              <!-- Map Background Mockup with Grid & Roads -->
+              <div class="absolute inset-0 bg-[#e5e9ef] pointer-events-none">
+                <!-- SVG Vector Roads & Map Details -->
+                <svg class="w-full h-full opacity-60" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M-20 120 Q 150 180 400 130" stroke="#cbd5e1" stroke-width="16" fill="none" />
+                  <path d="M120 -20 Q 180 300 240 800" stroke="#cbd5e1" stroke-width="24" fill="none" />
+                  <path d="M-20 420 Q 200 360 400 480" stroke="#cbd5e1" stroke-width="20" fill="none" />
+                  <path d="M120 -20 Q 180 300 240 800" stroke="#ffffff" stroke-width="16" fill="none" />
+                  <!-- Animated Road Track Dash (bg_road_track.xml) -->
+                  <path d="M-20 420 Q 200 360 400 480" stroke="#3b82f6" stroke-width="4" fill="none" class="animate-road-dash" />
+                  <!-- Safe Zone Geofence Circle (Home) -->
+                  <circle cx="140" cy="280" r="60" fill="#3b82f6" fill-opacity="0.15" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 2" />
+                </svg>
+
+                <!-- Member Pin 1: Dad (Moving in Car with Exhaust) -->
+                <div class="absolute top-[375px] left-[170px] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20">
+                  <div class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white text-[9px] font-bold shadow-md border border-slate-200 text-ink-primary mb-1">
+                    <span>Dad (In Transit)</span>
+                    <span class="text-blue-600">42 km/h</span>
+                  </div>
+                  <div class="relative flex items-center justify-center">
+                    <!-- Exhaust Puff Effect -->
+                    <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-slate-400 animate-exhaust"></div>
+                    <div class="w-10 h-10 rounded-full bg-brand-500 text-white border-2 border-white shadow-lg flex items-center justify-center font-bold text-xs">
+                      <i data-lucide="car" class="w-5 h-5"></i>
+                    </div>
+                  </div>
                 </div>
-                <div class="flex items-center gap-1.5 text-[9px]">
-                  <i data-lucide="wifi" class="w-2.5 h-2.5"></i>
-                  <span>84%</span>
-                  <i data-lucide="battery-medium" class="w-3 h-3 text-emerald-600"></i>
+
+                <!-- Member Pin 2: Priya (At Home) -->
+                <div onclick="goToScreen(11)" class="hotspot-interactive absolute top-[260px] left-[130px] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20">
+                  <div class="px-2 py-0.5 rounded-full bg-white text-[9px] font-bold shadow-md border border-slate-200 text-ink-primary mb-1">
+                    Priya · Home
+                  </div>
+                  <div class="w-9 h-9 rounded-full bg-purple-600 text-white border-2 border-white shadow-lg flex items-center justify-center font-bold text-xs">
+                    P
+                  </div>
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white -mt-1"></span>
                 </div>
               </div>
 
-              <!-- SCREEN VIEWPORT (Real Android XML Screen Replicas in Light Theme) -->
-              <div id="screen-viewport" class="relative w-full h-full pt-7 pb-11 overflow-hidden select-none">
-                
-                <!-- ================= SCREEN 0: REAL APP MAP (fragment_map.xml) ================= -->
-                <div id="mock-screen-0" role="tabpanel" aria-labelledby="tab-btn-0" class="mockup-screen absolute inset-0 pt-7 pb-11 flex flex-col justify-between transition-all duration-300 opacity-100 scale-100">
-                  
-                  <!-- Real App Search Bar Card (search_bar_card) -->
-                  <div class="mx-3 mt-1.5 p-2 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between z-20">
-                    <div class="flex items-center gap-2 flex-1">
-                      <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
-                      <span class="text-[11px] text-slate-500 font-medium">Search members, places...</span>
-                    </div>
-                    <div class="w-6 h-6 rounded-full bg-brand-50 text-brand-600 border border-brand-200 flex items-center justify-center text-[10px] font-bold">
-                      H
-                    </div>
-                  </div>
+              <!-- Top Nav Header (Floating Island) -->
+              <div class="relative z-30 p-3 flex items-center justify-between">
+                <button onclick="goToScreen(10)" class="w-9 h-9 rounded-xl bg-white/90 backdrop-blur-md border border-surface-border shadow-sm flex items-center justify-center text-ink-secondary">
+                  <i data-lucide="settings" class="w-4 h-4"></i>
+                </button>
 
-                  <!-- Floating Controls Overlay (Satellite Layer, Re-Center & Red SOS Button) -->
-                  <div class="absolute top-16 right-3 z-20 flex flex-col items-center gap-2">
-                    <button class="w-8 h-8 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-brand-600">
-                      <i data-lucide="layers" class="w-3.5 h-3.5"></i>
-                    </button>
-                    <button class="w-8 h-8 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-brand-600">
-                      <i data-lucide="navigation-2" class="w-3.5 h-3.5"></i>
-                    </button>
-                    <!-- Floating Red SOS Button (sos_btn) -->
-                    <button onclick="switchScreen(1)" class="w-8 h-8 rounded-full bg-[#ef4444] shadow-md shadow-red-500/30 flex items-center justify-center text-white font-extrabold text-[9px]">
-                      SOS
-                    </button>
-                  </div>
-
-                  <!-- Simulated Real Google Map (Light Mode Style) -->
-                  <div class="relative flex-1 bg-[#e5eef7] overflow-hidden flex items-center justify-center my-1 border-y border-slate-200">
-                    <!-- Road Grid Lines -->
-                    <div class="absolute w-full h-2 bg-white top-1/2 -rotate-12 shadow-sm"></div>
-                    <div class="absolute h-full w-2 bg-white left-1/3 rotate-6 shadow-sm"></div>
-                    <div class="absolute w-full h-1.5 bg-[#cbdcf0] top-20"></div>
-
-                    <!-- Geofence Safe Zone Overlay (Home) -->
-                    <div class="absolute top-10 left-8 w-22 h-22 rounded-full border-2 border-dashed border-emerald-500/70 bg-emerald-500/15 flex items-center justify-center">
-                      <span class="text-[7.5px] font-bold text-emerald-800 bg-white/95 px-1.5 py-0.5 rounded shadow-sm border border-emerald-300">Home Safe Zone (150m)</span>
-                    </div>
-
-                    <!-- Pin 1: Priya (Moving / College Route) -->
-                    <div class="absolute top-24 right-14 flex flex-col items-center animate-bounce duration-1000">
-                      <div class="px-1.5 py-0.5 bg-rose-600 text-[8px] font-bold text-white rounded shadow-sm flex items-center gap-1">
-                        <span>Priya</span>
-                        <span class="text-[7px] bg-black/30 px-0.5 rounded font-normal">28 km/h</span>
-                      </div>
-                      <div class="w-7 h-7 rounded-full bg-rose-500 p-0.5 shadow-md">
-                        <div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[9px] font-bold text-rose-600">
-                          P
-                        </div>
-                      </div>
-                      <div class="w-1.5 h-1.5 rounded-full bg-rose-600 -mt-0.5 ring-2 ring-rose-400"></div>
-                    </div>
-
-                    <!-- Pin 2: Mom (Home) -->
-                    <div class="absolute top-16 left-14 flex flex-col items-center">
-                      <div class="w-6 h-6 rounded-full bg-emerald-600 p-0.5 shadow-sm">
-                        <div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[8px] font-bold text-emerald-600">
-                          M
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Floating Accuracy Pill -->
-                    <div class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-white/95 border border-slate-200 text-[8px] text-slate-700 font-semibold flex items-center gap-1 shadow-sm">
-                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                      <span>GPS Accuracy: ±3m</span>
-                    </div>
-                  </div>
-
-                  <!-- Real App Bottom Draggable Sheet (bottom_sheet_behavior) -->
-                  <div class="mx-2 p-2.5 rounded-2xl bg-white border border-slate-200 shadow-lg">
-                    <!-- Handle Bar -->
-                    <div class="w-8 h-1 bg-slate-300 rounded-full mx-auto mb-2"></div>
-                    
-                    <!-- Family Header Row -->
-                    <div class="flex items-center justify-between mb-2">
-                      <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-lg bg-brand-50 text-brand-600 border border-brand-100 flex items-center justify-center">
-                          <i data-lucide="home" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                          <div class="text-[11px] font-bold text-ink-primary">HappyHome</div>
-                          <div class="text-[8.5px] text-emerald-600 font-semibold">● 4 Members Active</div>
-                        </div>
-                      </div>
-                      <button onclick="switchScreen(2)" class="text-[9px] font-bold text-brand-600 px-2 py-0.5 rounded-full border border-brand-200 bg-brand-50">
-                        View All ›
-                      </button>
-                    </div>
-
-                    <!-- Member Row (item_family_member.xml) -->
-                    <div class="p-1.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                      <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-[9px]">
-                          P
-                        </div>
-                        <div>
-                          <div class="text-[10px] font-bold text-ink-primary">Priya (Sister)</div>
-                          <div class="text-[8px] text-slate-500">Near Metro Station • 5G</div>
-                        </div>
-                      </div>
-                      <div class="text-right">
-                        <span class="text-[9px] font-bold text-emerald-600">🔋 84%</span>
-                      </div>
-                    </div>
-                  </div>
-
+                <!-- Circle Pill -->
+                <div class="px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-surface-border shadow-sm flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span class="text-xs font-bold text-ink-primary">Verma Family</span>
+                  <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-ink-muted"></i>
                 </div>
 
-                <!-- ================= SCREEN 1: REAL APP SOS (activity_sos_emergency.xml) ================= -->
-                <div id="mock-screen-1" role="tabpanel" aria-labelledby="tab-btn-1" hidden class="mockup-screen absolute inset-0 pt-7 pb-11 flex flex-col justify-between transition-all duration-300 opacity-0 scale-95 pointer-events-none bg-white">
-                  
-                  <!-- Real Header Bar (layout_header) -->
-                  <div class="h-10 px-3 bg-white border-b border-slate-200 flex items-center gap-2">
-                    <button onclick="switchScreen(0)" class="text-slate-600 hover:text-black">
-                      <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                    </button>
-                    <span class="text-[12px] font-bold text-ink-primary">SOS Emergency</span>
-                  </div>
-
-                  <!-- Pulsating SOS Button Container (sos_container) -->
-                  <div class="my-auto flex flex-col items-center justify-center">
-                    <div class="relative flex items-center justify-center my-2">
-                      <div class="absolute w-28 h-28 rounded-full bg-red-100 animate-pulse"></div>
-                      <div class="absolute w-22 h-22 rounded-full bg-red-200"></div>
-                      
-                      <!-- Main Red SOS Button (btn_sos_pulse) -->
-                      <div class="relative w-20 h-20 rounded-full bg-[#ef4444] shadow-lg shadow-red-500/40 flex flex-col items-center justify-center text-white border-2 border-white">
-                        <span class="text-base font-extrabold tracking-wider leading-none">SOS</span>
-                        <span class="text-[7.5px] font-bold opacity-90 mt-0.5 tracking-wider">TAP TO SEND</span>
-                      </div>
-                    </div>
-
-                    <!-- Status & Info Card (card_sos_status) -->
-                    <div class="mx-3 mt-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center">
-                      <div class="text-[10.5px] font-bold text-ink-primary mb-0.5">Emergency Distress System</div>
-                      <p class="text-[8px] text-slate-600 leading-tight">
-                        Broadcasts high-priority siren to all family devices and dispatches live GPS location via SMS.
-                      </p>
-                      <div class="mt-1.5 text-[8.5px] text-brand-600 font-bold flex items-center justify-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
-                        Acquiring satellite GPS position...
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Bottom Buttons (layout_buttons) -->
-                  <div class="px-3 pb-1 space-y-1.5">
-                    <button class="w-full py-2 rounded-xl bg-[#ef4444] hover:bg-red-600 text-white font-bold text-[10.5px] shadow-sm active:scale-95 transition-all">
-                      SEND EMERGENCY ALERT
-                    </button>
-                    <button onclick="switchScreen(0)" class="w-full py-1 text-center text-[9.5px] font-bold text-slate-500 hover:text-slate-800">
-                      Cancel / Back
-                    </button>
-                  </div>
-
-                </div>
-
-                <!-- ================= SCREEN 2: REAL APP FAMILY (fragment_family_modern.xml) ================= -->
-                <div id="mock-screen-2" role="tabpanel" aria-labelledby="tab-btn-2" hidden class="mockup-screen absolute inset-0 pt-7 pb-11 flex flex-col justify-between transition-all duration-300 opacity-0 scale-95 pointer-events-none bg-white">
-                  
-                  <!-- Real Header Bar -->
-                  <div class="h-10 px-3 bg-white border-b border-slate-200 flex items-center justify-between">
-                    <span class="text-[12px] font-bold text-ink-primary">Family</span>
-                    <button class="text-[10px] font-bold text-brand-600">+ Add</button>
-                  </div>
-
-                  <!-- Content Area -->
-                  <div class="p-3 space-y-2 overflow-y-auto">
-                    <!-- Family Information & Invite Code Card -->
-                    <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                      <div class="text-[12px] font-bold text-ink-primary">HappyHome</div>
-                      <div class="text-[8.5px] text-slate-500 mb-2">Role: Head of Family</div>
-                      
-                      <div class="border-t border-slate-200 pt-2 flex items-center justify-between">
-                        <div>
-                          <div class="text-[8px] text-slate-500 uppercase font-semibold">Family Invite Code</div>
-                          <div class="text-[13px] font-extrabold text-brand-600 tracking-wider font-mono">HOME-9821</div>
-                        </div>
-                        <button class="p-1 rounded bg-brand-50 text-brand-600 border border-brand-200 text-[8px] font-bold">
-                          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                        </button>
-                      </div>
-                    </div>
-
-                    <!-- Member Caption -->
-                    <div class="text-[9px] font-bold text-slate-500 uppercase tracking-wider px-0.5">
-                      Family Members (3)
-                    </div>
-
-                    <!-- Member List Cards (item_family_member.xml) -->
-                    <div class="space-y-1.5">
-                      <!-- Member 1 -->
-                      <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                          <div class="w-6 h-6 rounded-full bg-brand-50 text-brand-700 border border-brand-200 flex items-center justify-center font-bold text-[9px]">
-                            H
-                          </div>
-                          <div>
-                            <div class="text-[10px] font-bold text-ink-primary">Hariom (You)</div>
-                            <div class="text-[8px] text-emerald-600 font-semibold">● Live • Sector 62</div>
-                          </div>
-                        </div>
-                        <span class="text-[9px] font-bold text-emerald-600">🔋 92%</span>
-                      </div>
-
-                      <!-- Member 2: Priya (Sister) -->
-                      <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                          <div class="w-6 h-6 rounded-full bg-rose-100 text-rose-700 border border-rose-200 flex items-center justify-center font-bold text-[9px]">
-                            P
-                          </div>
-                          <div>
-                            <div class="text-[10px] font-bold text-ink-primary">Priya (Sister)</div>
-                            <div class="text-[8px] text-rose-600 font-semibold">● Moving • 28 km/h</div>
-                          </div>
-                        </div>
-                        <span class="text-[9px] font-bold text-emerald-600">🔋 84%</span>
-                      </div>
-
-                      <!-- Member 3: Mom -->
-                      <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                          <div class="w-6 h-6 rounded-full bg-teal-50 text-teal-700 border border-teal-200 flex items-center justify-center font-bold text-[9px]">
-                            M
-                          </div>
-                          <div>
-                            <div class="text-[10px] font-bold text-ink-primary">Mom</div>
-                            <div class="text-[8px] text-emerald-600 font-semibold">● Safe Zone: Home</div>
-                          </div>
-                        </div>
-                        <span class="text-[9px] font-bold text-amber-600">⚡ 48%</span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                <!-- ================= SCREEN 3: REAL APP GEOFENCE (activity_geofence.xml) ================= -->
-                <div id="mock-screen-3" role="tabpanel" aria-labelledby="tab-btn-3" hidden class="mockup-screen absolute inset-0 pt-7 pb-11 flex flex-col justify-between transition-all duration-300 opacity-0 scale-95 pointer-events-none bg-white">
-                  
-                  <!-- Real Header Bar -->
-                  <div class="h-10 px-3 bg-white border-b border-slate-200 flex items-center gap-2">
-                    <button onclick="switchScreen(0)" class="text-slate-600 hover:text-black">
-                      <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                    </button>
-                    <span class="text-[11px] font-bold text-ink-primary">Configure Saved Places</span>
-                  </div>
-
-                  <!-- Geofence Map Top Half -->
-                  <div class="relative h-32 bg-[#eaf1f8] border-b border-slate-200 flex items-center justify-center overflow-hidden">
-                    <div class="w-24 h-24 rounded-full border-2 border-dashed border-brand-500 bg-brand-500/15 flex items-center justify-center">
-                      <div class="w-3 h-3 rounded-full bg-brand-600 shadow ring-2 ring-brand-300"></div>
-                    </div>
-                    <div class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded bg-white text-[7.5px] text-brand-700 font-bold border border-brand-200 shadow-sm">
-                      Geofence Radius: 150m
-                    </div>
-                  </div>
-
-                  <!-- Geofence Configuration Bottom Panel (activity_geofence.xml) -->
-                  <div class="p-3 bg-white space-y-2">
-                    <div class="text-[10.5px] font-bold text-ink-primary">Add New Place</div>
-                    
-                    <!-- Place Input -->
-                    <div class="px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-[10px] text-ink-primary font-medium">
-                      Sweet Home
-                    </div>
-
-                    <!-- Radius Slider Simulator -->
-                    <div class="space-y-1">
-                      <div class="flex justify-between text-[8px] text-slate-500">
-                        <span>Radius</span>
-                        <span class="text-brand-600 font-bold">150 meters</span>
-                      </div>
-                      <div class="h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                        <div class="w-1/3 h-full bg-brand-600"></div>
-                      </div>
-                    </div>
-
-                    <!-- Save Button -->
-                    <button class="w-full py-1.5 rounded-lg bg-brand-600 text-white text-[10px] font-bold shadow-sm">
-                      Save Place
-                    </button>
-                  </div>
-
-                </div>
-
+                <button onclick="goToScreen(9)" class="relative w-9 h-9 rounded-xl bg-white/90 backdrop-blur-md border border-surface-border shadow-sm flex items-center justify-center text-ink-secondary">
+                  <i data-lucide="bell" class="w-4 h-4"></i>
+                  <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+                </button>
               </div>
 
-              <!-- Real App Bottom Navigation Bar Inside Mockup -->
-              <div class="absolute bottom-0 inset-x-0 h-11 bg-white/95 border-t border-slate-200 flex items-center justify-around px-1 text-[8.5px] font-bold text-slate-500 z-40">
-                <button onclick="switchScreen(0)" class="nav-mock-btn flex flex-col items-center text-brand-600">
-                  <i data-lucide="map" class="w-3.5 h-3.5"></i>
+              <!-- Floating Map Controls (Right Side) -->
+              <div class="absolute right-3 top-24 z-30 flex flex-col gap-2">
+                <button class="w-9 h-9 rounded-xl bg-white shadow-md border border-surface-border flex items-center justify-center text-ink-secondary">
+                  <i data-lucide="layers" class="w-4 h-4"></i>
+                </button>
+                <button class="w-9 h-9 rounded-xl bg-white shadow-md border border-surface-border flex items-center justify-center text-brand-600">
+                  <i data-lucide="crosshair" class="w-4 h-4"></i>
+                </button>
+                <!-- Floating Emergency SOS Button -->
+                <button onclick="goToScreen(12)" class="hotspot-interactive w-11 h-11 rounded-2xl bg-red-600 text-white shadow-lg shadow-red-500/40 flex items-center justify-center font-bold animate-sos-pulse" title="Trigger Instant SOS">
+                  <span class="text-xs font-extrabold tracking-wider">SOS</span>
+                </button>
+              </div>
+
+              <!-- Bottom Sheet: Stories Carousel & Active Member Peek -->
+              <div class="relative z-30 bg-white/95 backdrop-blur-md rounded-t-3xl border-t border-surface-border p-3.5 shadow-2xl space-y-3">
+                <div class="w-8 h-1 bg-slate-300 rounded-full mx-auto"></div>
+
+                <!-- Stories Horizontal Recycler (recycler_horizontal_members) -->
+                <div class="flex items-center gap-3 overflow-x-auto pb-1">
+                  <!-- Story 1: Amit (You) -->
+                  <div class="flex flex-col items-center flex-shrink-0 cursor-pointer">
+                    <div class="w-11 h-11 rounded-full ring-2 ring-brand-500 p-0.5 bg-white">
+                      <div class="w-full h-full rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center">You</div>
+                    </div>
+                    <span class="text-[10px] font-bold text-ink-primary mt-1">Amit</span>
+                    <span class="text-[9px] text-emerald-600 font-semibold">⚡ 98%</span>
+                  </div>
+
+                  <!-- Story 2: Priya (Sister) -->
+                  <div onclick="goToScreen(11)" class="hotspot-interactive flex flex-col items-center flex-shrink-0 cursor-pointer">
+                    <div class="w-11 h-11 rounded-full ring-2 ring-purple-500 p-0.5 bg-white">
+                      <div class="w-full h-full rounded-full bg-purple-600 text-white font-bold text-xs flex items-center justify-center">P</div>
+                    </div>
+                    <span class="text-[10px] font-bold text-ink-primary mt-1">Priya</span>
+                    <span class="text-[9px] text-emerald-600 font-semibold">⚡ 84%</span>
+                  </div>
+
+                  <!-- Story 3: Dad -->
+                  <div onclick="goToScreen(11)" class="hotspot-interactive flex flex-col items-center flex-shrink-0 cursor-pointer">
+                    <div class="w-11 h-11 rounded-full ring-2 ring-blue-500 p-0.5 bg-white">
+                      <div class="w-full h-full rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center">D</div>
+                    </div>
+                    <span class="text-[10px] font-bold text-ink-primary mt-1">Dad</span>
+                    <span class="text-[9px] text-blue-600 font-semibold">42 km/h</span>
+                  </div>
+
+                  <!-- Story 4: Mom -->
+                  <div onclick="goToScreen(11)" class="hotspot-interactive flex flex-col items-center flex-shrink-0 cursor-pointer">
+                    <div class="w-11 h-11 rounded-full ring-2 ring-slate-300 p-0.5 bg-white">
+                      <div class="w-full h-full rounded-full bg-slate-500 text-white font-bold text-xs flex items-center justify-center">M</div>
+                    </div>
+                    <span class="text-[10px] font-bold text-ink-primary mt-1">Mom</span>
+                    <span class="text-[9px] text-amber-600 font-semibold">⚡ 32%</span>
+                  </div>
+
+                  <!-- Add Member Quick Button -->
+                  <div onclick="goToScreen(14)" class="hotspot-interactive flex flex-col items-center flex-shrink-0 cursor-pointer">
+                    <div class="w-11 h-11 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-500 bg-surface-subtle">
+                      <i data-lucide="plus" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-ink-muted mt-1">Invite</span>
+                    <span class="text-[9px] text-ink-muted">Code</span>
+                  </div>
+                </div>
+
+                <!-- Bottom Navigation Bar (Map, Family, Alerts, Profile) -->
+                <div class="flex items-center justify-around pt-2 border-t border-slate-100 text-ink-secondary text-[10px] font-semibold">
+                  <button onclick="goToScreen(7)" class="flex flex-col items-center text-brand-600 font-bold">
+                    <i data-lucide="map" class="w-5 h-5 mb-0.5"></i>
+                    <span>Map</span>
+                  </button>
+                  <button onclick="goToScreen(8)" class="flex flex-col items-center hover:text-ink-primary">
+                    <i data-lucide="users" class="w-5 h-5 mb-0.5"></i>
+                    <span>Family</span>
+                  </button>
+                  <button onclick="goToScreen(9)" class="flex flex-col items-center hover:text-ink-primary">
+                    <i data-lucide="bell" class="w-5 h-5 mb-0.5"></i>
+                    <span>Alerts</span>
+                  </button>
+                  <button onclick="goToScreen(10)" class="flex flex-col items-center hover:text-ink-primary">
+                    <i data-lucide="user" class="w-5 h-5 mb-0.5"></i>
+                    <span>Profile</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 8: FAMILY CIRCLE (fragment_family_modern.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-family" class="app-screen bg-surface-bg flex flex-col justify-between p-4">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between pt-2">
+                  <div>
+                    <h2 class="text-lg font-display font-bold text-ink-primary">Verma Family</h2>
+                    <p class="text-xs text-ink-muted">4 Members Active · 1 Geofence</p>
+                  </div>
+                  <button onclick="goToScreen(14)" class="px-3 py-1.5 rounded-xl bg-brand-50 text-brand-600 border border-brand-100 font-bold text-xs flex items-center gap-1.5">
+                    <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+                    <span>Invite</span>
+                  </button>
+                </div>
+
+                <!-- 6-Digit Invite Code Card (layout_invite_code) -->
+                <div class="p-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-blue-100">Circle Invite Code</span>
+                    <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full">Valid 48h</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-2xl font-mono font-bold tracking-widest">HP-7842</span>
+                    <button onclick="copyText('HP-7842', this)" class="px-2.5 py-1 rounded-lg bg-white/20 hover:bg-white/30 text-xs font-bold transition-all">
+                      Copy
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Member Cards List -->
+                <div class="space-y-2.5">
+                  <!-- Member 1: Amit -->
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center">You</div>
+                      <div>
+                        <div class="text-xs font-bold text-ink-primary flex items-center gap-1.5">
+                          <span>Amit Verma</span>
+                          <span class="px-1.5 py-0.2 bg-blue-50 text-blue-600 text-[9px] rounded font-bold">Admin</span>
+                        </div>
+                        <div class="text-[10px] text-ink-muted">Andheri East · Active now</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-600">⚡ 98%</span>
+                  </div>
+
+                  <!-- Member 2: Priya -->
+                  <div onclick="goToScreen(11)" class="hotspot-interactive p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-full bg-purple-600 text-white font-bold text-xs flex items-center justify-center">P</div>
+                      <div>
+                        <div class="text-xs font-bold text-ink-primary">Priya Verma</div>
+                        <div class="text-[10px] text-emerald-600 font-medium">Inside Safe Zone: Home</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-600">⚡ 84%</span>
+                  </div>
+
+                  <!-- Member 3: Dad -->
+                  <div onclick="goToScreen(11)" class="hotspot-interactive p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center">D</div>
+                      <div>
+                        <div class="text-xs font-bold text-ink-primary">Dad (Rajesh)</div>
+                        <div class="text-[10px] text-blue-600 font-medium">In Transit · 42 km/h</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-600">⚡ 68%</span>
+                  </div>
+
+                  <!-- Member 4: Mom -->
+                  <div onclick="goToScreen(11)" class="hotspot-interactive p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-full bg-slate-500 text-white font-bold text-xs flex items-center justify-center">M</div>
+                      <div>
+                        <div class="text-xs font-bold text-ink-primary">Mom (Sunita)</div>
+                        <div class="text-[10px] text-ink-muted">Market · 12 min ago</div>
+                      </div>
+                    </div>
+                    <span class="text-xs font-bold text-amber-600">⚡ 32%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Nav Bar -->
+              <div class="flex items-center justify-around pt-3 border-t border-surface-border text-ink-secondary text-[10px] font-semibold bg-white -mx-4 -mb-4 px-4 pb-4">
+                <button onclick="goToScreen(7)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="map" class="w-5 h-5 mb-0.5"></i>
                   <span>Map</span>
                 </button>
-                <button onclick="switchScreen(1)" class="nav-mock-btn flex flex-col items-center text-safety-600">
-                  <i data-lucide="alert-octagon" class="w-3.5 h-3.5"></i>
-                  <span>SOS</span>
-                </button>
-                <button onclick="switchScreen(2)" class="nav-mock-btn flex flex-col items-center hover:text-black">
-                  <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                <button onclick="goToScreen(8)" class="flex flex-col items-center text-brand-600 font-bold">
+                  <i data-lucide="users" class="w-5 h-5 mb-0.5"></i>
                   <span>Family</span>
                 </button>
-                <button onclick="switchScreen(3)" class="nav-mock-btn flex flex-col items-center hover:text-black">
-                  <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
-                  <span>Places</span>
+                <button onclick="goToScreen(9)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="bell" class="w-5 h-5 mb-0.5"></i>
+                  <span>Alerts</span>
+                </button>
+                <button onclick="goToScreen(10)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="user" class="w-5 h-5 mb-0.5"></i>
+                  <span>Profile</span>
                 </button>
               </div>
+            </div>
 
-              <!-- Bottom Android Gesture Bar -->
-              <div class="absolute bottom-1 inset-x-0 flex justify-center z-50 pointer-events-none">
-                <div class="w-20 h-1 bg-slate-300 rounded-full"></div>
+            <!-- ----------------------------------------------------
+                 SCREEN 9: SAFETY ALERTS (fragment_alerts.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-alerts" class="app-screen bg-surface-bg flex flex-col justify-between p-4">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between pt-2">
+                  <h2 class="text-lg font-display font-bold text-ink-primary">Safety Activity</h2>
+                  <button class="text-xs font-bold text-brand-600">Mark all read</button>
+                </div>
+
+                <!-- Filter Chips -->
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
+                  <span class="px-2.5 py-1 rounded-full bg-brand-600 text-white font-bold">All</span>
+                  <span class="px-2.5 py-1 rounded-full bg-white border border-surface-border text-ink-secondary font-medium">SOS (1)</span>
+                  <span class="px-2.5 py-1 rounded-full bg-white border border-surface-border text-ink-secondary font-medium">Geofence</span>
+                  <span class="px-2.5 py-1 rounded-full bg-white border border-surface-border text-ink-secondary font-medium">Battery</span>
+                </div>
+
+                <!-- Alert Feed Items -->
+                <div class="space-y-2">
+                  <!-- Critical SOS Alert -->
+                  <div onclick="goToScreen(12)" class="hotspot-interactive p-3 rounded-2xl bg-red-50 border border-red-200 flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-red-600 text-white flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-red-900">SOS Drill Alert Triggered</div>
+                      <div class="text-[10px] text-red-700">Priya triggered SOS drill from Powai · 14:20 PM</div>
+                    </div>
+                  </div>
+
+                  <!-- Geofence Arrival -->
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-start gap-3 shadow-sm">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="home" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-ink-primary">Priya arrived at Home</div>
+                      <div class="text-[10px] text-ink-muted">Auto check-in geofence triggered · 12:45 PM</div>
+                    </div>
+                  </div>
+
+                  <!-- Speed Alert -->
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-start gap-3 shadow-sm">
+                    <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="gauge" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-ink-primary">Dad is traveling on WEH</div>
+                      <div class="text-[10px] text-ink-muted">Current speed: 42 km/h · 10 min ago</div>
+                    </div>
+                  </div>
+
+                  <!-- Battery Low Alert -->
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-start gap-3 shadow-sm">
+                    <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="battery-warning" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-ink-primary">Mom's battery is below 35%</div>
+                      <div class="text-[10px] text-ink-muted">Recommend reminder to charge phone · 11:30 AM</div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
+              <!-- Bottom Nav Bar -->
+              <div class="flex items-center justify-around pt-3 border-t border-surface-border text-ink-secondary text-[10px] font-semibold bg-white -mx-4 -mb-4 px-4 pb-4">
+                <button onclick="goToScreen(7)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="map" class="w-5 h-5 mb-0.5"></i>
+                  <span>Map</span>
+                </button>
+                <button onclick="goToScreen(8)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="users" class="w-5 h-5 mb-0.5"></i>
+                  <span>Family</span>
+                </button>
+                <button onclick="goToScreen(9)" class="flex flex-col items-center text-brand-600 font-bold">
+                  <i data-lucide="bell" class="w-5 h-5 mb-0.5"></i>
+                  <span>Alerts</span>
+                </button>
+                <button onclick="goToScreen(10)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="user" class="w-5 h-5 mb-0.5"></i>
+                  <span>Profile</span>
+                </button>
+              </div>
             </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 10: PROFILE & SETTINGS (fragment_profile_modern.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-profile" class="app-screen bg-surface-bg flex flex-col justify-between p-4">
+              <div class="space-y-4">
+                <div class="flex items-center gap-3 pt-2">
+                  <div class="w-12 h-12 rounded-full bg-brand-500 text-white font-bold text-sm flex items-center justify-center shadow">AV</div>
+                  <div>
+                    <h2 class="text-sm font-bold text-ink-primary">Amit Verma</h2>
+                    <p class="text-xs text-ink-muted">+91 98765 43210 · Head of Family</p>
+                  </div>
+                </div>
+
+                <!-- Settings Links -->
+                <div class="space-y-1.5 text-xs">
+                  <div onclick="goToScreen(13)" class="hotspot-interactive p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-xl bg-blue-50 text-brand-600 flex items-center justify-center"><i data-lucide="shield" class="w-4 h-4"></i></div>
+                      <span class="font-semibold text-ink-primary">Smart Geofence Safe Zones</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-ink-muted"></i>
+                  </div>
+
+                  <div onclick="goToScreen(14)" class="hotspot-interactive p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center"><i data-lucide="user-plus" class="w-4 h-4"></i></div>
+                      <span class="font-semibold text-ink-primary">Add Member / Invite Code</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-ink-muted"></i>
+                  </div>
+
+                  <div class="p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="battery-charging" class="w-4 h-4"></i></div>
+                      <div>
+                        <div class="font-semibold text-ink-primary">Daemon Engine Status</div>
+                        <div class="text-[10px] text-emerald-600">Active · Low Drain (<3%/day)</div>
+                      </div>
+                    </div>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  </div>
+
+                  <a href="privacy-policy.html" target="_blank" class="p-3 rounded-2xl bg-white border border-surface-border flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-xl bg-slate-100 text-ink-secondary flex items-center justify-center"><i data-lucide="file-text" class="w-4 h-4"></i></div>
+                      <span class="font-semibold text-ink-primary">Privacy Policy</span>
+                    </div>
+                    <i data-lucide="external-link" class="w-4 h-4 text-ink-muted"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Bottom Nav Bar -->
+              <div class="flex items-center justify-around pt-3 border-t border-surface-border text-ink-secondary text-[10px] font-semibold bg-white -mx-4 -mb-4 px-4 pb-4">
+                <button onclick="goToScreen(7)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="map" class="w-5 h-5 mb-0.5"></i>
+                  <span>Map</span>
+                </button>
+                <button onclick="goToScreen(8)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="users" class="w-5 h-5 mb-0.5"></i>
+                  <span>Family</span>
+                </button>
+                <button onclick="goToScreen(9)" class="flex flex-col items-center hover:text-ink-primary">
+                  <i data-lucide="bell" class="w-5 h-5 mb-0.5"></i>
+                  <span>Alerts</span>
+                </button>
+                <button onclick="goToScreen(10)" class="flex flex-col items-center text-brand-600 font-bold">
+                  <i data-lucide="user" class="w-5 h-5 mb-0.5"></i>
+                  <span>Profile</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 11: MEMBER DETAIL (activity_member_detail.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-member-detail" class="app-screen bg-surface-bg flex flex-col justify-between p-4">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between pt-2">
+                  <button onclick="goToScreen(7)" class="w-8 h-8 rounded-xl bg-white border border-surface-border flex items-center justify-center text-ink-secondary">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                  </button>
+                  <h2 class="text-sm font-bold text-ink-primary">Member Telemetry</h2>
+                  <button class="w-8 h-8 rounded-xl bg-white border border-surface-border flex items-center justify-center text-ink-secondary">
+                    <i data-lucide="share-2" class="w-4 h-4"></i>
+                  </button>
+                </div>
+
+                <!-- Member Identity Card -->
+                <div class="p-4 rounded-2xl bg-white border border-surface-border shadow-sm flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-purple-600 text-white font-bold text-base flex items-center justify-center shadow">P</div>
+                    <div>
+                      <h3 class="text-sm font-bold text-ink-primary">Priya Verma</h3>
+                      <p class="text-xs text-ink-muted">Sister · iPhone 15 Pro</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-xs font-bold text-emerald-600">⚡ 84%</div>
+                    <div class="text-[10px] text-ink-muted">Good Signal</div>
+                  </div>
+                </div>
+
+                <!-- Live Speedometer Card -->
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="p-3.5 rounded-2xl bg-white border border-surface-border shadow-sm">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Current Speed</span>
+                    <div class="text-xl font-bold text-brand-600 mt-1">42 <span class="text-xs text-ink-secondary font-normal">km/h</span></div>
+                    <div class="text-[10px] text-emerald-600 font-semibold mt-0.5">● In Transit</div>
+                  </div>
+                  <div class="p-3.5 rounded-2xl bg-white border border-surface-border shadow-sm">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">GPS Accuracy</span>
+                    <div class="text-xl font-bold text-ink-primary mt-1">±3.2 <span class="text-xs text-ink-secondary font-normal">meters</span></div>
+                    <div class="text-[10px] text-ink-muted mt-0.5">HD Satellite Lock</div>
+                  </div>
+                </div>
+
+                <!-- Timeline History -->
+                <div class="p-4 rounded-2xl bg-white border border-surface-border shadow-sm space-y-3">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-ink-primary">Today's Timeline</span>
+                  <div class="space-y-3 text-xs pl-2 border-l-2 border-brand-100">
+                    <div class="relative pl-3">
+                      <span class="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-brand-600 ring-2 ring-white"></span>
+                      <div class="font-bold text-ink-primary">Left Office (BKC)</div>
+                      <div class="text-[10px] text-ink-muted">14:10 PM · 7.8 km traveled</div>
+                    </div>
+                    <div class="relative pl-3">
+                      <span class="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-slate-300 ring-2 ring-white"></span>
+                      <div class="font-bold text-ink-primary">Arrived at Powai Plaza</div>
+                      <div class="text-[10px] text-ink-muted">13:15 PM · Stayed 45 min</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="grid grid-cols-2 gap-2 pb-2">
+                <button class="py-3 rounded-2xl bg-brand-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                  <span>Call Member</span>
+                </button>
+                <button class="py-3 rounded-2xl bg-surface-subtle border border-surface-border text-ink-primary font-bold text-xs flex items-center justify-center gap-2">
+                  <i data-lucide="message-square" class="w-4 h-4"></i>
+                  <span>SMS Location</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 12: SOS EMERGENCY SIREN (activity_sos_emergency.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-sos" class="app-screen bg-gradient-to-b from-red-600 via-rose-700 to-red-900 text-white flex flex-col justify-between p-6 text-center">
+              <div class="pt-6">
+                <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-bold uppercase tracking-wider">High Priority Distress</span>
+                <h2 class="text-2xl font-display font-extrabold mt-2 mb-1">EMERGENCY SOS</h2>
+                <p class="text-xs text-rose-100 px-4">Coordinates broadcasting to 4 emergency contacts & family members.</p>
+
+                <!-- Pulsating Siren Radar Centerpiece -->
+                <div class="relative w-40 h-40 mx-auto my-8 flex items-center justify-center">
+                  <div class="absolute inset-0 rounded-full bg-white/20 animate-ping"></div>
+                  <div class="w-32 h-32 rounded-full bg-white text-red-600 flex flex-col items-center justify-center shadow-2xl">
+                    <i data-lucide="bell-ring" class="w-10 h-10 animate-bounce"></i>
+                    <span class="text-xs font-bold mt-1">SIREN ACTIVE</span>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-2xl bg-black/25 backdrop-blur-sm border border-white/10 text-xs text-left space-y-1">
+                  <div class="flex justify-between font-bold">
+                    <span>GPS Coordinates:</span>
+                    <span class="font-mono">19.0760° N, 72.8777° E</span>
+                  </div>
+                  <div class="text-[11px] text-rose-200">Broadcast sent with 100% battery boost trigger.</div>
+                </div>
+              </div>
+
+              <!-- Emergency Actions -->
+              <div class="space-y-3 pb-2">
+                <button onclick="goToScreen(7)" class="hotspot-interactive w-full py-3.5 rounded-2xl bg-white text-red-600 font-bold text-xs shadow-lg">
+                  I Am Safe (Cancel Distress Alert)
+                </button>
+                <a href="tel:112" class="w-full py-3 rounded-2xl bg-black/40 border border-white/20 text-white font-bold text-xs flex items-center justify-center gap-2">
+                  <i data-lucide="phone-call" class="w-4 h-4"></i>
+                  <span>Call Emergency Police (112)</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 13: GEOFENCE SAFE ZONES (activity_geofence.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-geofence" class="app-screen bg-surface-bg flex flex-col justify-between p-4">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between pt-2">
+                  <button onclick="goToScreen(10)" class="w-8 h-8 rounded-xl bg-white border border-surface-border flex items-center justify-center text-ink-secondary">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                  </button>
+                  <h2 class="text-sm font-bold text-ink-primary">Smart Geofence Zones</h2>
+                  <button class="w-8 h-8 rounded-xl bg-brand-50 text-brand-600 border border-brand-100 flex items-center justify-center">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                  </button>
+                </div>
+
+                <p class="text-xs text-ink-secondary">Get notified instantly when family members enter or leave these perimeter zones.</p>
+
+                <!-- Geofence Zone Cards -->
+                <div class="space-y-2.5">
+                  <div class="p-3.5 rounded-2xl bg-white border-2 border-brand-500 shadow-sm">
+                    <div class="flex items-center justify-between mb-1">
+                      <div class="flex items-center gap-2">
+                        <i data-lucide="home" class="w-4 h-4 text-brand-600"></i>
+                        <span class="text-xs font-bold text-ink-primary">Home (Powai)</span>
+                      </div>
+                      <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-600 rounded">Active</span>
+                    </div>
+                    <div class="text-[10px] text-ink-muted">Radius: 150 meters · 2 Members inside</div>
+                  </div>
+
+                  <div class="p-3.5 rounded-2xl bg-white border border-surface-border shadow-sm">
+                    <div class="flex items-center justify-between mb-1">
+                      <div class="flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-4 h-4 text-purple-600"></i>
+                        <span class="text-xs font-bold text-ink-primary">School & Coaching</span>
+                      </div>
+                      <span class="px-2 py-0.5 text-[10px] font-bold bg-slate-100 text-ink-muted rounded">Active</span>
+                    </div>
+                    <div class="text-[10px] text-ink-muted">Radius: 200 meters · Auto-arrival alerts</div>
+                  </div>
+
+                  <div class="p-3.5 rounded-2xl bg-white border border-surface-border shadow-sm">
+                    <div class="flex items-center justify-between mb-1">
+                      <div class="flex items-center gap-2">
+                        <i data-lucide="briefcase" class="w-4 h-4 text-blue-600"></i>
+                        <span class="text-xs font-bold text-ink-primary">Office (BKC)</span>
+                      </div>
+                      <span class="px-2 py-0.5 text-[10px] font-bold bg-slate-100 text-ink-muted rounded">Active</span>
+                    </div>
+                    <div class="text-[10px] text-ink-muted">Radius: 250 meters · Departure alerts</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pb-2">
+                <button onclick="goToScreen(7)" class="hotspot-interactive w-full py-3 rounded-2xl bg-brand-600 text-white font-bold text-xs shadow-md">
+                  Back to Live Map
+                </button>
+              </div>
+            </div>
+
+            <!-- ----------------------------------------------------
+                 SCREEN 14: ADD MEMBER (activity_add_member.xml)
+                 ---------------------------------------------------- -->
+            <div id="screen-add-member" class="app-screen bg-surface-bg flex flex-col justify-between p-6">
+              <div class="pt-4 text-center">
+                <button onclick="goToScreen(8)" class="w-8 h-8 rounded-xl bg-white border border-surface-border flex items-center justify-center text-ink-secondary mb-4">
+                  <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                </button>
+
+                <h2 class="text-xl font-display font-bold text-ink-primary mb-1">Invite Family Member</h2>
+                <p class="text-xs text-ink-secondary mb-6">Share this 6-digit code or scan the QR code to pair device instantly.</p>
+
+                <!-- Code Card -->
+                <div class="p-6 rounded-3xl bg-brand-50 border border-brand-100 shadow-sm mb-6">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-brand-600">Circle Invite Code</span>
+                  <div class="text-3xl font-mono font-extrabold tracking-widest text-ink-primary mt-2 mb-3">HP-7842</div>
+                  <button onclick="copyText('HP-7842', this)" class="px-4 py-2 rounded-xl bg-brand-600 text-white font-bold text-xs shadow">
+                    Copy Code
+                  </button>
+                </div>
+
+                <!-- Sharing Options -->
+                <div class="space-y-2">
+                  <button onclick="copyText('Hey! Join my HomePro family circle with code: HP-7842. Download APK from https://hariomaunique.github.io/HomePro_Preview/', this)" class="w-full py-3 rounded-2xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm">
+                    <i data-lucide="share" class="w-4 h-4"></i>
+                    <span>Share via WhatsApp</span>
+                  </button>
+                  <button onclick="goToScreen(7)" class="w-full py-3 rounded-2xl bg-white border border-surface-border text-ink-primary font-bold text-xs">
+                    Return to Map
+                  </button>
+                </div>
+              </div>
+
+              <div class="pb-2 text-center">
+                <p class="text-[11px] text-ink-muted">Code expires automatically in 48 hours.</p>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Micro Subtext -->
-          <div class="mt-2.5 flex items-center gap-1.5 text-xs text-ink-secondary">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            <span>Interactive Android UI Simulation</span>
-          </div>
-
+          <!-- Bottom Home Bar Indicator -->
+          <div class="phone-home-bar"></div>
         </div>
 
-      </div>
+        <!-- Phone Mockup Controls Bar (Prev, Counter, Next, Auto-Play) -->
+        <div class="mt-6 flex items-center gap-3 bg-white p-2 rounded-2xl border border-surface-border shadow-sm text-xs font-semibold">
+          <button onclick="prevScreen()" class="p-2 rounded-xl hover:bg-surface-subtle text-ink-secondary hover:text-ink-primary transition-colors" title="Previous Screen">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          </button>
+          <span id="mockup-screen-counter" class="px-3 text-ink-primary font-bold">Screen 8 of 15</span>
+          <button onclick="nextScreen()" class="p-2 rounded-xl hover:bg-surface-subtle text-ink-secondary hover:text-ink-primary transition-colors" title="Next Screen">
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+          <div class="w-px h-4 bg-surface-border"></div>
+          <button id="btn-autoplay-toggle" onclick="toggleAutoPlay()" class="px-3 py-1.5 rounded-xl border border-surface-border flex items-center gap-1.5 text-slate-700 hover:bg-surface-subtle transition-all">
+            <i data-lucide="play" id="icon-autoplay" class="w-3.5 h-3.5"></i>
+            <span>Auto-Play</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- RIGHT COLUMN: Active Screen Inspector Panel (3 Cols) -->
+      <aside class="lg:col-span-3 bg-white rounded-2xl border border-surface-border p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-surface-border">
+          <span class="text-xs font-bold uppercase tracking-wider text-ink-primary flex items-center gap-1.5">
+            <i data-lucide="info" class="w-4 h-4 text-brand-500"></i>
+            Screen Details
+          </span>
+          <span id="inspector-step-badge" class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded-full">Screen 8/15</span>
+        </div>
+
+        <div>
+          <span id="inspector-flow-badge" class="px-2.5 py-0.5 text-[10px] font-bold bg-surface-subtle text-ink-secondary rounded-full uppercase tracking-wider">Core Tracking</span>
+          <h3 id="inspector-title" class="text-base font-display font-bold text-ink-primary mt-1">Live Family Map</h3>
+        </div>
+
+        <!-- Android Real XML & Kotlin File Pills -->
+        <div class="space-y-1.5">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Represented Android XML Layout</div>
+          <div class="p-2 rounded-xl bg-slate-900 text-slate-200 font-mono text-[11px] flex items-center justify-between">
+            <span id="inspector-xml-tag">fragment_map.xml</span>
+            <span class="text-[9px] text-emerald-400 font-sans font-bold">100% Real</span>
+          </div>
+          <div class="p-2 rounded-xl bg-surface-subtle text-ink-secondary font-mono text-[11px] flex items-center justify-between border border-surface-border">
+            <span id="inspector-kotlin-tag">MapFragment.kt</span>
+            <span class="text-[9px] text-brand-600 font-sans font-bold">Source</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider text-ink-muted mb-1">Architecture & Purpose</div>
+          <p id="inspector-description" class="text-xs text-ink-secondary leading-relaxed">
+            Core flagship screen: Interactive map with moving family pins, member stories carousel with live battery %, animated road track with exhaust puff, and bottom sheet.
+          </p>
+        </div>
+
+        <!-- Interactive Hotspots Info -->
+        <div class="p-3.5 rounded-2xl bg-brand-50/70 border border-brand-100">
+          <div class="text-[11px] font-bold text-brand-900 flex items-center gap-1.5 mb-1">
+            <i data-lucide="mouse-pointer-click" class="w-3.5 h-3.5 text-brand-600"></i>
+            Interactive Hotspots in Mockup:
+          </div>
+          <p id="inspector-hotspots" class="text-[11px] text-brand-800 leading-snug">
+            Tap Member Story for Details • Tap Red SOS button for Emergency Siren • Tap Bottom Nav to switch tabs.
+          </p>
+        </div>
+
+        <!-- Quick Flow Jump Actions -->
+        <div class="pt-2 border-t border-surface-border flex gap-2">
+          <button onclick="goToScreen(0)" class="flex-1 py-2 rounded-xl bg-surface-subtle hover:bg-slate-200 text-ink-primary font-bold text-xs transition-colors">
+            Reset to Start
+          </button>
+          <button onclick="nextScreen()" class="flex-1 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs transition-colors">
+            Next Screen →
+          </button>
+        </div>
+
+      </aside>
 
     </div>
   </main>
 
-  <!-- Dedicated Women Safety Section (Clean Light Theme) -->
-  <section class="relative z-10 py-14 border-t border-surface-border bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-safety-50 text-safety-700 border border-rose-200 text-xs font-bold">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-          Empowering Safety & Independence
-        </div>
-        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-ink-primary tracking-tight">
-          How HomePro Protects Women On Every Trip
-        </h2>
-        <p class="text-sm text-ink-secondary">
-          Engineered for late evening shifts, college commutes, and solo journeys.
-        </p>
-      </div>
-
-      <!-- 3 Pillars Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- Pillar 1 -->
-        <div class="p-6 rounded-2xl bg-surface-bg border border-surface-border hover:border-rose-300 hover:shadow-md transition-all">
-          <div class="w-11 h-11 rounded-xl bg-safety-50 text-safety-600 border border-rose-100 flex items-center justify-center mb-4">
-            <i data-lucide="phone-forwarded" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-base font-bold text-ink-primary mb-2">Instant Emergency SOS Dispatch</h3>
-          <p class="text-xs sm:text-sm text-ink-secondary leading-relaxed">
-            1-tap alert sends high-priority sirens to all family phones along with exact satellite coordinates. Works online and via fallback SMS.
-          </p>
-        </div>
-
-        <!-- Pillar 2 -->
-        <div class="p-6 rounded-2xl bg-surface-bg border border-surface-border hover:border-brand-300 hover:shadow-md transition-all">
-          <div class="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 border border-brand-100 flex items-center justify-center mb-4">
-            <i data-lucide="navigation-2" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-base font-bold text-ink-primary mb-2">Night Travel Route & Speed Watch</h3>
-          <p class="text-xs sm:text-sm text-ink-secondary leading-relaxed">
-            Real-time movement speed and route updates let family know she is travelling safely on the right path without repeated calls.
-          </p>
-        </div>
-
-        <!-- Pillar 3 -->
-        <div class="p-6 rounded-2xl bg-surface-bg border border-surface-border hover:border-emerald-300 hover:shadow-md transition-all">
-          <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center mb-4">
-            <i data-lucide="check-check" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-base font-bold text-ink-primary mb-2">Automated Arrival Check-In</h3>
-          <p class="text-xs sm:text-sm text-ink-secondary leading-relaxed">
-            Instant geofence detection automatically notifies parents the moment she safely enters College campus or Home.
-          </p>
-        </div>
-
-      </div>
-
+  <!-- ========================================================
+       VIEW 2: ALL SCREENS GALLERY (Side-by-side design system)
+       ======================================================== -->
+  <section id="view-all-screens" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 transition-opacity duration-300">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-50 text-brand-600 border border-brand-100 uppercase tracking-wider">Design System & Gallery</span>
+      <h2 class="text-2xl sm:text-3xl font-display font-bold text-ink-primary mt-2 mb-2">All 15 Real Android Screens</h2>
+      <p class="text-xs sm:text-sm text-ink-secondary">
+        Browse every screen of the HomePro Android app side-by-side across all user journey stages.
+      </p>
     </div>
-  </section>
 
-  <!-- Easy 3-Step APK Installation Guide (Clean Light Theme) -->
-  <section class="py-12 border-t border-surface-border bg-surface-bg">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="text-center mb-8">
-        <h2 class="font-display text-lg sm:text-xl font-bold text-ink-primary">How to Install HomePro on Your Android Device</h2>
-        <p class="text-xs text-ink-secondary mt-0.5">Compatible with Android 8.0 to Android 14+</p>
-      </div>
+    <!-- Gallery Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        
-        <div class="p-4 rounded-xl bg-white border border-surface-border shadow-sm flex items-start gap-3.5">
-          <div class="w-7 h-7 rounded-lg bg-brand-50 text-brand-600 font-bold text-xs flex items-center justify-center flex-shrink-0 border border-brand-100">1</div>
-          <div>
-            <h3 class="text-xs font-bold text-ink-primary mb-0.5">Download APK</h3>
-            <p class="text-[11px] text-ink-secondary">Download <code class="text-brand-600 font-semibold">HomePro-release.apk</code> (33.2 MB).</p>
+      <!-- Gallery Card 1: Splash -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 1</span>
+            <code class="text-[10px] text-ink-muted">activity_splash.xml</code>
           </div>
+          <h4 class="text-sm font-bold text-ink-primary">Splash Screen</h4>
+          <p class="text-xs text-ink-secondary mb-3">Minimalist brand screen with house logo and protective ring animation.</p>
         </div>
-
-        <div class="p-4 rounded-xl bg-white border border-surface-border shadow-sm flex items-start gap-3.5">
-          <div class="w-7 h-7 rounded-lg bg-brand-50 text-brand-600 font-bold text-xs flex items-center justify-center flex-shrink-0 border border-brand-100">2</div>
-          <div>
-            <h3 class="text-xs font-bold text-ink-primary mb-0.5">Allow Install</h3>
-            <p class="text-[11px] text-ink-secondary">Tap <strong class="text-ink-primary">"Install Unknown Apps"</strong> -> Allow.</p>
-          </div>
-        </div>
-
-        <div class="p-4 rounded-xl bg-white border border-surface-border shadow-sm flex items-start gap-3.5">
-          <div class="w-7 h-7 rounded-lg bg-brand-50 text-brand-600 font-bold text-xs flex items-center justify-center flex-shrink-0 border border-brand-100">3</div>
-          <div>
-            <h3 class="text-xs font-bold text-ink-primary mb-0.5">Join Family</h3>
-            <p class="text-[11px] text-ink-secondary">Enter phone number and share your unique 6-digit invite code.</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Accessible QR Code Modal -->
-  <div id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle" aria-hidden="true" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
-    <div class="bg-white border border-surface-border rounded-2xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl relative">
-      <button id="closeModalBtn" onclick="closeQrModal()" aria-label="Close QR code dialog" class="absolute top-4 right-4 p-1.5 rounded-full bg-slate-100 text-slate-500 hover:text-black">
-        <i data-lucide="x" class="w-4 h-4"></i>
-      </button>
-
-      <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 border border-brand-100 flex items-center justify-center mx-auto">
-        <i data-lucide="qr-code" class="w-5 h-5"></i>
-      </div>
-
-      <div>
-        <h3 id="qrModalTitle" class="text-base font-bold text-ink-primary">Scan to Download on Phone</h3>
-        <p class="text-xs text-ink-secondary mt-0.5">Scan with your Android camera to download the APK directly.</p>
-      </div>
-
-      <div class="bg-white p-3.5 rounded-xl inline-block mx-auto border border-surface-border shadow-sm">
-        <img id="qrCodeImage" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://github.com" alt="Download QR Code" class="w-36 h-36 object-contain" />
-      </div>
-
-      <div class="pt-1">
-        <button onclick="copyCurrentUrl()" class="w-full py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold text-ink-primary hover:bg-slate-200 flex items-center justify-center gap-1.5 transition-colors">
-          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-          <span id="copyBtnText">Copy Download Link</span>
+        <button onclick="switchView('prototype'); goToScreen(0);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </button>
       </div>
-    </div>
-  </div>
 
-  <!-- Footer (Clean Editorial) -->
-  <footer class="border-t border-surface-border py-6 bg-white relative z-10 text-xs text-ink-secondary">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-2">
-        <span class="font-bold text-ink-primary">HomePro</span>
-        <span>•</span>
-        <span>Family GPS Tracker & Safety</span>
-        <span>•</span>
-        <a href="privacy-policy.html" class="text-brand-600 hover:underline font-medium">Privacy Policy</a>
+      <!-- Gallery Card 2: Onboarding -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 2</span>
+            <code class="text-[10px] text-ink-muted">activity_onboarding.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Onboarding Carousel</h4>
+          <p class="text-xs text-ink-secondary mb-3">3-Step tour of GPS satellite tracking, smart geofences, and emergency SOS.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(1);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
       </div>
 
-      <div class="text-[11px] text-slate-400">
-        Engineered for Reliability & 24/7 Protection
+      <!-- Gallery Card 3: Login -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 3</span>
+            <code class="text-[10px] text-ink-muted">activity_login_modern.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Modern Phone Login</h4>
+          <p class="text-xs text-ink-secondary mb-3">Phone number entry with +91 country prefix and zero-spam assurance.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(2);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 4: OTP -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 4</span>
+            <code class="text-[10px] text-ink-muted">activity_otp_modern.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">OTP Verification</h4>
+          <p class="text-xs text-ink-secondary mb-3">4-Digit auto-focus token verification with live 30s resend countdown.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(3);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 5: Permissions -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 5</span>
+            <code class="text-[10px] text-ink-muted">activity_permission.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">System Permission Guard</h4>
+          <p class="text-xs text-ink-secondary mb-3">GPS satellite, Always-On background service, battery saver bypass, autostart.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(4);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 6: Profile Setup -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 6</span>
+            <code class="text-[10px] text-ink-muted">activity_profile_setup.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Profile Creation</h4>
+          <p class="text-xs text-ink-secondary mb-3">Avatar picker with family relation roles (Head of Family, Spouse, Son, etc.).</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(5);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 7: Family Setup -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 7</span>
+            <code class="text-[10px] text-ink-muted">activity_family_setup.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Family Circle Setup</h4>
+          <p class="text-xs text-ink-secondary mb-3">Create private circle or enter 6-digit code to pair with existing circle.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(6);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 8: Live Map (Flagship) -->
+      <div class="bg-white rounded-2xl border-2 border-brand-500 p-4 shadow-md hover:shadow-lg transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-500 text-white rounded">Screen 8 • Flagship</span>
+            <code class="text-[10px] text-ink-muted">fragment_map.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-brand-600">Live Family Map</h4>
+          <p class="text-xs text-ink-secondary mb-3">Google Map with moving vehicle puff track, member stories bar, and floating SOS.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(7);" class="w-full py-2 rounded-xl bg-brand-600 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 9: Family Circle -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 9</span>
+            <code class="text-[10px] text-ink-muted">fragment_family_modern.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Family Circle Roster</h4>
+          <p class="text-xs text-ink-secondary mb-3">Active circle members, battery telemetry, and 6-digit code HP-7842.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(8);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 10: Alerts -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 10</span>
+            <code class="text-[10px] text-ink-muted">fragment_alerts.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Safety Alerts & Logs</h4>
+          <p class="text-xs text-ink-secondary mb-3">Categorized feed for SOS emergencies, safe zone arrivals, and battery alerts.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(9);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 11: Profile & Settings -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 11</span>
+            <code class="text-[10px] text-ink-muted">fragment_profile_modern.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Profile & Circle Settings</h4>
+          <p class="text-xs text-ink-secondary mb-3">Safe Zones management, low battery notifications, and Privacy Policy.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(10);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 12: Member Telemetry -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 12</span>
+            <code class="text-[10px] text-ink-muted">activity_member_detail.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Member Live Telemetry</h4>
+          <p class="text-xs text-ink-secondary mb-3">Live 42 km/h speedometer, battery health, route timeline, and direct Call.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(11);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 13: SOS Emergency -->
+      <div class="bg-white rounded-2xl border border-red-200 p-4 shadow-sm hover:border-red-400 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-red-50 text-red-600 rounded">Screen 13 • Emergency</span>
+            <code class="text-[10px] text-ink-muted">activity_sos_emergency.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-red-600">SOS Emergency Siren</h4>
+          <p class="text-xs text-ink-secondary mb-3">Pulsating siren radar, coordinates SMS broadcast, cancel alert, Call 112.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(12);" class="w-full py-2 rounded-xl bg-red-50 text-red-600 group-hover:bg-red-600 group-hover:text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 14: Geofence -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 14</span>
+            <code class="text-[10px] text-ink-muted">activity_geofence.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Smart Geofence Safe Zones</h4>
+          <p class="text-xs text-ink-secondary mb-3">Radius boundary zones (Home, School, Office) with arrival & departure alerts.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(13);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Gallery Card 15: Add Member -->
+      <div class="bg-white rounded-2xl border border-surface-border p-4 shadow-sm hover:border-brand-300 transition-all group flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 rounded">Screen 15</span>
+            <code class="text-[10px] text-ink-muted">activity_add_member.xml</code>
+          </div>
+          <h4 class="text-sm font-bold text-ink-primary">Add Member & Share</h4>
+          <p class="text-xs text-ink-secondary mb-3">6-digit invite code sharing via WhatsApp, SMS and QR scanner.</p>
+        </div>
+        <button onclick="switchView('prototype'); goToScreen(14);" class="w-full py-2 rounded-xl bg-surface-subtle group-hover:bg-brand-500 group-hover:text-white text-ink-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5">
+          <span>Open in Interactive Mockup</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       VIEW 3: MAIN DASHBOARD & PRODUCT OVERVIEW
+       ======================================================== -->
+  <section id="view-dashboard" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 transition-opacity duration-300 space-y-12">
+    
+    <!-- Hero Banner with Prominent Download APK Button -->
+    <div class="bg-white rounded-3xl border border-surface-border p-8 sm:p-12 shadow-sm text-center max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-600 text-xs font-bold border border-brand-100 mb-4">
+        <i data-lucide="shield-check" class="w-4 h-4"></i>
+        <span>Official Release • Android 8.0+ Ready</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-ink-primary tracking-tight mb-4">
+        Real-Time Family GPS Tracker & <br class="hidden sm:inline" />Women Safety Guardian
+      </h1>
+      <p class="text-sm sm:text-base text-ink-secondary max-w-2xl mx-auto leading-relaxed mb-8">
+        HomePro ensures complete peace of mind for your loved ones with live high-precision satellite telemetry, instant SOS distress siren broadcast, and automated geofence safe zones.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="HomePro-release.apk" download="HomePro-release.apk" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-500/25 flex items-center justify-center gap-3 active:scale-95 transition-all">
+          <i data-lucide="download" class="w-5 h-5"></i>
+          <span>Download HomePro APK (v1.0 • 33.2 MB)</span>
+        </a>
+        <a href="https://github.com/hariomaunique/HomePro_Preview/raw/main/HomePro-release.apk" target="_blank" rel="noopener" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-surface-subtle hover:bg-slate-200 text-ink-primary font-bold text-sm border border-surface-border flex items-center justify-center gap-2 transition-all">
+          <i data-lucide="cloud-download" class="w-4 h-4 text-ink-secondary"></i>
+          <span>Direct GitHub Mirror</span>
+        </a>
+      </div>
+
+      <!-- Quick Metrics Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-10 mt-10 border-t border-surface-border">
+        <div>
+          <div class="text-2xl font-display font-extrabold text-brand-600">±3m</div>
+          <div class="text-xs text-ink-secondary font-medium">GPS Satellite Accuracy</div>
+        </div>
+        <div>
+          <div class="text-2xl font-display font-extrabold text-emerald-600">&lt;3%</div>
+          <div class="text-xs text-ink-secondary font-medium">Battery Drain / Day</div>
+        </div>
+        <div>
+          <div class="text-2xl font-display font-extrabold text-ink-primary">256-bit</div>
+          <div class="text-xs text-ink-secondary font-medium">Encrypted Private Vault</div>
+        </div>
+        <div>
+          <div class="text-2xl font-display font-extrabold text-red-600">0s Delay</div>
+          <div class="text-xs text-ink-secondary font-medium">SOS Distress Dispatch</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What HomePro Is: Minimal Clean Theme Feature Points -->
+    <div>
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-brand-600">Core Capabilities</span>
+        <h2 class="text-2xl font-display font-bold text-ink-primary mt-1">Why Families Rely on HomePro</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Feature 1 -->
+        <div class="bg-white rounded-2xl border border-surface-border p-6 shadow-sm hover:border-brand-200 transition-all space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-brand-600 flex items-center justify-center">
+            <i data-lucide="navigation" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-ink-primary">1. Precision GPS & Motion Telemetry</h3>
+          <ul class="text-xs text-ink-secondary space-y-1.5 list-disc pl-4 leading-relaxed">
+            <li>Continuous background tracking via low-power satellite daemon.</li>
+            <li>Live speedometer (km/h) for transit routes and night travels.</li>
+            <li>Moving vehicle animation with exhaust puff indicator.</li>
+          </ul>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-white rounded-2xl border border-surface-border p-6 shadow-sm hover:border-brand-200 transition-all space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-ink-primary">2. Instant Emergency SOS Siren</h3>
+          <ul class="text-xs text-ink-secondary space-y-1.5 list-disc pl-4 leading-relaxed">
+            <li>1-Tap distress trigger with high-decibel countdown siren.</li>
+            <li>Automated SMS with GPS coordinates broadcast to family members.</li>
+            <li>Direct one-click integration with National Emergency (112).</li>
+          </ul>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-white rounded-2xl border border-surface-border p-6 shadow-sm hover:border-brand-200 transition-all space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <i data-lucide="map-pin" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-ink-primary">3. Smart Geofence Safe Zones</h3>
+          <ul class="text-xs text-ink-secondary space-y-1.5 list-disc pl-4 leading-relaxed">
+            <li>Configurable circular boundary safe zones (Home, School, Work).</li>
+            <li>Automatic check-in / check-out push notifications on arrival.</li>
+            <li>Custom radial sensitivity from 100m to 1,000m.</li>
+          </ul>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-white rounded-2xl border border-surface-border p-6 shadow-sm hover:border-brand-200 transition-all space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <i data-lucide="battery-charging" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-ink-primary">4. Live Battery & Health Telemetry</h3>
+          <ul class="text-xs text-ink-secondary space-y-1.5 list-disc pl-4 leading-relaxed">
+            <li>Remote battery percentage tracking across all circle devices.</li>
+            <li>Low battery warning alerts before phone shuts down.</li>
+            <li>Adaptive battery throttling for less than 3% daily battery drain.</li>
+          </ul>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-white rounded-2xl border border-surface-border p-6 shadow-sm hover:border-brand-200 transition-all space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+            <i data-lucide="lock" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-ink-primary">5. Private & Encrypted Circles</h3>
+          <ul class="text-xs text-ink-secondary space-y-1.5 list-disc pl-4 leading-relaxed">
+            <li>Closed family networks paired securely via 6-digit codes.</li>
+            <li>No public search or unapproved member access.</li>
+            <li>Zero advertisement tracking and strict zero-telemetry resale.</li>
+          </ul>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-white rounded-2xl border border-surface-border p-6 shadow-sm hover:border-brand-200 transition-all space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <i data-lucide="smartphone" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-ink-primary">6. Offline & Reboot Resilience</h3>
+          <ul class="text-xs text-ink-secondary space-y-1.5 list-disc pl-4 leading-relaxed">
+            <li>BOOT_COMPLETED receiver automatically restarts tracking on device reboot.</li>
+            <li>Local offline waypoint queuing until network connection returns.</li>
+            <li>Battery optimization exemption guard.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Web Family Command Center Live Preview -->
+    <div class="bg-white rounded-3xl border border-surface-border p-6 shadow-sm">
+      <div class="flex items-center justify-between pb-4 border-b border-surface-border mb-4">
+        <div>
+          <h3 class="text-base font-bold text-ink-primary">Live Web Family Command Center</h3>
+          <p class="text-xs text-ink-secondary">Simulated desktop command station for monitoring active circles</p>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 text-xs font-bold flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>4 Members Online</span>
+        </span>
+      </div>
+
+      <!-- Command Center Desktop Map Mockup -->
+      <div class="h-80 rounded-2xl bg-slate-100 border border-surface-border relative overflow-hidden flex items-center justify-center">
+        <!-- SVG Map Grid -->
+        <svg class="absolute inset-0 w-full h-full opacity-50" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 80 Q 300 120 1200 60" stroke="#cbd5e1" stroke-width="24" fill="none" />
+          <path d="M400 0 Q 450 200 500 400" stroke="#cbd5e1" stroke-width="32" fill="none" />
+          <path d="M0 240 Q 500 200 1200 280" stroke="#cbd5e1" stroke-width="20" fill="none" />
+        </svg>
+
+        <!-- Command Pin 1 -->
+        <div class="absolute top-20 left-48 flex items-center gap-2 p-2 rounded-xl bg-white shadow-md border border-surface-border">
+          <div class="w-7 h-7 rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center">You</div>
+          <div class="text-left">
+            <div class="text-xs font-bold text-ink-primary">Amit · Head</div>
+            <div class="text-[10px] text-emerald-600 font-semibold">⚡ 98% Battery</div>
+          </div>
+        </div>
+
+        <!-- Command Pin 2 -->
+        <div class="absolute top-44 left-1/2 flex items-center gap-2 p-2 rounded-xl bg-white shadow-md border border-surface-border">
+          <div class="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center"><i data-lucide="car" class="w-4 h-4"></i></div>
+          <div class="text-left">
+            <div class="text-xs font-bold text-ink-primary">Dad · 42 km/h</div>
+            <div class="text-[10px] text-blue-600 font-semibold">Western Express Hwy</div>
+          </div>
+        </div>
+
+        <!-- Command Pin 3 -->
+        <div class="absolute bottom-16 right-56 flex items-center gap-2 p-2 rounded-xl bg-white shadow-md border border-surface-border">
+          <div class="w-7 h-7 rounded-full bg-purple-600 text-white font-bold text-xs flex items-center justify-center">P</div>
+          <div class="text-left">
+            <div class="text-xs font-bold text-ink-primary">Priya · Home</div>
+            <div class="text-[10px] text-emerald-600 font-semibold">Safe Zone Active</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========================================================
+       VIEW 4: DEDICATED DOWNLOAD APK PAGE
+       ======================================================== -->
+  <section id="view-download" class="hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 transition-opacity duration-300 space-y-10">
+    
+    <!-- Download Hero Card -->
+    <div class="bg-white rounded-3xl border border-surface-border p-8 sm:p-12 shadow-sm text-center">
+      <div class="w-20 h-20 rounded-3xl bg-brand-500 text-white mx-auto flex items-center justify-center shadow-xl shadow-brand-500/30 mb-6">
+        <i data-lucide="shield-check" class="w-10 h-10"></i>
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200 mb-3">
+        <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
+        <span>Official Release APK Verified & Signed</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-display font-extrabold text-ink-primary mb-3">
+        Download HomePro for Android
+      </h1>
+      <p class="text-sm text-ink-secondary max-w-lg mx-auto mb-8">
+        Get the latest official release APK directly from our GitHub release distribution. No ads, lightweight, and fully secured.
+      </p>
+
+      <!-- Download Button Grid -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="HomePro-release.apk" download="HomePro-release.apk" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-xl shadow-brand-500/25 flex items-center justify-center gap-3 active:scale-95 transition-all">
+          <i data-lucide="download" class="w-5 h-5"></i>
+          <span>Download HomePro-release.apk</span>
+          <span class="px-2 py-0.5 rounded-full bg-white/20 text-xs font-semibold">33.2 MB</span>
+        </a>
+        <a href="https://github.com/hariomaunique/HomePro_Preview/raw/main/HomePro-release.apk" target="_blank" rel="noopener" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-surface-subtle hover:bg-slate-200 text-ink-primary font-bold text-sm border border-surface-border flex items-center justify-center gap-2 transition-all">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>Direct GitHub Mirror</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Official Release Specifications Table -->
+    <div class="bg-white rounded-3xl border border-surface-border p-6 sm:p-8 shadow-sm">
+      <h3 class="text-lg font-display font-bold text-ink-primary mb-4 flex items-center gap-2">
+        <i data-lucide="cpu" class="w-5 h-5 text-brand-500"></i>
+        <span>Release Build Specifications</span>
+      </h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+        <div class="p-3.5 rounded-xl bg-surface-subtle border border-surface-border">
+          <div class="text-[10px] font-bold text-ink-muted uppercase">Version Name</div>
+          <div class="text-sm font-bold text-ink-primary mt-0.5">v1.0</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-surface-subtle border border-surface-border">
+          <div class="text-[10px] font-bold text-ink-muted uppercase">Version Code</div>
+          <div class="text-sm font-bold text-ink-primary mt-0.5">1 (Release)</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-surface-subtle border border-surface-border">
+          <div class="text-[10px] font-bold text-ink-muted uppercase">Release Date</div>
+          <div class="text-sm font-bold text-ink-primary mt-0.5">14 November 2026</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-surface-subtle border border-surface-border">
+          <div class="text-[10px] font-bold text-ink-muted uppercase">File Size</div>
+          <div class="text-sm font-bold text-ink-primary mt-0.5">33.2 MB (33,221,209 bytes)</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-surface-subtle border border-surface-border">
+          <div class="text-[10px] font-bold text-ink-muted uppercase">Minimum OS Required</div>
+          <div class="text-sm font-bold text-ink-primary mt-0.5">Android 8.0 (Oreo, API 26)+</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-surface-subtle border border-surface-border">
+          <div class="text-[10px] font-bold text-ink-muted uppercase">Architecture</div>
+          <div class="text-sm font-bold text-ink-primary mt-0.5">Universal (arm64, v7a, x86_64)</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-surface-subtle border border-surface-border sm:col-span-2 lg:col-span-3">
+          <div class="text-[10px] font-bold text-ink-muted uppercase">Security & Keystore Signing</div>
+          <div class="text-xs font-mono text-emerald-700 font-semibold mt-0.5">Verified SHA-256 Android Keystore Signature (homepro-release-key.jks)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scan to Download QR Code Card & 3-Step Guide -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+      
+      <!-- QR Code (4 Cols) -->
+      <div class="md:col-span-4 bg-white rounded-3xl border border-surface-border p-6 shadow-sm text-center flex flex-col items-center">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-ink-muted mb-3">Scan to Download on Phone</h4>
+        <div class="p-3 rounded-2xl bg-white border border-surface-border shadow-inner">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://hariomaunique.github.io/HomePro_Preview/HomePro-release.apk" alt="Scan QR Code to download HomePro APK" class="w-40 h-40" />
+        </div>
+        <p class="text-[11px] text-ink-secondary mt-3">Scan using your Android camera to start instant download.</p>
+      </div>
+
+      <!-- 3-Step Guide (8 Cols) -->
+      <div class="md:col-span-8 bg-white rounded-3xl border border-surface-border p-6 sm:p-8 shadow-sm">
+        <h3 class="text-base font-display font-bold text-ink-primary mb-4 flex items-center gap-2">
+          <i data-lucide="help-circle" class="w-5 h-5 text-brand-500"></i>
+          <span>Easy 3-Step Installation Guide</span>
+        </h3>
+
+        <div class="space-y-4 text-xs">
+          <div class="flex items-start gap-3.5">
+            <span class="w-7 h-7 rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+            <div>
+              <div class="font-bold text-ink-primary">Download the APK File</div>
+              <p class="text-ink-secondary mt-0.5 leading-relaxed">Click the Download APK button above. When your browser displays a security prompt, tap <strong>"Download anyway"</strong>.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3.5">
+            <span class="w-7 h-7 rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+            <div>
+              <div class="font-bold text-ink-primary">Allow Installation from Browser</div>
+              <p class="text-ink-secondary mt-0.5 leading-relaxed">Open the downloaded file. If prompted by Android, go to <em>Settings → Allow from this source</em> and tap <strong>Install</strong>.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3.5">
+            <span class="w-7 h-7 rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+            <div>
+              <div class="font-bold text-ink-primary">Sign In & Connect Your Family</div>
+              <p class="text-ink-secondary mt-0.5 leading-relaxed">Open HomePro, enter your phone number, grant GPS and battery permissions, and share your 6-digit family invite code.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================================
+       GLOBAL FOOTER
+       ======================================================== -->
+  <footer class="bg-white border-t border-surface-border mt-16 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-secondary">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center font-bold">
+          <i data-lucide="shield" class="w-4 h-4"></i>
+        </div>
+        <span>&copy; 2026 HomePro. All rights reserved.</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="privacy-policy.html" class="hover:text-brand-600 transition-colors font-medium">Privacy Policy</a>
+        <a href="https://github.com/hariomaunique/HomePro_Preview" target="_blank" rel="noopener" class="hover:text-brand-600 transition-colors font-medium">GitHub Repository</a>
+        <a href="HomePro-release.apk" download="HomePro-release.apk" class="text-brand-600 hover:underline font-bold">Download APK</a>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Application Controller Script -->
   <script src="app.js"></script>
-  <script>
-    // Initialize Lucide Icons
-    lucide.createIcons();
-  </script>
 </body>
 </html>
