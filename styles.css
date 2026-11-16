@@ -16,8 +16,8 @@
   --color-border: #E2E8F0;
   --color-text-main: #0F172A;
   --color-text-muted: #64748B;
-  --phone-width: 375px;
-  --phone-height: 760px;
+  --phone-width: 380px;
+  --phone-height: 835px;
 }
 
 /* Base Smooth Scrolling & Typography */
@@ -553,16 +553,30 @@ input:focus-visible {
   background: linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #3B82F6 100%);
 }
 
-/* Responsive Layout Helpers */
-@media (max-width: 1024px) {
-  :root {
-    --phone-width: 340px;
-    --phone-height: 700px;
-  }
+/* ==========================================
+   Responsive Phone Mockup & Scaling Wrapper
+   Maintains true 380px x 835px Android aspect ratio
+   Fluently scales on mobile screens (< 430px) without overflow
+   ========================================== */
+.phone-scale-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  transition: height 0.15s ease-out;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 440px) {
+  .phone-scale-wrapper {
+    overflow: hidden;
+  }
   .phone-chassis {
     margin: 0 auto;
+    box-shadow:
+      0 0 0 3px #262e3d,
+      0 0 0 6px #0f172a,
+      0 16px 40px rgba(0, 0, 0, 0.6);
   }
 }

@@ -76,63 +76,82 @@
 <body class="bg-surface-bg text-ink-primary antialiased font-sans selection:bg-brand-50 selection:text-brand-600">
 
   <!-- ========================================================
-       TOP GLOBAL NAVIGATION BAR (Matches Porter / ShipKaro style)
+       TOP GLOBAL NAVIGATION BAR (Responsive: Desktop Single-Bar / Mobile Dual-Bar)
        ======================================================== -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-surface-border">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <!-- Main Header Bar -->
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
       
       <!-- Brand Logo & Name -->
-      <a href="#dashboard" onclick="switchView('dashboard')" class="flex items-center gap-3 group focus:outline-none">
-        <div class="w-10 h-10 rounded-xl bg-brand-500 text-white flex items-center justify-center shadow-md shadow-brand-500/25 group-hover:bg-brand-600 transition-all">
-          <i data-lucide="shield" class="w-5 h-5 fill-current"></i>
+      <a href="#dashboard" onclick="switchView('dashboard')" class="flex items-center gap-2 sm:gap-3 group focus:outline-none flex-shrink-0">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-brand-500 text-white flex items-center justify-center shadow-md shadow-brand-500/25 group-hover:bg-brand-600 transition-all">
+          <i data-lucide="shield" class="w-4 h-4 sm:w-5 sm:h-5 fill-current"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <span class="font-display font-bold text-lg text-ink-primary tracking-tight">HomePro</span>
-            <span class="px-2 py-0.5 text-[10px] font-bold bg-brand-50 text-brand-600 border border-brand-100 rounded-full">v1.0 Live</span>
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <span class="font-display font-bold text-base sm:text-lg text-ink-primary tracking-tight">HomePro</span>
+            <span class="px-1.5 py-0.5 text-[9px] sm:text-[10px] font-bold bg-brand-50 text-brand-600 border border-brand-100 rounded-full">v1.0</span>
           </div>
-          <p class="text-[11px] text-ink-secondary hidden sm:block">Family GPS Tracker & Women Safety Guardian</p>
+          <p class="text-[11px] text-ink-secondary hidden lg:block">Family GPS Tracker & Women Safety Guardian</p>
         </div>
       </a>
 
-      <!-- Center Navigation View Switcher (Tabs: Dashboard -> Downloads -> Prototype) -->
-      <nav class="flex items-center p-1 bg-surface-subtle border border-surface-border rounded-xl text-xs font-semibold" role="tablist" aria-label="Preview Views">
+      <!-- Desktop Center Navigation Switcher (Hidden on mobile < md) -->
+      <nav class="hidden md:flex items-center p-1 bg-surface-subtle border border-surface-border rounded-xl text-xs font-semibold" role="tablist" aria-label="Desktop Views">
         <button onclick="switchView('dashboard')" data-view="dashboard" class="view-nav-pill active flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="true">
           <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-          Dashboard
+          <span>Dashboard</span>
         </button>
         <button onclick="switchView('download')" data-view="download" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
           <i data-lucide="download" class="w-4 h-4"></i>
-          Downloads
+          <span>Downloads</span>
         </button>
         <button onclick="switchView('prototype')" data-view="prototype" class="view-nav-pill flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all" role="tab" aria-selected="false">
           <i data-lucide="smartphone" class="w-4 h-4"></i>
-          Prototype
+          <span>Prototype</span>
         </button>
       </nav>
 
-      <!-- Right Action CTA -->
-      <div class="flex items-center gap-2">
-        <a href="HomePro-release.apk" download="HomePro-release.apk" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-500 hover:bg-brand-600 text-white shadow-sm transition-all active:scale-95">
+      <!-- Right Action CTAs: APK Download & GitHub -->
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <a href="HomePro-release.apk" download="HomePro-release.apk" class="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold bg-brand-500 hover:bg-brand-600 text-white shadow-sm transition-all active:scale-95">
           <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          <span>Download (34.6 MB)</span>
+          <span>APK (34.6 MB)</span>
         </a>
-        <a href="https://github.com/hariomaunique/HomePro_Preview" target="_blank" rel="noopener" class="p-2 rounded-xl text-ink-secondary hover:text-ink-primary hover:bg-surface-subtle border border-surface-border transition-colors" title="View Source on GitHub">
+        <a href="https://github.com/hariomaunique/HomePro_Preview" target="_blank" rel="noopener" class="p-1.5 sm:p-2 rounded-xl text-ink-secondary hover:text-ink-primary hover:bg-surface-subtle border border-surface-border transition-colors" title="View Source on GitHub">
           <i data-lucide="github" class="w-4 h-4"></i>
         </a>
       </div>
 
+    </div>
+
+    <!-- Mobile Navigation Sub-Bar (Full-width 3-tab pill grid on mobile < md) -->
+    <div class="md:hidden border-t border-surface-border/70 bg-white/90 px-3 py-1.5">
+      <nav class="grid grid-cols-3 gap-1 p-0.5 bg-surface-subtle border border-surface-border rounded-xl text-xs font-semibold" role="tablist" aria-label="Mobile Views">
+        <button onclick="switchView('dashboard')" data-view="dashboard" class="view-nav-pill active flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-bold transition-all" role="tab" aria-selected="true">
+          <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+          <span>Dashboard</span>
+        </button>
+        <button onclick="switchView('download')" data-view="download" class="view-nav-pill flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-bold transition-all" role="tab" aria-selected="false">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Downloads</span>
+        </button>
+        <button onclick="switchView('prototype')" data-view="prototype" class="view-nav-pill flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-bold transition-all" role="tab" aria-selected="false">
+          <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+          <span>Prototype</span>
+        </button>
+      </nav>
     </div>
   </header>
 
   <!-- ========================================================
        VIEW 1: INTERACTIVE PROTOTYPE (Desktop Multi-Pane View)
        ======================================================== -->
-  <main id="view-prototype" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-opacity duration-300">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+  <main id="view-prototype" class="hidden max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 scroll-mt-28 transition-opacity duration-300">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
 
-      <!-- LEFT COLUMN: Screen Flow Navigator (3 Cols) -->
-      <aside class="lg:col-span-3 bg-white rounded-2xl border border-surface-border p-4 shadow-sm flex flex-col max-h-[820px]">
+      <!-- LEFT COLUMN: Screen Flow Navigator (Desktop Left, Mobile Below Phone) -->
+      <aside class="order-2 lg:order-1 lg:col-span-3 bg-white rounded-2xl border border-surface-border p-4 shadow-sm flex flex-col max-h-[820px]">
         <div class="flex items-center justify-between pb-3 border-b border-surface-border mb-3">
           <div class="flex items-center gap-2">
             <i data-lucide="layers" class="w-4 h-4 text-brand-500"></i>
@@ -345,11 +364,34 @@
         </div>
       </aside>
 
-      <!-- CENTER COLUMN: Responsive Smartphone Mockup (6 Cols) -->
-      <section class="lg:col-span-6 flex flex-col items-center">
+      <!-- CENTER COLUMN: Responsive Smartphone Mockup (First on Mobile, Center on Desktop) -->
+      <section class="order-1 lg:order-2 lg:col-span-6 flex flex-col items-center w-full">
         
-        <!-- Mobile Frame Chassis (Real Android device matching Splash_Screen) -->
-        <div class="device-mockup phone-chassis" id="deviceFrame">
+        <!-- Mobile Quick Screen Switcher Toolbar (Visible on Mobile/Tablet <1024px) -->
+        <div class="lg:hidden w-full max-w-[380px] mb-4 bg-white p-2 rounded-2xl border border-surface-border shadow-sm flex items-center justify-between gap-2 text-xs font-semibold">
+          <button onclick="prevScreen()" class="p-2 sm:px-3 py-1.5 rounded-xl bg-surface-subtle hover:bg-slate-200 text-ink-primary flex items-center gap-1 active:scale-95 transition-all" title="Previous Screen">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Prev</span>
+          </button>
+          
+          <!-- Dropdown Selector for all 15 screens -->
+          <div class="relative flex-1">
+            <select id="mobile-screen-dropdown" onchange="goToScreen(parseInt(this.value))" class="w-full appearance-none pl-3 pr-8 py-2 text-xs font-bold bg-surface-subtle border border-surface-border rounded-xl text-ink-primary focus:outline-none focus:border-brand-500 transition-colors cursor-pointer">
+              <!-- Populated dynamically via JS -->
+            </select>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-ink-muted absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          </div>
+
+          <button onclick="nextScreen()" class="p-2 sm:px-3 py-1.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white flex items-center gap-1 active:scale-95 transition-all" title="Next Screen">
+            <span class="hidden sm:inline">Next</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Phone Scaler Wrapper (Fluidly scales on mobile viewports <430px) -->
+        <div class="phone-scale-wrapper">
+          <!-- Mobile Frame Chassis (Real Android device matching Splash_Screen) -->
+          <div class="device-mockup phone-chassis" id="deviceFrame">
           
           <!-- Android Phone Speaker & Camera Notch (from Splash_Screen) -->
           <div class="phone-speaker"></div>
@@ -1358,13 +1400,14 @@
           <!-- Bottom Home Bar Indicator -->
           <div class="phone-home-bar"></div>
         </div>
+      </div> <!-- /phone-scale-wrapper -->
 
         <!-- Phone Mockup Controls Bar (Prev, Counter, Next, Auto-Play) -->
-        <div class="mt-6 flex items-center gap-3 bg-white p-2 rounded-2xl border border-surface-border shadow-sm text-xs font-semibold">
+        <div class="mt-4 sm:mt-6 flex items-center justify-center flex-wrap gap-2 sm:gap-3 bg-white p-2 rounded-2xl border border-surface-border shadow-sm text-xs font-semibold max-w-full">
           <button onclick="prevScreen()" class="p-2 rounded-xl hover:bg-surface-subtle text-ink-secondary hover:text-ink-primary transition-colors" title="Previous Screen">
             <i data-lucide="chevron-left" class="w-4 h-4"></i>
           </button>
-          <span id="mockup-screen-counter" class="px-3 text-ink-primary font-bold">Screen 8 of 15</span>
+          <span id="mockup-screen-counter" class="px-2 sm:px-3 text-ink-primary font-bold">Screen 1 of 15</span>
           <button onclick="nextScreen()" class="p-2 rounded-xl hover:bg-surface-subtle text-ink-secondary hover:text-ink-primary transition-colors" title="Next Screen">
             <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </button>
@@ -1377,8 +1420,8 @@
 
       </section>
 
-      <!-- RIGHT COLUMN: Active Screen Inspector Panel (3 Cols) -->
-      <aside class="lg:col-span-3 bg-white rounded-2xl border border-surface-border p-5 shadow-sm space-y-4">
+      <!-- RIGHT COLUMN: Active Screen Inspector Panel (Desktop Right, Mobile Bottom) -->
+      <aside class="order-3 lg:order-3 lg:col-span-3 bg-white rounded-2xl border border-surface-border p-4 sm:p-5 shadow-sm space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-surface-border">
           <span class="text-xs font-bold uppercase tracking-wider text-ink-primary flex items-center gap-1.5">
             <i data-lucide="info" class="w-4 h-4 text-brand-500"></i>
@@ -1579,20 +1622,20 @@
     </div>
 
     <!-- Web Family Command Center Live Preview -->
-    <div class="bg-white rounded-3xl border border-surface-border p-6 shadow-sm">
-      <div class="flex items-center justify-between pb-4 border-b border-surface-border mb-4">
+    <div class="bg-white rounded-3xl border border-surface-border p-5 sm:p-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-surface-border mb-4">
         <div>
           <h3 class="text-base font-bold text-ink-primary">Live Web Family Command Center</h3>
           <p class="text-xs text-ink-secondary">Simulated desktop command station for monitoring active circles</p>
         </div>
-        <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 text-xs font-bold flex items-center gap-1.5">
+        <span class="w-fit px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 text-xs font-bold flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span>4 Members Online</span>
         </span>
       </div>
 
       <!-- Command Center Desktop Map Mockup -->
-      <div class="h-80 rounded-2xl bg-slate-100 border border-surface-border relative overflow-hidden flex items-center justify-center">
+      <div class="h-72 sm:h-80 rounded-2xl bg-slate-100 border border-surface-border relative overflow-hidden flex items-center justify-center">
         <!-- SVG Map Grid -->
         <svg class="absolute inset-0 w-full h-full opacity-50" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 80 Q 300 120 1200 60" stroke="#cbd5e1" stroke-width="24" fill="none" />
@@ -1601,29 +1644,29 @@
         </svg>
 
         <!-- Command Pin 1 -->
-        <div class="absolute top-20 left-48 flex items-center gap-2 p-2 rounded-xl bg-white shadow-md border border-surface-border">
-          <div class="w-7 h-7 rounded-full bg-brand-500 text-white font-bold text-xs flex items-center justify-center">You</div>
+        <div class="absolute top-8 sm:top-16 left-3 sm:left-12 flex items-center gap-2 p-1.5 sm:p-2 rounded-xl bg-white shadow-md border border-surface-border">
+          <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-brand-500 text-white font-bold text-[10px] sm:text-xs flex items-center justify-center">You</div>
           <div class="text-left">
-            <div class="text-xs font-bold text-ink-primary">Amit · Head</div>
-            <div class="text-[10px] text-emerald-600 font-semibold">⚡ 98% Battery</div>
+            <div class="text-[11px] sm:text-xs font-bold text-ink-primary">Amit · Head</div>
+            <div class="text-[9px] sm:text-[10px] text-emerald-600 font-semibold">⚡ 98% Battery</div>
           </div>
         </div>
 
         <!-- Command Pin 2 -->
-        <div class="absolute top-44 left-1/2 flex items-center gap-2 p-2 rounded-xl bg-white shadow-md border border-surface-border">
-          <div class="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center"><i data-lucide="car" class="w-4 h-4"></i></div>
+        <div class="absolute top-32 sm:top-40 left-1/2 -translate-x-1/2 flex items-center gap-2 p-1.5 sm:p-2 rounded-xl bg-white shadow-md border border-surface-border">
+          <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-600 text-white font-bold text-[10px] sm:text-xs flex items-center justify-center"><i data-lucide="car" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></div>
           <div class="text-left">
-            <div class="text-xs font-bold text-ink-primary">Dad · 42 km/h</div>
-            <div class="text-[10px] text-blue-600 font-semibold">Western Express Hwy</div>
+            <div class="text-[11px] sm:text-xs font-bold text-ink-primary">Dad · 42 km/h</div>
+            <div class="text-[9px] sm:text-[10px] text-blue-600 font-semibold">Western Exp Hwy</div>
           </div>
         </div>
 
         <!-- Command Pin 3 -->
-        <div class="absolute bottom-16 right-56 flex items-center gap-2 p-2 rounded-xl bg-white shadow-md border border-surface-border">
-          <div class="w-7 h-7 rounded-full bg-purple-600 text-white font-bold text-xs flex items-center justify-center">P</div>
+        <div class="absolute bottom-6 sm:bottom-12 right-3 sm:right-16 flex items-center gap-2 p-1.5 sm:p-2 rounded-xl bg-white shadow-md border border-surface-border">
+          <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-purple-600 text-white font-bold text-[10px] sm:text-xs flex items-center justify-center">P</div>
           <div class="text-left">
-            <div class="text-xs font-bold text-ink-primary">Priya · Home</div>
-            <div class="text-[10px] text-emerald-600 font-semibold">Safe Zone Active</div>
+            <div class="text-[11px] sm:text-xs font-bold text-ink-primary">Priya · Home</div>
+            <div class="text-[9px] sm:text-[10px] text-emerald-600 font-semibold">Safe Zone Active</div>
           </div>
         </div>
       </div>

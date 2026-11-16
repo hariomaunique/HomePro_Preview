@@ -238,6 +238,11 @@ function switchView(viewName) {
   if (window.lucide && typeof window.lucide.createIcons === 'function') {
     window.lucide.createIcons();
   }
+
+  // Recalculate phone scale when opening prototype
+  if (viewName === 'prototype') {
+    setTimeout(updatePhoneScale, 50);
+  }
 }
 
 // ==========================================
@@ -280,6 +285,12 @@ function goToScreen(index) {
   const counterEl = document.getElementById('mockup-screen-counter');
   if (counterEl) {
     counterEl.textContent = `Screen ${index + 1} of ${APP_SCREENS.length}`;
+  }
+
+  // 4b. Sync Mobile Screen Dropdown Selector
+  const mobileDropdown = document.getElementById('mobile-screen-dropdown');
+  if (mobileDropdown && mobileDropdown.value != index) {
+    mobileDropdown.value = index;
   }
 
   // 5. Update Status bar color scheme based on screen background
@@ -527,9 +538,54 @@ function showCopiedFeedback(btnElement) {
 }
 
 // ==========================================
+// MOBILE RESPONSIVE SCALING & CONTROLLER
+// ==========================================
+function updatePhoneScale() {
+  const wrapper = document.querySelector('.phone-scale-wrapper');
+  const chassis = document.getElementById('deviceFrame');
+  if (!wrapper || !chassis) return;
+
+  const screenWidth = window.innerWidth;
+  const nativeWidth = 380;
+  const nativeHeight = 835;
+
+  if (screenWidth < 440) {
+    // Leave 24px padding (12px on each side)
+    const availableWidth = Math.min(nativeWidth, Math.max(280, screenWidth - 24));
+    const scale = availableWidth / nativeWidth;
+    chassis.style.transform = `scale(${scale})`;
+    chassis.style.transformOrigin = 'top center';
+    wrapper.style.height = `${Math.round(nativeHeight * scale)}px`;
+  } else {
+    chassis.style.transform = '';
+    chassis.style.transformOrigin = '';
+    wrapper.style.height = '';
+  }
+}
+
+function initMobileDropdown() {
+  const dropdown = document.getElementById('mobile-screen-dropdown');
+  if (!dropdown) return;
+  dropdown.innerHTML = APP_SCREENS.map((screen, i) => `
+    <option value="${i}">Screen ${i + 1}: ${screen.title}</option>
+  `).join('');
+  dropdown.value = activeScreenIndex;
+}
+
+// Window resize & orientation listeners for responsive scaling
+window.addEventListener('resize', updatePhoneScale);
+window.addEventListener('orientationchange', updatePhoneScale);
+
+// ==========================================
 // INITIALIZATION ON DOM READY
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
+  // Populate mobile screen selector dropdown
+  initMobileDropdown();
+
+  // Initial phone scaling calculation
+  updatePhoneScale();
+
   // Check URL hash for initial view
   const hash = window.location.hash.replace('#', '');
   if (['dashboard', 'download', 'prototype'].includes(hash)) {
